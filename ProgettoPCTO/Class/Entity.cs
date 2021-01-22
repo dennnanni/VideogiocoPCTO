@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 using System.Runtime.Serialization;
 
-namespace Progetto_PCTO
+namespace ProgettoPCTO
 {
     
     public abstract class Entity : IBaseObject

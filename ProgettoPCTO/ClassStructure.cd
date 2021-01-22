@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
-  <Class Name="Progetto_PCTO.Gameplay">
-    <Position X="9.5" Y="0.75" Width="1.5" />
+  <Class Name="ProgettoPCTO.Gameplay">
+    <Position X="8.25" Y="4" Width="3" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAgRAACAAAAAQAAAAAAAAEAAAAAAAAAAA=</HashCode>
       <FileName>Gameplay.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Progetto_PCTO.Item">
-    <Position X="1" Y="2.25" Width="1.5" />
-    <AssociationLine Name="Powers" Type="Progetto_PCTO.Power">
+  <Class Name="ProgettoPCTO.Item">
+    <Position X="0.5" Y="2.25" Width="2" />
+    <AssociationLine Name="Powers" Type="ProgettoPCTO.Power">
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.11" Y="0.177" />
       </MemberNameLabel>
@@ -23,16 +23,16 @@
       <Property Name="Powers" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="Progetto_PCTO.Power">
-    <Position X="1" Y="4.5" Width="1.5" />
+  <Class Name="ProgettoPCTO.Power">
+    <Position X="0.75" Y="4.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAACAAAAAAgAAAAAAAAAAQAAABAAAAAEAAAAAAAQAA=</HashCode>
       <FileName>Class\Power.cs</FileName>
     </TypeIdentifier>
     <Lollipop Orientation="Left" Position="0.2" />
   </Class>
-  <Class Name="Progetto_PCTO.Player">
-    <Position X="5" Y="4.5" Width="1.5" />
+  <Class Name="ProgettoPCTO.Player">
+    <Position X="5.5" Y="4.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAABEAAAAAAAQAA=</HashCode>
       <FileName>Class\Player.cs</FileName>
@@ -41,34 +41,44 @@
       <Property Name="Powers" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="Progetto_PCTO.Situation">
-    <Position X="7" Y="0.75" Width="1.5" />
+  <Class Name="ProgettoPCTO.Situation">
+    <Position X="8.25" Y="0.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgAAAIBAAAAAQAAACAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Class\Situation.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Entities" />
-    </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Progetto_PCTO.Character">
-    <Position X="5" Y="2.25" Width="1.5" />
+  <Class Name="ProgettoPCTO.Character">
+    <Position X="5.75" Y="2.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Class\Character.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Progetto_PCTO.Entity">
-    <Position X="3" Y="0.5" Width="1.5" />
+  <Class Name="ProgettoPCTO.Entity">
+    <Position X="3" Y="0.5" Width="2.25" />
+    <AssociationLine Name="Inventory" Type="ProgettoPCTO.Item" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3" Y="1.375" />
+        <Point X="1.833" Y="1.375" />
+        <Point X="1.833" Y="2.25" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.085" Y="0.152" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAABAAgAAAABAAAAEQAAAAAAAAAAAAAAgAAYAA=</HashCode>
       <FileName>Class\Entity.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Inventory" />
+    </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="Progetto_PCTO.IBaseObject">
-    <Position X="7" Y="4" Width="1.5" />
+  <Interface Name="ProgettoPCTO.IBaseObject">
+    <Position X="11" Y="0.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Class\IBaseObject.cs</FileName>

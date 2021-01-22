@@ -1,0 +1,56 @@
+﻿
+body {
+    
+}
+
+#pnlGameplay {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border: solid;
+    border-color: black;
+    border-width: thin;
+    background-color: black;
+}
+
+#pnlImages {
+    position:absolute;
+    top:10px;
+    left:10px;
+}
+
+#lstStory {
+    position:absolute;
+    top:10px;
+    left:870px;
+}
+
+#pnlCardinals {
+    position: absolute;
+    top: 520px;
+    left: 10px;
+}
+
+#btnNorth {
+    position: absolute;
+    top: 0px;
+    left: 55px;
+}
+
+#btnEast {
+    position: absolute;
+    top: 60px;
+    left: 110px;
+}
+
+#btnSouth {
+    position: absolute;
+    top: 120px;
+    left: 55px;
+}
+
+#btnWest {
+    position: absolute;
+    top: 60px;
+    left: 0px;
+}

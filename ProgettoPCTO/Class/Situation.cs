@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Progetto_PCTO
+namespace ProgettoPCTO
 {
     public class Situation : IBaseObject
     {
@@ -40,12 +40,10 @@ namespace Progetto_PCTO
             }
         }
 
-        public Entity Entities
+        public List<ProgettoPCTO.Entity> Entities
         {
-            get => default;
-            set
-            {
-            }
+            get;
+            set;
         }
     }
 }

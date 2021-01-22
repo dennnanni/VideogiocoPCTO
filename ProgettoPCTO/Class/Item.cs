@@ -4,7 +4,7 @@ using System.Web.Services;
 using System.Web.Services.Protocols;
 using System.ComponentModel;
 
-namespace Progetto_PCTO
+namespace ProgettoPCTO
 {
     public class Item : Entity
     {

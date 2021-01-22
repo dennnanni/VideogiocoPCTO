@@ -8,7 +8,7 @@ using System.Collections;
 
 
 
-namespace Progetto_PCTO
+namespace ProgettoPCTO
 {
     public class Gameplay: IEnumerable<Situation>
     {

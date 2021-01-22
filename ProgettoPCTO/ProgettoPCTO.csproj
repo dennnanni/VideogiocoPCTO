@@ -69,6 +69,12 @@
   <ItemGroup>
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Img\Areas\area1.png" />
+    <Content Include="Img\Areas\area2.png" />
+    <Content Include="Img\Areas\area3.png" />
+    <Content Include="Img\Characters\creeper.png" />
+    <Content Include="Img\Characters\steve.png" />
+    <Content Include="Stylesheet.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Img\Items\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
