@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Progetto_PCTO.Gameplay">
+    <Position X="9.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAgRAACAAAAAQAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Gameplay.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Progetto_PCTO.Item">
+    <Position X="1" Y="2.25" Width="1.5" />
+    <AssociationLine Name="Powers" Type="Progetto_PCTO.Power">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.11" Y="0.177" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAAAAAAAAA=</HashCode>
+      <FileName>Class\Item.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Powers" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Progetto_PCTO.Power">
+    <Position X="1" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAgAAAAAAAAAAQAAABAAAAAEAAAAAAAQAA=</HashCode>
+      <FileName>Class\Power.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Left" Position="0.2" />
+  </Class>
+  <Class Name="Progetto_PCTO.Player">
+    <Position X="5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAABEAAAAAAAQAA=</HashCode>
+      <FileName>Class\Player.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Powers" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Progetto_PCTO.Situation">
+    <Position X="7" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAIBAAAAAQAAACAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Class\Situation.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Entities" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Progetto_PCTO.Character">
+    <Position X="5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Class\Character.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Progetto_PCTO.Entity">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAgAAAABAAAAEQAAAAAAAAAAAAAAgAAYAA=</HashCode>
+      <FileName>Class\Entity.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Progetto_PCTO.IBaseObject">
+    <Position X="7" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Class\IBaseObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
