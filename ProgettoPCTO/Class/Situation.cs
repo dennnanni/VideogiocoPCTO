@@ -45,5 +45,11 @@ namespace ProgettoPCTO
             get;
             set;
         }
+
+        public List<ProgettoPCTO.Item> Items
+        {
+            get;
+            set;
+        }
     }
 }

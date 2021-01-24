@@ -100,6 +100,20 @@ namespace ProgettoPCTO
                     img.ID = "img" + e.Name;
                     pnlImages.Controls.Add(img);
                 }
+
+            if(s.Items != null)
+                foreach(Item i in s.Items)
+                {
+                    ImageButton img = new ImageButton();
+                    img.ImageUrl = i.ImageURL;
+                    img.Style["position"] = "absolute";
+                    img.Style["width"] = i.Width + "px";
+                    img.Style["height"] = i.Height + "px";
+                    img.Style["left"] = i.X + "px";
+                    img.Style["top"] = i.Y + "px";
+                    img.ID = "img" + i.Name;
+                    pnlImages.Controls.Add(img);
+                }
         }
     }
 }
