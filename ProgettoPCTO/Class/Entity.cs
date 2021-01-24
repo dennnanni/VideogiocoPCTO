@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 
 namespace ProgettoPCTO
 {
-    
+    [DataContract]
     public abstract class Entity : IBaseObject
     {
         public Entity(string URL)
@@ -16,36 +16,44 @@ namespace ProgettoPCTO
             ImageURL = URL;
         }
 
-
+        [DataMember]
         public int X
         {
             get; 
             set;
         }
 
+        [DataMember]
         public int Y
         {
             get;
             set;
         }
 
+        [DataMember]
         public string ImageURL { get; private set; }
 
+        [DataMember]
         public string Description { get; set; }
+
+        [DataMember]
         public string Name { get; set; }
 
+        [DataMember]
         public int Width
         {
             get;
             set;
         }
 
+        [DataMember]
         public int Height
         {
             get;
             set;
         }
 
+        [DataMember]
         public Item Inventory
         {
             get => default;

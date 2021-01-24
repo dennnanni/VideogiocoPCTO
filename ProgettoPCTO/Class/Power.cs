@@ -4,43 +4,29 @@ using System.Web.Services;
 using System.Web.Services.Protocols;
 using System.ComponentModel;
 
+using System.Runtime.Serialization;
+
 namespace ProgettoPCTO
 {
+    [DataContract]
     public class Power : IBaseObject
     {
-        public string Description { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        [DataMember]
+        public string Description { get; set; }
 
-        public int Armor
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        [DataMember]
+        public string Name { get; set; }
 
-        public int Experience
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        [DataMember]
+        public int Armor { get; set; }
 
-        public int Strength
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        [DataMember]
+        public int Experience { get; set; }
 
-        public int Health
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        [DataMember]
+        public int Strength { get; set; }
+
+        [DataMember]
+        public int Health { get; set; }
     }
 }

@@ -6,10 +6,11 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections;
 
-
+using System.Runtime.Serialization;
 
 namespace ProgettoPCTO
 {
+    [DataContract]
     public class Gameplay: IEnumerable<Situation>
     {
         //private Situation[] situations = new Situation[20];

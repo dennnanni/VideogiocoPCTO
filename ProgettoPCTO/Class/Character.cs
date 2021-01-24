@@ -4,8 +4,11 @@ using System.Web.Services;
 using System.Web.Services.Protocols;
 using System.ComponentModel;
 
+using System.Runtime.Serialization;
+
 namespace ProgettoPCTO
 {
+    [DataContract]
     public class Character : Entity
     {
         public Character(string URL) : base(URL)
@@ -13,6 +16,7 @@ namespace ProgettoPCTO
 
         }
 
+        [DataMember]
         public int Health
         {
             get => default;

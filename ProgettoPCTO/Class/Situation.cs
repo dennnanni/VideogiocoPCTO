@@ -7,8 +7,11 @@ using System.Drawing;
 using System.Collections;
 using System.Collections.Generic;
 
+using System.Runtime.Serialization;
+
 namespace ProgettoPCTO
 {
+    [DataContract]
     public class Situation : IBaseObject
     {
         private string[] _areasID = new string[4];
@@ -23,10 +26,16 @@ namespace ProgettoPCTO
             ImageURL = URL;
         }
 
+        [DataMember]
         public string Description { get; set; }
+
+        [DataMember]
         public string Name { get; set; }
+
+        [DataMember]
         public string ImageURL { get; set; }
 
+        [DataMember]
         public string[] Areas
         {
             get
@@ -40,12 +49,14 @@ namespace ProgettoPCTO
             }
         }
 
+        [DataMember]
         public List<ProgettoPCTO.Entity> Entities
         {
             get;
             set;
         }
 
+        [DataMember]
         public List<ProgettoPCTO.Item> Items
         {
             get;
