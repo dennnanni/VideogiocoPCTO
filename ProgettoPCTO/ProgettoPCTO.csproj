@@ -98,6 +98,7 @@
     <Compile Include="Class\Power.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Class\Situation.cs" />
+    <Compile Include="XMLHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClassStructure.cd" />

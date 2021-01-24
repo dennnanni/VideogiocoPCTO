@@ -9,6 +9,7 @@ using System.Runtime.Serialization;
 namespace ProgettoPCTO
 {
     [DataContract]
+    [KnownType(typeof(Character))]
     public class Character : Entity
     {
         public Character(string URL) : base(URL)
@@ -17,13 +18,7 @@ namespace ProgettoPCTO
         }
 
         [DataMember]
-        public int Health
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int Health { get; set; }
 
     }
 }
