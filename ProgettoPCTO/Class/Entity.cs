@@ -5,10 +5,12 @@ using System.Web.Services.Protocols;
 using System.ComponentModel;
 
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace ProgettoPCTO
 {
     [DataContract]
+    [KnownType(typeof(Entity))]
     public abstract class Entity : IBaseObject
     {
         public Entity(string URL)
@@ -61,5 +63,7 @@ namespace ProgettoPCTO
             {
             }
         }
+
+        
     }
 }

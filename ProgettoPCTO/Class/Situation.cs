@@ -50,7 +50,7 @@ namespace ProgettoPCTO
         }
 
         [DataMember]
-        public List<ProgettoPCTO.Entity> Entities
+        public List<ProgettoPCTO.Character> Entities
         {
             get;
             set;

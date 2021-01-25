@@ -19,6 +19,5 @@ namespace ProgettoPCTO
 
         [DataMember]
         public int Health { get; set; }
-
     }
 }

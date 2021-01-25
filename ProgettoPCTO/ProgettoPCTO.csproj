@@ -68,6 +68,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Data.XML" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Img\Areas\area1.png" />
@@ -111,7 +112,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Img\Items\" />
     <Folder Include="Models\" />
   </ItemGroup>

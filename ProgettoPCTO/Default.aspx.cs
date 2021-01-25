@@ -18,14 +18,14 @@ namespace ProgettoPCTO
         {
             if (!IsPostBack)
             {
-                Gameplay game = new Gameplay();
-                XMLHandler.Write(game, Server);
-                //// Creates the gameplay and loads the first situation
-                //_game = new Gameplay();
-                //Session["game"] = _game;
-                //Session["currentArea"] = currentAreaID;
-                //_currentSituation = _game[currentAreaID];
-                //this.LoadSituation(currentAreaID);
+                //Gameplay game = new Gameplay();
+                //XMLHandler.Write(game, Server);
+                // Creates the gameplay and loads the first situation
+                _game = XMLHandler.Read(Server);
+                Session["game"] = _game;
+                Session["currentArea"] = currentAreaID;
+                _currentSituation = _game[currentAreaID];
+                this.LoadSituation(currentAreaID);
             }
             else
             {
@@ -89,7 +89,7 @@ namespace ProgettoPCTO
 
             // Loading all entities in the situation if there are
             if(s.Entities != null)
-                foreach (Entity e in s.Entities)
+                foreach (Character e in s.Entities)
                 {
                     ImageButton img = new ImageButton();
                     img.ImageUrl = e.ImageURL;

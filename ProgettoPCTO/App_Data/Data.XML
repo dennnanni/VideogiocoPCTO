@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfKeyValueOfstringSituationwOB_SG4KC xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <KeyValueOfstringSituationwOB_SG4KC>
+    <Key>area1</Key>
+    <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Areas>
+        <string>area2</string>
+        <string>area3</string>
+        <string i:nil="true" />
+        <string i:nil="true" />
+      </d3p1:Areas>
+      <d3p1:Description i:nil="true" />
+      <d3p1:Entities>
+        <d3p1:Character>
+          <d3p1:Description i:nil="true" />
+          <d3p1:Height>90</d3p1:Height>
+          <d3p1:ImageURL>~\Img\Characters\steve.png</d3p1:ImageURL>
+          <d3p1:Inventory i:nil="true" />
+          <d3p1:Name>steve</d3p1:Name>
+          <d3p1:Width>100</d3p1:Width>
+          <d3p1:X>100</d3p1:X>
+          <d3p1:Y>100</d3p1:Y>
+          <d3p1:Health>0</d3p1:Health>
+        </d3p1:Character>
+      </d3p1:Entities>
+      <d3p1:ImageURL>~\Img\Areas\area1.png</d3p1:ImageURL>
+      <d3p1:Items i:nil="true" />
+      <d3p1:Name i:nil="true" />
+    </Value>
+  </KeyValueOfstringSituationwOB_SG4KC>
+  <KeyValueOfstringSituationwOB_SG4KC>
+    <Key>area2</Key>
+    <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Areas>
+        <string i:nil="true" />
+        <string i:nil="true" />
+        <string>area1</string>
+        <string i:nil="true" />
+      </d3p1:Areas>
+      <d3p1:Description i:nil="true" />
+      <d3p1:Entities>
+        <d3p1:Character>
+          <d3p1:Description i:nil="true" />
+          <d3p1:Height>90</d3p1:Height>
+          <d3p1:ImageURL>~\Img\Characters\creeper.png</d3p1:ImageURL>
+          <d3p1:Inventory i:nil="true" />
+          <d3p1:Name>mob</d3p1:Name>
+          <d3p1:Width>100</d3p1:Width>
+          <d3p1:X>150</d3p1:X>
+          <d3p1:Y>100</d3p1:Y>
+          <d3p1:Health>0</d3p1:Health>
+        </d3p1:Character>
+      </d3p1:Entities>
+      <d3p1:ImageURL>~\Img\Areas\area2.png</d3p1:ImageURL>
+      <d3p1:Items i:nil="true" />
+      <d3p1:Name i:nil="true" />
+    </Value>
+  </KeyValueOfstringSituationwOB_SG4KC>
+  <KeyValueOfstringSituationwOB_SG4KC>
+    <Key>area3</Key>
+    <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Areas>
+        <string i:nil="true" />
+        <string i:nil="true" />
+        <string i:nil="true" />
+        <string>area1</string>
+      </d3p1:Areas>
+      <d3p1:Description i:nil="true" />
+      <d3p1:Entities i:nil="true" />
+      <d3p1:ImageURL>~\Img\Areas\area3.png</d3p1:ImageURL>
+      <d3p1:Items i:nil="true" />
+      <d3p1:Name i:nil="true" />
+    </Value>
+  </KeyValueOfstringSituationwOB_SG4KC>
+</ArrayOfKeyValueOfstringSituationwOB_SG4KC>

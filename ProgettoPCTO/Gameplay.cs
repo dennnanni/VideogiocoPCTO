@@ -7,14 +7,17 @@ using System.Collections.Generic;
 using System.Collections;
 
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace ProgettoPCTO
 {
     [DataContract]
+    
     public class Gameplay: IEnumerable<Situation>
     {
-        //private Situation[] situations = new Situation[20];
-        public Dictionary<string, Situation> _situations = new Dictionary<string, Situation>();
+
+        private Dictionary<string, Situation> _situations = new Dictionary<string, Situation>();
+
         public Gameplay()
         {
             this.Initialize();
@@ -29,6 +32,12 @@ namespace ProgettoPCTO
         public void Add(string key, Situation situation)
         {
             _situations.Add(key, situation);
+        }
+
+        public Dictionary<string, Situation> Situations
+        {
+            get => _situations;
+            set => _situations = value;
         }
 
         /// <summary>
@@ -77,7 +86,7 @@ namespace ProgettoPCTO
 
                 },
 
-                Entities = new List<Entity>()
+                Entities = new List<Character>()
                 {
                     new Character(URL: @"~\Img\Characters\steve.png")
                     {
@@ -86,6 +95,7 @@ namespace ProgettoPCTO
                         Y = 100,
                         Width = 100,
                         Height = 90,
+                        
                     }
                 },
             };
@@ -100,7 +110,7 @@ namespace ProgettoPCTO
                     null
                 },
 
-                Entities = new List<Entity>()
+                Entities = new List<Character>()
                 {
                     new Character(URL: @"~\Img\Characters\creeper.png")
                     {
