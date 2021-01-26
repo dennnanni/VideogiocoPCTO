@@ -3,7 +3,7 @@
   <Class Name="ProgettoPCTO.Gameplay">
     <Position X="8.25" Y="4" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAgRAACAAAAAQAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAAAAAAAAgRAACAAAAAQAAAAAAAAEAAAAAAgAAAA=</HashCode>
       <FileName>Gameplay.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -32,7 +32,13 @@
     <Lollipop Orientation="Left" Position="0.2" />
   </Class>
   <Class Name="ProgettoPCTO.Player">
-    <Position X="5.5" Y="4.5" Width="2.25" />
+    <Position X="5.5" Y="4.75" Width="2.25" />
+    <InheritanceLine Type="ProgettoPCTO.Character" FixedFromPoint="true">
+      <Path>
+        <Point X="6.625" Y="4.127" />
+        <Point X="6.625" Y="4.75" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAABEAAAAAAAQAA=</HashCode>
       <FileName>Class\Player.cs</FileName>
@@ -44,7 +50,7 @@
   <Class Name="ProgettoPCTO.Situation">
     <Position X="8.25" Y="0.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgAAAIBAAAAAQAAACAAAAAAAEAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgCAAIBAAAAAQAAACAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Class\Situation.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -52,7 +58,7 @@
   <Class Name="ProgettoPCTO.Character">
     <Position X="5.75" Y="2.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAACAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Class\Character.cs</FileName>
     </TypeIdentifier>
   </Class>

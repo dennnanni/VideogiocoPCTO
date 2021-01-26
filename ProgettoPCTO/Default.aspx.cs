@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -11,29 +12,30 @@ namespace ProgettoPCTO
     public partial class Default : System.Web.UI.Page
     {
         private Gameplay _game = null;
-        private string currentAreaID = "area1";
+        private string _currentAreaID = "area1";
         private Situation _currentSituation;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                //Gameplay game = new Gameplay();
-                //XMLHandler.Write(game, Server);
+                // Da togliere, necessario per fase debug
+                Gameplay game = new Gameplay();
+                XMLHandler.Write(game, Server);
                 // Creates the gameplay and loads the first situation
                 _game = XMLHandler.Read(Server);
                 Session["game"] = _game;
-                Session["currentArea"] = currentAreaID;
-                _currentSituation = _game[currentAreaID];
-                this.LoadSituation(currentAreaID);
+                Session["currentArea"] = _currentAreaID;
+                _currentSituation = _game[_currentAreaID];
+                this.LoadSituation(_currentAreaID);
             }
             else
             {
                 // Restores last changes 
-                currentAreaID = Session["currentArea"].ToString();
+                _currentAreaID = Session["currentArea"].ToString();
                 _game = (Gameplay)Session["game"];
-                _currentSituation = _game[currentAreaID];
-                this.LoadSituation(currentAreaID);
+                _currentSituation = _game[_currentAreaID];
+                this.LoadSituation(_currentAreaID);
 
             }
         }
@@ -54,7 +56,7 @@ namespace ProgettoPCTO
 
             this.LoadSituation(_currentSituation.Areas[index]);
 
-            Session["currentArea"] = currentAreaID;
+            Session["currentArea"] = _currentAreaID;
             Session["gameplay"] = _game;
         }
 
@@ -63,29 +65,28 @@ namespace ProgettoPCTO
             Situation s = _game[name];
             pnlImages.Controls.Clear();
             pnlImages.BackImageUrl = s.ImageURL; // Load background
-            currentAreaID = name; // Sets the global variable
+            lstStory.Items.Clear();
+            lstStory.Items.Add("Hai raggiunto " + s.Name);
+            lstStory.Items.Add(s.Description);
+            _currentAreaID = name; // Sets the global variable
 
             for (int i = 0; i < 4; i++)
             {
                 if (s.Areas[i] == null)
                 {
-                    foreach (Control btn in pnlCardinals.Controls)
-                    {
-                        // Sorting buttons 
-                        if (btn as Button != null && (btn as Button).ID == "btn" + (Cardinals)i)
-                            (btn as Button).Enabled = false;
-                    }
+                    Button btn = pnlCardinals.FindControl("btn" + (Cardinals)i) as Button;
+                    btn.Enabled = false;
+                    btn.Text = "";
                 }
                 else
                 {
-                    foreach (Control btn in pnlCardinals.Controls)
-                    {
-                        if ((btn as Button) != null && (btn as Button).ID == "btn" + (Cardinals)i)
-                            (btn as Button).Enabled = true;
-                    }
+                    Button btn = pnlCardinals.FindControl("btn" + (Cardinals)i) as Button;
+                    btn.Enabled = true;
+                    btn.Text = _game[s.Areas[i]].Name;
                 }
 
             }
+
 
             // Loading all entities in the situation if there are
             if(s.Entities != null)
@@ -99,6 +100,8 @@ namespace ProgettoPCTO
                     img.Style["left"] = e.X + "px";
                     img.Style["top"] = e.Y + "px";
                     img.ID = "img" + e.Name;
+                    img.OnClientClick += EventDispatcher(e);
+
                     pnlImages.Controls.Add(img);
                 }
 
@@ -116,5 +119,43 @@ namespace ProgettoPCTO
                     pnlImages.Controls.Add(img);
                 }
         }
+
+        protected ImageClickEventHandler EventDispatcher(Entity e)
+        {
+            switch (e.Name.ToLower())
+            {
+                case "steve":
+                    return btnSteve_Click;
+
+                default:
+                    return null;
+            }
+        }
+
+        #region Entities events
+        protected void btnSteve_Click(object sender, EventArgs e)
+        {
+            Character c = null;
+            for(int i = 0; i < _currentSituation.Entities.Count; i++)
+            {
+                if(_currentSituation.Entities[i].Name == "Steve")
+                {
+                    c = _currentSituation.Entities[i];
+                    i = _currentSituation.Entities.Count;
+                }
+            }
+            
+            lstStory.Items.Add(c.Dialogue[_currentAreaID]);
+        }
+
+        protected void btnCreeper_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region Items events
+
+        #endregion
     }
 }
