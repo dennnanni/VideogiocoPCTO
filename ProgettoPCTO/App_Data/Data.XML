@@ -3,6 +3,9 @@
   <KeyValueOfstringSituationwOB_SG4KC>
     <Key>area1</Key>
     <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Actions>
+        <string>Parla con Steve</string>
+      </d3p1:Actions>
       <d3p1:Areas>
         <string>area2</string>
         <string>area3</string>
@@ -40,6 +43,7 @@ Clicca su Steve per sapere come giocare.</d3p1:Description>
   <KeyValueOfstringSituationwOB_SG4KC>
     <Key>area2</Key>
     <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Actions i:nil="true" />
       <d3p1:Areas>
         <string i:nil="true" />
         <string i:nil="true" />
@@ -69,6 +73,7 @@ Clicca su Steve per sapere come giocare.</d3p1:Description>
   <KeyValueOfstringSituationwOB_SG4KC>
     <Key>area3</Key>
     <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Actions i:nil="true" />
       <d3p1:Areas>
         <string i:nil="true" />
         <string i:nil="true" />

@@ -62,5 +62,8 @@ namespace ProgettoPCTO
             get;
             set;
         }
+
+        [DataMember]
+        public string[] Actions { get; set; }
     }
 }

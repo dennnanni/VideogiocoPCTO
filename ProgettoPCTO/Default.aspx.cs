@@ -68,6 +68,12 @@ namespace ProgettoPCTO
             txtStory.Text += "Hai raggiunto " + s.Name + "\n";
             txtStory.Text += s.Description;
             _currentAreaID = name; // Sets the global variable
+
+            foreach(string st in s.Actions)
+            {
+                drpActions.Items.Add(st);
+            }
+
             // Enables and unables direction buttons
             for (int i = 0; i < 4; i++)
             {

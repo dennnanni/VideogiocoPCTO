@@ -79,6 +79,7 @@ namespace ProgettoPCTO
             {
                 Name = "ingresso",
                 Description = "Benvenuto, da qui inizia la tua avventura.\nClicca su Steve per sapere come giocare.",
+                Actions = new string[] { "Parla con Steve" },
                 Areas = new string[]
                 {
                     "area2",
