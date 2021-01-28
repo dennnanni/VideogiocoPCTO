@@ -28,6 +28,21 @@ namespace ProgettoPCTO
                 Session["currentArea"] = _currentAreaID;
                 _currentSituation = _game[_currentAreaID];
                 this.LoadSituation(_currentAreaID);
+
+                //Character en = _currentSituation.Entities[0];
+                //ImageButton img = new ImageButton();
+                //img.ImageUrl = en.ImageURL;
+                //img.Style["position"] = "absolute";
+                //img.Style["width"] = en.Width + "px";
+                //img.Style["height"] = en.Height + "px";
+                //img.Style["left"] = en.X + "px";
+                //img.Style["top"] = en.Y + "px";
+                //img.ID = "img" + en.Name;
+                ////img.OnClientClick += EventDispatcher(e);
+                //ImageClickEventHandler i = new ImageClickEventHandler(btnPrint_Click);
+                //img.OnClientClick += i;
+
+                //pnlProva.Controls.Add(img);
             }
             else
             {
@@ -65,11 +80,12 @@ namespace ProgettoPCTO
             Situation s = _game[name];
             pnlImages.Controls.Clear();
             pnlImages.BackImageUrl = s.ImageURL; // Load background
-            lstStory.Items.Clear();
+            //lstStory.Items.Clear();
             lstStory.Items.Add("Hai raggiunto " + s.Name);
             lstStory.Items.Add(s.Description);
             _currentAreaID = name; // Sets the global variable
 
+            // Enables and unables direction buttons
             for (int i = 0; i < 4; i++)
             {
                 if (s.Areas[i] == null)
@@ -88,24 +104,26 @@ namespace ProgettoPCTO
             }
 
 
-            // Loading all entities in the situation if there are
-            if(s.Entities != null)
-                foreach (Character e in s.Entities)
-                {
-                    ImageButton img = new ImageButton();
-                    img.ImageUrl = e.ImageURL;
-                    img.Style["position"] = "absolute";
-                    img.Style["width"] = e.Width + "px";
-                    img.Style["height"] = e.Height + "px";
-                    img.Style["left"] = e.X + "px";
-                    img.Style["top"] = e.Y + "px";
-                    img.ID = "img" + e.Name;
-                    img.OnClientClick += EventDispatcher(e);
+            //Loading all entities in the situation if there are
+            //if (s.Entities != null)
+            //    foreach (Character e in s.Entities)
+            //    {
+            //        ImageButton img = new ImageButton();
+            //        img.ImageUrl = e.ImageURL;
+            //        img.Style["position"] = "absolute";
+            //        img.Style["width"] = e.Width + "px";
+            //        img.Style["height"] = e.Height + "px";
+            //        img.Style["left"] = e.X + "px";
+            //        img.Style["top"] = e.Y + "px";
+            //        img.ID = "img" + e.Name;
+            //        //img.OnClientClick += EventDispatcher(e);
+            //        ImageClickEventHandler i = new ImageClickEventHandler(btnPrint_Click);
+            //        img.OnClientClick += i;
 
-                    pnlImages.Controls.Add(img);
-                }
+            //        pnlProva.Controls.Add(img);
+            //    }
 
-            if(s.Items != null)
+            if (s.Items != null)
                 foreach(Item i in s.Items)
                 {
                     ImageButton img = new ImageButton();
@@ -116,12 +134,13 @@ namespace ProgettoPCTO
                     img.Style["left"] = i.X + "px";
                     img.Style["top"] = i.Y + "px";
                     img.ID = "img" + i.Name;
-                    pnlImages.Controls.Add(img);
+                    pnlProva.Controls.Add(img);
                 }
         }
 
         protected ImageClickEventHandler EventDispatcher(Entity e)
         {
+            // Gets the name of the entity and assign 
             switch (e.Name.ToLower())
             {
                 case "steve":
@@ -130,6 +149,11 @@ namespace ProgettoPCTO
                 default:
                     return null;
             }
+        }
+
+        protected void btnPrint_Click(object sender, EventArgs e)
+        {
+            lstStory.Items.Add("funziona"); // Spoiler: no
         }
 
         #region Entities events

@@ -26,6 +26,7 @@
                 </asp:Panel>
             </ContentTemplate>
         </asp:UpdatePanel>
+        <asp:Panel ID="pnlProva" runat="server" Width="1300px" Height="700px"></asp:Panel>
     </form>
 </body>
 </html>
