@@ -51,13 +51,13 @@ namespace ProgettoPCTO
         protected global::System.Web.UI.WebControls.Panel pnlImages;
 
         /// <summary>
-        /// Controllo lstStory.
+        /// Controllo lblStory.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lstStory;
+        protected global::System.Web.UI.WebControls.Label lblStory;
 
         /// <summary>
         /// Controllo pnlCardinals.
@@ -105,12 +105,21 @@ namespace ProgettoPCTO
         protected global::System.Web.UI.WebControls.Button btnWest;
 
         /// <summary>
-        /// Controllo pnlProva.
+        /// Controllo txtStory.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlProva;
+        protected global::System.Web.UI.WebControls.TextBox txtStory;
+
+        /// <summary>
+        /// Controllo drpActions.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList drpActions;
     }
 }

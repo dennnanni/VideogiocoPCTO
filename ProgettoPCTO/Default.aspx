@@ -17,16 +17,17 @@
         <asp:UpdatePanel ID="pnlGameplay" UpdateMode="Conditional" runat="server"  Width="1300px" Height="700px">
             <ContentTemplate>
                 <asp:Panel ID="pnlImages" runat="server" Width="850" Height="500"></asp:Panel>
-                <asp:ListBox ID="lstStory" runat="server" Width="420" Height="500" />
+                <asp:Label ID="lblStory" runat="server" Width="420" Height="445" Text="Label"></asp:Label>
                 <asp:Panel ID="pnlCardinals" runat="server" Width="210" Height="170px">
                     <asp:Button ID="btnNorth" runat="server" Width="100" Height="50" Text="North" OnClick="btnCardinal_Click"/>
                     <asp:Button ID="btnEast" runat="server" Width="100" Height="50" Text="East" OnClick="btnCardinal_Click"/>
                     <asp:Button ID="btnSouth" runat="server" Width="100" Height="50" Text="South" OnClick="btnCardinal_Click"/>
                     <asp:Button ID="btnWest" runat="server" Width="100" Height="50" Text="West" OnClick="btnCardinal_Click"/>
                 </asp:Panel>
+                <asp:TextBox ID="txtStory" runat="server" TextMode="MultiLine"></asp:TextBox>
+                <asp:DropDownList ID="drpActions" runat="server" Width="420" Height="50"/>
             </ContentTemplate>
         </asp:UpdatePanel>
-        <asp:Panel ID="pnlProva" runat="server" Width="1300px" Height="700px"></asp:Panel>
     </form>
 </body>
 </html>

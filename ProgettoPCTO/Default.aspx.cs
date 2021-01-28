@@ -28,21 +28,6 @@ namespace ProgettoPCTO
                 Session["currentArea"] = _currentAreaID;
                 _currentSituation = _game[_currentAreaID];
                 this.LoadSituation(_currentAreaID);
-
-                //Character en = _currentSituation.Entities[0];
-                //ImageButton img = new ImageButton();
-                //img.ImageUrl = en.ImageURL;
-                //img.Style["position"] = "absolute";
-                //img.Style["width"] = en.Width + "px";
-                //img.Style["height"] = en.Height + "px";
-                //img.Style["left"] = en.X + "px";
-                //img.Style["top"] = en.Y + "px";
-                //img.ID = "img" + en.Name;
-                ////img.OnClientClick += EventDispatcher(e);
-                //ImageClickEventHandler i = new ImageClickEventHandler(btnPrint_Click);
-                //img.OnClientClick += i;
-
-                //pnlProva.Controls.Add(img);
             }
             else
             {
@@ -81,8 +66,10 @@ namespace ProgettoPCTO
             pnlImages.Controls.Clear();
             pnlImages.BackImageUrl = s.ImageURL; // Load background
             //lstStory.Items.Clear();
-            lstStory.Items.Add("Hai raggiunto " + s.Name);
-            lstStory.Items.Add(s.Description);
+            //lstStory.Items.Add("Hai raggiunto " + s.Name);
+            //lstStory.Items.Add(s.Description);
+            lblStory.Text += "Hai raggiunto " + s.Name + "\n";
+            lblStory.Text += s.Description;
             _currentAreaID = name; // Sets the global variable
             // Enables and unables direction buttons
             for (int i = 0; i < 4; i++)
@@ -103,26 +90,24 @@ namespace ProgettoPCTO
             }
 
 
-            //Loading all entities in the situation if there are
-            //if (s.Entities != null)
-            //    foreach (Character e in s.Entities)
-            //    {
-            //        ImageButton img = new ImageButton();
-            //        img.ImageUrl = e.ImageURL;
-            //        img.Style["position"] = "absolute";
-            //        img.Style["width"] = e.Width + "px";
-            //        img.Style["height"] = e.Height + "px";
-            //        img.Style["left"] = e.X + "px";
-            //        img.Style["top"] = e.Y + "px";
-            //        img.ID = "img" + e.Name;
-            //        //img.OnClientClick += EventDispatcher(e);
-            //        ImageClickEventHandler i = new ImageClickEventHandler(btnPrint_Click);
-            //        img.OnClientClick += i;
+            // Loading all entities in the situation if there are
+            if(s.Entities != null)
+                foreach (Character e in s.Entities)
+                {
+                    ImageButton img = new ImageButton();
+                    img.ImageUrl = e.ImageURL;
+                    img.Style["position"] = "absolute";
+                    img.Style["width"] = e.Width + "px";
+                    img.Style["height"] = e.Height + "px";
+                    img.Style["left"] = e.X + "px";
+                    img.Style["top"] = e.Y + "px";
+                    img.ID = "img" + e.Name;
+                    img.OnClientClick += EventDispatcher(e);
 
-            //        pnlProva.Controls.Add(img);
-            //    }
+                    pnlImages.Controls.Add(img);
+                }
 
-            if (s.Items != null)
+            if(s.Items != null)
                 foreach(Item i in s.Items)
                 {
                     ImageButton img = new ImageButton();
@@ -133,13 +118,12 @@ namespace ProgettoPCTO
                     img.Style["left"] = i.X + "px";
                     img.Style["top"] = i.Y + "px";
                     img.ID = "img" + i.Name;
-                    pnlProva.Controls.Add(img);
+                    pnlImages.Controls.Add(img);
                 }
         }
 
         protected ImageClickEventHandler EventDispatcher(Entity e)
         {
-            // Gets the name of the entity and assign 
             switch (e.Name.ToLower())
             {
                 case "steve":
@@ -148,11 +132,6 @@ namespace ProgettoPCTO
                 default:
                     return null;
             }
-        }
-
-        private void wiufgwfuwe(string mannaggia)
-        {
-            string accidenti = "accidenti";
         }
 
         #region Entities events
@@ -168,7 +147,7 @@ namespace ProgettoPCTO
                 }
             }
             
-            lstStory.Items.Add(c.Dialogue[_currentAreaID]);
+            //lstStory.Items.Add(c.Dialogue[_currentAreaID]);
         }
 
         protected void btnCreeper_Click(object sender, EventArgs e)

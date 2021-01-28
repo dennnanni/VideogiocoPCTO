@@ -19,12 +19,6 @@ body {
     left:10px;
 }
 
-#pnlProva {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-}
-
 #lstStory {
     position:absolute;
     top:10px;
@@ -59,4 +53,10 @@ body {
     position: absolute;
     top: 60px;
     left: 0px;
+}
+
+#drpActions {
+    position: absolute;
+    top: 460px;
+    left: 870px;
 }

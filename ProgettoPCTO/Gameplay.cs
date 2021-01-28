@@ -78,7 +78,7 @@ namespace ProgettoPCTO
             _situations["area1"] = new Situation(URL: @"~\Img\Areas\area1.png")
             {
                 Name = "ingresso",
-                Description = "Benvenuto, da qui inizia la tua avventura. \nClicca su Steve per sapere come giocare.",
+                Description = "Benvenuto, da qui inizia la tua avventura.\nClicca su Steve per sapere come giocare.",
                 Areas = new string[]
                 {
                     "area2",
