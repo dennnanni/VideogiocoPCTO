@@ -51,15 +51,6 @@ namespace ProgettoPCTO
         protected global::System.Web.UI.WebControls.Panel pnlImages;
 
         /// <summary>
-        /// Controllo lblStory.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblStory;
-
-        /// <summary>
         /// Controllo pnlCardinals.
         /// </summary>
         /// <remarks>

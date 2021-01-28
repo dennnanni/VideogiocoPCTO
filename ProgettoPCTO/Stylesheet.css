@@ -19,10 +19,11 @@ body {
     left:10px;
 }
 
-#lstStory {
+#txtStory {
     position:absolute;
     top:10px;
     left:870px;
+    resize:none;
 }
 
 #pnlCardinals {

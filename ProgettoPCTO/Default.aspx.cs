@@ -65,11 +65,8 @@ namespace ProgettoPCTO
             Situation s = _game[name];
             pnlImages.Controls.Clear();
             pnlImages.BackImageUrl = s.ImageURL; // Load background
-            //lstStory.Items.Clear();
-            //lstStory.Items.Add("Hai raggiunto " + s.Name);
-            //lstStory.Items.Add(s.Description);
-            lblStory.Text += "Hai raggiunto " + s.Name + "\n";
-            lblStory.Text += s.Description;
+            txtStory.Text += "Hai raggiunto " + s.Name + "\n";
+            txtStory.Text += s.Description;
             _currentAreaID = name; // Sets the global variable
             // Enables and unables direction buttons
             for (int i = 0; i < 4; i++)
@@ -94,7 +91,7 @@ namespace ProgettoPCTO
             if(s.Entities != null)
                 foreach (Character e in s.Entities)
                 {
-                    ImageButton img = new ImageButton();
+                    Image img = new Image();
                     img.ImageUrl = e.ImageURL;
                     img.Style["position"] = "absolute";
                     img.Style["width"] = e.Width + "px";
@@ -102,7 +99,6 @@ namespace ProgettoPCTO
                     img.Style["left"] = e.X + "px";
                     img.Style["top"] = e.Y + "px";
                     img.ID = "img" + e.Name;
-                    img.OnClientClick += EventDispatcher(e);
 
                     pnlImages.Controls.Add(img);
                 }
