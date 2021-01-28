@@ -84,7 +84,6 @@ namespace ProgettoPCTO
             lstStory.Items.Add("Hai raggiunto " + s.Name);
             lstStory.Items.Add(s.Description);
             _currentAreaID = name; // Sets the global variable
-
             // Enables and unables direction buttons
             for (int i = 0; i < 4; i++)
             {
@@ -151,9 +150,9 @@ namespace ProgettoPCTO
             }
         }
 
-        protected void btnPrint_Click(object sender, EventArgs e)
+        private void wiufgwfuwe(string mannaggia)
         {
-            lstStory.Items.Add("funziona"); // Spoiler: no
+            string accidenti = "accidenti";
         }
 
         #region Entities events
