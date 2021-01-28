@@ -23,8 +23,9 @@
                     <asp:Button ID="btnSouth" runat="server" Width="100" Height="50" Text="South" OnClick="btnCardinal_Click"/>
                     <asp:Button ID="btnWest" runat="server" Width="100" Height="50" Text="West" OnClick="btnCardinal_Click"/>
                 </asp:Panel>
-                <asp:TextBox ID="txtStory" runat="server" TextMode="MultiLine" Width="420" Height="430"></asp:TextBox>
-                <asp:DropDownList ID="drpActions" runat="server" Width="420" Height="50"/>
+                <asp:TextBox ID="txtStory" runat="server" TextMode="MultiLine" Width="420" Height="430" ReadOnly="True"></asp:TextBox>
+                <asp:DropDownList ID="drpActions" runat="server" Width="330" Height="50"/>
+                <asp:Button ID="btnDo" runat="server" Text="Agisci" Height="52" Width="92"/> 
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
