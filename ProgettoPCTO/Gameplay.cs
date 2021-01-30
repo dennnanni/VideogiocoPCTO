@@ -139,7 +139,7 @@ namespace ProgettoPCTO
                         Height = 90,
                         Dialogue = new Dictionary<string, string>()
                         {
-                            {"area2", "Hai raccolto la spada." }
+                            {"area2", "Hai aggiunto Spada al tuo inventario!\n" }
                         },
 
                     }

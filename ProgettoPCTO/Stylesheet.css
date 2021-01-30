@@ -67,3 +67,15 @@ body {
     top: 459px;
     left: 1205px;
 }
+
+#lstInventory {
+    position: absolute;
+    top: 520px;
+    left: 240px;
+}
+
+#btnDrop {
+    position: absolute;
+    top: 660px;
+    left: 240px;
+}

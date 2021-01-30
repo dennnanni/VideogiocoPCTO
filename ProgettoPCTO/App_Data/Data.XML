@@ -78,7 +78,8 @@ Clicca su Steve per sapere come giocare.
           <d3p1:Dialogue>
             <KeyValueOfstringstring>
               <Key>area2</Key>
-              <Value>Hai raccolto la spada.</Value>
+              <Value>Hai aggiunto Spada al tuo inventario!
+</Value>
             </KeyValueOfstringstring>
           </d3p1:Dialogue>
           <d3p1:Height>90</d3p1:Height>
@@ -89,7 +90,7 @@ Clicca su Steve per sapere come giocare.
           <d3p1:Width>100</d3p1:Width>
           <d3p1:X>340</d3p1:X>
           <d3p1:Y>230</d3p1:Y>
-          <d3p1:IsCollectable>false</d3p1:IsCollectable>
+          <d3p1:IsCollectable>true</d3p1:IsCollectable>
           <d3p1:Powers i:nil="true" />
         </d3p1:Item>
       </d3p1:Items>

@@ -65,5 +65,7 @@ namespace ProgettoPCTO
 
         [DataMember]
         public List<string> Actions { get; set; }
+
+
     }
 }

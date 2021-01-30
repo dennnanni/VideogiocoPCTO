@@ -14,7 +14,7 @@ namespace ProgettoPCTO
         private Gameplay _game = null;
         private string _currentAreaID = "area0";
         private Situation _currentSituation;
-        private Player _player = null;
+        private Player _player = new Player(null);
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,7 +26,7 @@ namespace ProgettoPCTO
 
                 // Creates the gameplay and loads the first situation
                 _game = XMLHandler.Read(Server);
-                Session["player"] = new Player(null);
+                Session["player"] = _player;
                 Session["game"] = _game;
                 Session["currentArea"] = "area1";
                 _currentSituation = _game["area1"];
@@ -37,6 +37,7 @@ namespace ProgettoPCTO
                 // Restores last changes 
                 _currentAreaID = Session["currentArea"].ToString();
                 _game = (Gameplay)Session["game"];
+                _player = (Player)Session["player"];
                 _currentSituation = _game[_currentAreaID];
                 this.LoadSituation(_currentAreaID);
 
@@ -83,6 +84,7 @@ namespace ProgettoPCTO
                 _currentAreaID = name;
             }
 
+            drpActions.Items.Clear();
             // Fill the drop down list with actions in the situation, if there are
             if(s.Actions != null)
                 foreach (string st in s.Actions)
@@ -176,7 +178,7 @@ namespace ProgettoPCTO
                 try
                 {
                     _player.Collect(item);
-                    txtStory.Text += "Hai aggiunto " + item.Name + " al tuo inventario!\n";
+                    _game[_currentAreaID].Items.Remove(item);
                 }
                 catch (Exception ex)
                 {
@@ -186,6 +188,10 @@ namespace ProgettoPCTO
                 }
 
                 // TODO: add item to the graphic inventory
+                lstInventory.Items.Add(item.Name);
+
+                // Remove the item from
+                pnlImages.Controls.Remove(pnlImages.FindControl("img" + item.Name));
             }
 
             // Shows the dialogue and remove the action from the situation and the drp
@@ -194,7 +200,7 @@ namespace ProgettoPCTO
 
             // I don't know why only one instruction does not work
             drpActions.Items.RemoveAt(drpActions.SelectedIndex);
-            drpActions.Items.RemoveAt(drpActions.SelectedIndex);
+            //drpActions.Items.RemoveAt(drpActions.SelectedIndex);
 
         }
     }

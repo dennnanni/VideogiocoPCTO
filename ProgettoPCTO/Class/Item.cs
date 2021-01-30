@@ -17,7 +17,7 @@ namespace ProgettoPCTO
         }
 
         [DataMember]
-        public bool IsCollectable { get; set; }
+        public bool IsCollectable { get; set; } = true;
 
         [DataMember]
         public Power Powers
