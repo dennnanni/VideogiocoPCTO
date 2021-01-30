@@ -13,7 +13,8 @@
         <string i:nil="true" />
       </d3p1:Areas>
       <d3p1:Description>Benvenuto, da qui inizia la tua avventura.
-Clicca su Steve per sapere come giocare.</d3p1:Description>
+Clicca su Steve per sapere come giocare.
+</d3p1:Description>
       <d3p1:Entities>
         <d3p1:Character>
           <d3p1:Description>Hai incontrato Steve, clicca su di lui per scoprire cosa vuole dirti.</d3p1:Description>
@@ -21,6 +22,7 @@ Clicca su Steve per sapere come giocare.</d3p1:Description>
           <d3p1:ImageURL>~\Img\Characters\steve.png</d3p1:ImageURL>
           <d3p1:Inventory i:nil="true" />
           <d3p1:Name>Steve</d3p1:Name>
+          <d3p1:Visible>false</d3p1:Visible>
           <d3p1:Width>110</d3p1:Width>
           <d3p1:X>300</d3p1:X>
           <d3p1:Y>190</d3p1:Y>
@@ -29,7 +31,8 @@ Clicca su Steve per sapere come giocare.</d3p1:Description>
               <Key>area1</Key>
               <Value>Io sono Steve e sarò la tua guida per le prime parti di questa avventura. Adesso ti spiegherò come utilizzare l'interfaccia:
 - puoi muoverti nel gioco con i pulsanti in basso a sinistra in cui sono indicati i nomi degli ambienti che puoi raggiungere. Alcuni passaggi saranno chiusi e ti serviranno degli oggetti per poterli aprire.
-- Potrai trovare oggetti nella tua strada, alcuni ti permetteranno di aprire passaggi e altri ti proteggeranno. Un oggetto può essere messo nell'inventario cliccandoci sopra, se questo non è già pieno; se dovesse esserlo, potrai scegliere un oggetto da lasciare. Alcuni oggetti scompaiono se lasciati, quindi fai attenzione!- Incontrerai delle entità nel tuo cammino, alcune amiche, altre nemiche, scoprirai cosa vogliono da te.</Value>
+- Potrai trovare oggetti nella tua strada, alcuni ti permetteranno di aprire passaggi e altri ti proteggeranno. Un oggetto può essere messo nell'inventario cliccandoci sopra, se questo non è già pieno; se dovesse esserlo, potrai scegliere un oggetto da lasciare. Alcuni oggetti scompaiono se lasciati, quindi fai attenzione!
+- Incontrerai delle entità nel tuo cammino, alcune amiche, altre nemiche, scoprirai cosa vogliono da te.</Value>
             </KeyValueOfstringstring>
           </d3p1:Dialogue>
           <d3p1:Health>0</d3p1:Health>
@@ -58,6 +61,7 @@ Clicca su Steve per sapere come giocare.</d3p1:Description>
           <d3p1:ImageURL>~\Img\Characters\creeper.png</d3p1:ImageURL>
           <d3p1:Inventory i:nil="true" />
           <d3p1:Name>mob</d3p1:Name>
+          <d3p1:Visible>false</d3p1:Visible>
           <d3p1:Width>100</d3p1:Width>
           <d3p1:X>150</d3p1:X>
           <d3p1:Y>100</d3p1:Y>

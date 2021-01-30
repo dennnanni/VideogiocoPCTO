@@ -13,6 +13,11 @@ namespace ProgettoPCTO
     [KnownType(typeof(Character))]
     public class Character : Entity
     {
+        public Character() : base(null)
+        {
+
+        }
+
         public Character(string URL) : base(URL)
         {
 

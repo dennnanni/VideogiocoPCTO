@@ -25,7 +25,7 @@
                 </asp:Panel>
                 <asp:TextBox ID="txtStory" runat="server" TextMode="MultiLine" Width="420" Height="430" ReadOnly="True"></asp:TextBox>
                 <asp:DropDownList ID="drpActions" runat="server" Width="330" Height="50"/>
-                <asp:Button ID="btnDo" runat="server" Text="Agisci" Height="52" Width="92"/> 
+                <asp:Button ID="btnDo" runat="server" Text="Agisci" Height="52" Width="92" OnClick="btnDo_Click"/> 
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>

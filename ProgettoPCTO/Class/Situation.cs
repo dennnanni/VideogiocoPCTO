@@ -64,6 +64,6 @@ namespace ProgettoPCTO
         }
 
         [DataMember]
-        public string[] Actions { get; set; }
+        public List<string> Actions { get; set; }
     }
 }

@@ -78,8 +78,8 @@ namespace ProgettoPCTO
             _situations["area1"] = new Situation(URL: @"~\Img\Areas\area1.png")
             {
                 Name = "ingresso",
-                Description = "Benvenuto, da qui inizia la tua avventura.\nClicca su Steve per sapere come giocare.",
-                Actions = new string[] { "Parla con Steve" },
+                Description = "Benvenuto, da qui inizia la tua avventura.\nClicca su Steve per sapere come giocare.\n",
+                Actions = new List<string> { "Parla con Steve" },
                 Areas = new string[]
                 {
                     "area2",
@@ -106,7 +106,7 @@ namespace ProgettoPCTO
                             "degli ambienti che puoi raggiungere. Alcuni passaggi saranno chiusi e ti serviranno degli oggetti per poterli aprire.\n"+
                             "- Potrai trovare oggetti nella tua strada, alcuni ti permetteranno di aprire passaggi e altri ti proteggeranno. Un oggetto "+
                             "può essere messo nell'inventario cliccandoci sopra, se questo non è già pieno; se dovesse esserlo, potrai scegliere " +
-                            "un oggetto da lasciare. Alcuni oggetti scompaiono se lasciati, quindi fai attenzione!"+
+                            "un oggetto da lasciare. Alcuni oggetti scompaiono se lasciati, quindi fai attenzione!\n"+
                             "- Incontrerai delle entità nel tuo cammino, alcune amiche, altre nemiche, scoprirai cosa vogliono da te."},
                         }
                     }

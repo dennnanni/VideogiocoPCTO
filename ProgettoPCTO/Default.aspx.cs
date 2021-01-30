@@ -12,7 +12,7 @@ namespace ProgettoPCTO
     public partial class Default : System.Web.UI.Page
     {
         private Gameplay _game = null;
-        private string _currentAreaID = "area1";
+        private string _currentAreaID = "area1", _previousAreaID = "area0";
         private Situation _currentSituation;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -26,6 +26,7 @@ namespace ProgettoPCTO
                 _game = XMLHandler.Read(Server);
                 Session["game"] = _game;
                 Session["currentArea"] = _currentAreaID;
+                Session["previousArea"] = _previousAreaID;
                 _currentSituation = _game[_currentAreaID];
                 this.LoadSituation(_currentAreaID);
             }
@@ -33,6 +34,7 @@ namespace ProgettoPCTO
             {
                 // Restores last changes 
                 _currentAreaID = Session["currentArea"].ToString();
+                _previousAreaID = Session["previousArea"].ToString();
                 _game = (Gameplay)Session["game"];
                 _currentSituation = _game[_currentAreaID];
                 this.LoadSituation(_currentAreaID);
@@ -53,10 +55,11 @@ namespace ProgettoPCTO
                     exit = true;
                 }
 
-
+            txtStory.Text = "";
             this.LoadSituation(_currentSituation.Areas[index]);
 
             Session["currentArea"] = _currentAreaID;
+            Session["previousArea"] = _previousAreaID;
             Session["gameplay"] = _game;
         }
 
@@ -65,14 +68,25 @@ namespace ProgettoPCTO
             Situation s = _game[name];
             pnlImages.Controls.Clear();
             pnlImages.BackImageUrl = s.ImageURL; // Load background
-            txtStory.Text += "Hai raggiunto " + s.Name + "\n";
-            txtStory.Text += s.Description;
-            _currentAreaID = name; // Sets the global variable
 
-            foreach(string st in s.Actions)
+
+            // If the situation is changed
+            if (_currentAreaID != s.Name)
             {
-                drpActions.Items.Add(st);
+                txtStory.Text += "Hai raggiunto " + s.Name + "\n";
+                txtStory.Text += s.Description;
+
+                _previousAreaID = _currentAreaID;
+                _currentAreaID = name;
             }
+
+            // Fill the drop down list with actions in the situation, if there are
+            if(s.Actions != null)
+                foreach (string st in s.Actions)
+                {
+                    drpActions.Items.Add(st);
+                }
+
 
             // Enables and unables direction buttons
             for (int i = 0; i < 4; i++)
@@ -112,7 +126,7 @@ namespace ProgettoPCTO
             if(s.Items != null)
                 foreach(Item i in s.Items)
                 {
-                    ImageButton img = new ImageButton();
+                    Image img = new Image();
                     img.ImageUrl = i.ImageURL;
                     img.Style["position"] = "absolute";
                     img.Style["width"] = i.Width + "px";
@@ -122,44 +136,42 @@ namespace ProgettoPCTO
                     img.ID = "img" + i.Name;
                     pnlImages.Controls.Add(img);
                 }
+
+            // Save the parameters
+            Session["currentArea"] = _currentAreaID;
+            Session["previousArea"] = _previousAreaID;
+            Session["gameplay"] = _game;
         }
 
-        protected ImageClickEventHandler EventDispatcher(Entity e)
+        protected void btnDo_Click(object sender, EventArgs e)
         {
-            switch (e.Name.ToLower())
-            {
-                case "steve":
-                    return btnSteve_Click;
+            string actionText = drpActions.SelectedValue;
 
-                default:
-                    return null;
-            }
-        }
+            // If nothing is selected, the method does nothing
+            if (actionText == "")
+                return;
 
-        #region Entities events
-        protected void btnSteve_Click(object sender, EventArgs e)
-        {
-            Character c = null;
-            for(int i = 0; i < _currentSituation.Entities.Count; i++)
-            {
-                if(_currentSituation.Entities[i].Name == "Steve")
+            Character character = new Character();
+
+            // Finds the entity that fits the action (it is possible to have only one entity of the 
+            // same type in a situation so there's no problem of ambiguity)
+            foreach(Character c in _currentSituation.Entities)
+                if(actionText.ToLower().Contains(c.Name.ToLower()))
                 {
-                    c = _currentSituation.Entities[i];
-                    i = _currentSituation.Entities.Count;
+                    character = c;
+                    break;
                 }
-            }
-            
-            //lstStory.Items.Add(c.Dialogue[_currentAreaID]);
+
+            // Shows the dialogue and remove the action from the situation and the drp
+            txtStory.Text += character.Dialogue[_currentAreaID];
+            _game[_currentAreaID].Actions.Remove(actionText);
+
+            // I don't know why only one instruction does not work
+            drpActions.Items.RemoveAt(drpActions.SelectedIndex);
+            drpActions.Items.RemoveAt(drpActions.SelectedIndex);
+
+            if (_game[_currentAreaID].Actions.Count == 0)
+                btnDo.Enabled = false;
         }
-
-        protected void btnCreeper_Click(object sender, EventArgs e)
-        {
-
-        }
-        #endregion
-
-        #region Items events
-
-        #endregion
     }
 }

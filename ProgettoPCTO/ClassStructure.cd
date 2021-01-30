@@ -16,7 +16,7 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>Class\Item.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -50,7 +50,7 @@
   <Class Name="ProgettoPCTO.Situation">
     <Position X="8.25" Y="0.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgCAAIBAAAAAQAAACAAAAAAAEAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAIAAgCAAIDAAAAAQAAACAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Class\Situation.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -66,8 +66,8 @@
     <Position X="3" Y="0.5" Width="2.25" />
     <AssociationLine Name="Inventory" Type="ProgettoPCTO.Item" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="3" Y="1.375" />
-        <Point X="1.833" Y="1.375" />
+        <Point X="3" Y="1.437" />
+        <Point X="1.833" Y="1.437" />
         <Point X="1.833" Y="2.25" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
@@ -75,7 +75,7 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAABAAgAAAABAAAAEQAAAAAAAAAAAAAAgAAYAA=</HashCode>
+      <HashCode>AAAAAAAABAAgAAAABAAAAEQAAAAAAAAIAAAAAgAAYAA=</HashCode>
       <FileName>Class\Entity.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>

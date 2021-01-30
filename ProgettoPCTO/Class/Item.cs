@@ -16,15 +16,6 @@ namespace ProgettoPCTO
         }
 
         [DataMember]
-        public bool Visible
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
-        [DataMember]
         public Power Powers
         {
             get => default;

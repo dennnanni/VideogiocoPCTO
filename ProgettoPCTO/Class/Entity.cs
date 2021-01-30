@@ -19,18 +19,10 @@ namespace ProgettoPCTO
         }
 
         [DataMember]
-        public int X
-        {
-            get; 
-            set;
-        }
+        public int X { get; set; }
 
         [DataMember]
-        public int Y
-        {
-            get;
-            set;
-        }
+        public int Y { get; set; }
 
         [DataMember]
         public string ImageURL { get; private set; }
@@ -42,28 +34,15 @@ namespace ProgettoPCTO
         public string Name { get; set; }
 
         [DataMember]
-        public int Width
-        {
-            get;
-            set;
-        }
+        public int Width { get; set; }
 
         [DataMember]
-        public int Height
-        {
-            get;
-            set;
-        }
+        public int Height { get; set; }
 
         [DataMember]
-        public Item Inventory
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public Item Inventory { get; set; }
 
-        
+        [DataMember]
+        public bool Visible { get; set; }
     }
 }
