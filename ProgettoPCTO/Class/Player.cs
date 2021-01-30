@@ -13,42 +13,35 @@ namespace ProgettoPCTO
     {
         public Player(string URL) : base(URL)
         {
+
         }
 
         [DataMember]
-        public int Armor
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int Armor { get; set; }
 
         [DataMember]
-        public int Experience
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int Experience { get; set; }
 
         [DataMember]
-        public int Strength
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int Strength { get; set; }
 
         [DataMember]
-        public Power Powers
+        public Power Powers { get; set; }
+
+        public void Collect(Item item)
         {
-            get => default;
-            set
-            {
-            }
+            if (Inventory.Count == 4)
+                throw new Exception("L'inventario è pieno! Lascia un oggetto per poter raccogliere " + item.Name + "\n");
+
+            Inventory.Add(item);
+        }
+
+        public void Drop(Item item)
+        {
+            if (Inventory.Count == 0)
+                throw new Exception("L'inventario è vuoto, non puoi lasciare niente!\n");
+
+            Inventory.Remove(item);
         }
     }
 }

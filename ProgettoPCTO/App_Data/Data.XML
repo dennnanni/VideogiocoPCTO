@@ -29,13 +29,8 @@ Clicca su Steve per sapere come giocare.
           </d3p1:Dialogue>
           <d3p1:Height>230</d3p1:Height>
           <d3p1:ImageURL>~\Img\Characters\steve.png</d3p1:ImageURL>
-          <d3p1:Inventory>
-            <d3p1:Item i:nil="true" />
-            <d3p1:Item i:nil="true" />
-            <d3p1:Item i:nil="true" />
-            <d3p1:Item i:nil="true" />
-          </d3p1:Inventory>
-          <d3p1:IsVisible>false</d3p1:IsVisible>
+          <d3p1:Inventory />
+          <d3p1:IsVisible>true</d3p1:IsVisible>
           <d3p1:Name>Steve</d3p1:Name>
           <d3p1:Width>110</d3p1:Width>
           <d3p1:X>300</d3p1:X>
@@ -67,13 +62,8 @@ Clicca su Steve per sapere come giocare.
           <d3p1:Dialogue />
           <d3p1:Height>90</d3p1:Height>
           <d3p1:ImageURL>~\Img\Characters\creeper.png</d3p1:ImageURL>
-          <d3p1:Inventory>
-            <d3p1:Item i:nil="true" />
-            <d3p1:Item i:nil="true" />
-            <d3p1:Item i:nil="true" />
-            <d3p1:Item i:nil="true" />
-          </d3p1:Inventory>
-          <d3p1:IsVisible>false</d3p1:IsVisible>
+          <d3p1:Inventory />
+          <d3p1:IsVisible>true</d3p1:IsVisible>
           <d3p1:Name>mob</d3p1:Name>
           <d3p1:Width>100</d3p1:Width>
           <d3p1:X>150</d3p1:X>
@@ -94,7 +84,7 @@ Clicca su Steve per sapere come giocare.
           <d3p1:Height>90</d3p1:Height>
           <d3p1:ImageURL>~\Img\Items\sword.png</d3p1:ImageURL>
           <d3p1:Inventory i:nil="true" />
-          <d3p1:IsVisible>false</d3p1:IsVisible>
+          <d3p1:IsVisible>true</d3p1:IsVisible>
           <d3p1:Name>Spada</d3p1:Name>
           <d3p1:Width>100</d3p1:Width>
           <d3p1:X>340</d3p1:X>

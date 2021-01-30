@@ -14,6 +14,7 @@ namespace ProgettoPCTO
         private Gameplay _game = null;
         private string _currentAreaID = "area0";
         private Situation _currentSituation;
+        private Player _player = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,6 +26,7 @@ namespace ProgettoPCTO
 
                 // Creates the gameplay and loads the first situation
                 _game = XMLHandler.Read(Server);
+                Session["player"] = new Player(null);
                 Session["game"] = _game;
                 Session["currentArea"] = "area1";
                 _currentSituation = _game["area1"];
@@ -112,37 +114,27 @@ namespace ProgettoPCTO
             if(s.Entities != null)
                 foreach (Character e in s.Entities)
                 {
-                    Image img = new Image();
-                    img.ImageUrl = e.ImageURL;
-                    img.Style["position"] = "absolute";
-                    img.Style["width"] = e.Width + "px";
-                    img.Style["height"] = e.Height + "px";
-                    img.Style["left"] = e.X + "px";
-                    img.Style["top"] = e.Y + "px";
-                    img.ID = "img" + e.Name;
-
-                    pnlImages.Controls.Add(img);
+                    if (e.IsVisible)
+                    {
+                        pnlImages.Controls.Add(_game.SetEntityImage(e));
+                    }
                 }
 
             // Loads all items in the situation
             if(s.Items != null)
                 foreach(Item i in s.Items)
                 {
-                    Image img = new Image();
-                    img.ImageUrl = i.ImageURL;
-                    img.Style["position"] = "absolute";
-                    img.Style["width"] = i.Width + "px";
-                    img.Style["height"] = i.Height + "px";
-                    img.Style["left"] = i.X + "px";
-                    img.Style["top"] = i.Y + "px";
-                    img.ID = "img" + i.Name;
-                    pnlImages.Controls.Add(img);
+                    if (i.IsVisible)
+                    {
+                        pnlImages.Controls.Add(_game.SetEntityImage(i));
+                    }
                 }
 
             // Save the parameters
             Session["currentArea"] = _currentAreaID;
             Session["gameplay"] = _game;
         }
+         
 
         protected void btnDo_Click(object sender, EventArgs e)
         {
@@ -172,6 +164,29 @@ namespace ProgettoPCTO
                         entity = i;
                         break;
                     }
+
+            if(entity.GetType() == typeof(Item) && (entity as Item).IsCollectable)
+            {
+                // TODO: add item to the inventory
+                Item item = entity as Item;
+                item.IsVisible = false;
+                item.IsCollectable = false;
+
+                // Try to add item to the inventory
+                try
+                {
+                    _player.Collect(item);
+                    txtStory.Text += "Hai aggiunto " + item.Name + " al tuo inventario!\n";
+                }
+                catch (Exception ex)
+                {
+                    // If an exception is generated, inventory is full and next instructions must not be done
+                    txtStory.Text += ex.Message;
+                    return;
+                }
+
+                // TODO: add item to the graphic inventory
+            }
 
             // Shows the dialogue and remove the action from the situation and the drp
             txtStory.Text += entity.Dialogue[_currentAreaID];

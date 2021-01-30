@@ -6,6 +6,8 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections;
 
+using System.Web.UI.WebControls;
+
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
@@ -13,7 +15,7 @@ namespace ProgettoPCTO
 {
     [DataContract]
     
-    public class Gameplay: IEnumerable<Situation>
+    public class Gameplay
     {
 
         private Dictionary<string, Situation> _situations = new Dictionary<string, Situation>();
@@ -21,7 +23,6 @@ namespace ProgettoPCTO
         public Gameplay()
         {
             this.Initialize();
-            //throw new System.NotImplementedException();
         }
         
         public int Count
@@ -62,15 +63,6 @@ namespace ProgettoPCTO
             }
         }
 
-        public IEnumerator<Situation> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
 
         // Cè bisogno di un config file, così fa discretamente schifo, per ora però può rimanere così
         public void Initialize()
@@ -160,6 +152,19 @@ namespace ProgettoPCTO
                 Name = "acqua",
                 Areas = new string[] { null, null, null, "area1" }
             };
+        }
+
+        public Image SetEntityImage(Entity e)
+        {
+            Image img = new Image();
+            img.ImageUrl = e.ImageURL;
+            img.Style["position"] = "absolute";
+            img.Style["width"] = e.Width + "px";
+            img.Style["height"] = e.Height + "px";
+            img.Style["left"] = e.X + "px";
+            img.Style["top"] = e.Y + "px";
+            img.ID = "img" + e.Name;
+            return img;
         }
     }
 }
