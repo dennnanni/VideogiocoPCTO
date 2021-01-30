@@ -76,6 +76,7 @@
     <Content Include="Img\Areas\area3.png" />
     <Content Include="Img\Characters\creeper.png" />
     <Content Include="Img\Characters\steve.png" />
+    <Content Include="Img\Items\sword.png" />
     <Content Include="Stylesheet.css" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -112,7 +113,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Img\Items\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>

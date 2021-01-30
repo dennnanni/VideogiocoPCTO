@@ -117,6 +117,10 @@ namespace ProgettoPCTO
             {
                 Name = "interno del labirinto",
                 Areas = new string[] { null, null, "area1", null },
+                Actions = new List<string>()
+                {
+                    "Raccogli la spada",
+                },
 
                 Entities = new List<Character>()
                 {
@@ -130,6 +134,24 @@ namespace ProgettoPCTO
 
                     }
                 },
+
+                Items = new List<Item>()
+                {
+                    new Item(URL: @"~\Img\Items\sword.png")
+                    {
+                        Name = "Spada",
+                        Description = "Qui c'è una spada. Usala per uccidere i tuoi nemici.",
+                        X = 340,
+                        Y = 230,
+                        Width = 100,
+                        Height = 90,
+                        Dialogue = new Dictionary<string, string>()
+                        {
+                            {"area2", "Hai raccolto la spada." }
+                        },
+
+                    }
+                }
 
             };
 

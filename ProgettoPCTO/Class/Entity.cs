@@ -3,6 +3,7 @@ using System.Web;
 using System.Web.Services;
 using System.Web.Services.Protocols;
 using System.ComponentModel;
+using System.Collections.Generic;
 
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
@@ -40,9 +41,15 @@ namespace ProgettoPCTO
         public int Height { get; set; }
 
         [DataMember]
-        public Item Inventory { get; set; }
+        public Item[] Inventory { get; set; }
 
         [DataMember]
-        public bool Visible { get; set; }
+        public bool IsVisible { get; set; }
+
+        /// <summary>
+        /// Match of a dialogue with a situation, the key is the situation, the value is the dialogue
+        /// </summary>
+        [DataMember]
+        public Dictionary<string, string> Dialogue { get; set; } = new Dictionary<string, string>();
     }
 }

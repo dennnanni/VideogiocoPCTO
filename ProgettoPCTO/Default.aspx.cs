@@ -12,7 +12,7 @@ namespace ProgettoPCTO
     public partial class Default : System.Web.UI.Page
     {
         private Gameplay _game = null;
-        private string _currentAreaID = "area1"; //_previousAreaID = "area0";
+        private string _currentAreaID = "area0";
         private Situation _currentSituation;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -22,19 +22,18 @@ namespace ProgettoPCTO
                 // Da togliere, necessario per fase debug
                 Gameplay game = new Gameplay();
                 XMLHandler.Write(game, Server);
+
                 // Creates the gameplay and loads the first situation
                 _game = XMLHandler.Read(Server);
                 Session["game"] = _game;
-                Session["currentArea"] = _currentAreaID;
-                //Session["previousArea"] = _previousAreaID;
-                _currentSituation = _game[_currentAreaID];
-                this.LoadSituation(_currentAreaID);
+                Session["currentArea"] = "area1";
+                _currentSituation = _game["area1"];
+                this.LoadSituation("area1");
             }
             else
             {
                 // Restores last changes 
                 _currentAreaID = Session["currentArea"].ToString();
-                //_previousAreaID = Session["previousArea"].ToString();
                 _game = (Gameplay)Session["game"];
                 _currentSituation = _game[_currentAreaID];
                 this.LoadSituation(_currentAreaID);
@@ -55,28 +54,30 @@ namespace ProgettoPCTO
                     exit = true;
                 }
 
+            // If a cardinal button has been pressed, the textbox must be empty
             txtStory.Text = "";
             this.LoadSituation(_currentSituation.Areas[index]);
 
             Session["currentArea"] = _currentAreaID;
-            //Session["previousArea"] = _previousAreaID;
             Session["gameplay"] = _game;
         }
 
         public void LoadSituation(string name) // Loading by name is much more easy to reuse code
         {
             Situation s = _game[name];
+
+            // Clears the images panel from all controls and sets the background
             pnlImages.Controls.Clear();
             pnlImages.BackImageUrl = s.ImageURL; // Load background
 
 
             // If the situation is changed
-            if (_currentAreaID != s.Name)
+            if (_currentAreaID != name)
             {
                 txtStory.Text += "Hai raggiunto " + s.Name + "\n";
                 txtStory.Text += s.Description;
 
-                //_previousAreaID = _currentAreaID;
+                // Update the current area ID
                 _currentAreaID = name;
             }
 
@@ -123,6 +124,7 @@ namespace ProgettoPCTO
                     pnlImages.Controls.Add(img);
                 }
 
+            // Loads all items in the situation
             if(s.Items != null)
                 foreach(Item i in s.Items)
                 {
@@ -139,7 +141,6 @@ namespace ProgettoPCTO
 
             // Save the parameters
             Session["currentArea"] = _currentAreaID;
-            //Session["previousArea"] = _previousAreaID;
             Session["gameplay"] = _game;
         }
 
@@ -147,31 +148,39 @@ namespace ProgettoPCTO
         {
             string actionText = drpActions.SelectedValue;
 
-            // If nothing is selected, the method does nothing
-            if (actionText == "")
+            // If nothing is selected or there are no entities to interact with, the method does nothing
+            if (actionText == "" || _currentSituation.Entities is null && _currentSituation.Items is null)
                 return;
 
-            Character character = new Character();
+            Entity entity = null;
 
-            // Finds the entity that fits the action (it is possible to have only one entity of the 
-            // same type in a situation so there's no problem of ambiguity)
-            foreach(Character c in _currentSituation.Entities)
-                if(actionText.ToLower().Contains(c.Name.ToLower()))
-                {
-                    character = c;
-                    break;
-                }
+            if(_currentSituation.Entities != null)
+                // Search for the character that fits the action (it is possible to have only one entity of the 
+                // same type in a situation so there's no problem of ambiguity)
+                foreach(Character c in _currentSituation.Entities)
+                    if(actionText.ToLower().Contains(c.Name.ToLower()))
+                    {
+                        entity = c;
+                        break;
+                    }
+
+            if(_currentSituation.Items != null)
+                // Search for the item that fits the action (same of above)
+                foreach(Item i in _currentSituation.Items)
+                    if (actionText.ToLower().Contains(i.Name.ToLower()))
+                    {
+                        entity = i;
+                        break;
+                    }
 
             // Shows the dialogue and remove the action from the situation and the drp
-            txtStory.Text += character.Dialogue[_currentAreaID];
+            txtStory.Text += entity.Dialogue[_currentAreaID];
             _game[_currentAreaID].Actions.Remove(actionText);
 
             // I don't know why only one instruction does not work
             drpActions.Items.RemoveAt(drpActions.SelectedIndex);
             drpActions.Items.RemoveAt(drpActions.SelectedIndex);
 
-            if (_game[_currentAreaID].Actions.Count == 0)
-                btnDo.Enabled = false;
         }
     }
 }

@@ -13,7 +13,11 @@ namespace ProgettoPCTO
     {
         public Item(string URL) : base(URL)
         {
+
         }
+
+        [DataMember]
+        public bool IsCollectable { get; set; }
 
         [DataMember]
         public Power Powers

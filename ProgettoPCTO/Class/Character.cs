@@ -13,21 +13,17 @@ namespace ProgettoPCTO
     [KnownType(typeof(Character))]
     public class Character : Entity
     {
-        public Character() : base(null)
+        public Character() : this(null)
         {
 
         }
 
         public Character(string URL) : base(URL)
         {
-
+            Inventory = new Item[4];
         }
 
-        /// <summary>
-        /// Match of a dialogue with a situation, the key is the situation, the value is the dialogue
-        /// </summary>
-        [DataMember]
-        public Dictionary<string, string> Dialogue { get; set; } = new Dictionary<string, string>();
+        
 
         [DataMember]
         public int Health { get; set; }

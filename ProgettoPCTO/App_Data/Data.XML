@@ -18,14 +18,6 @@ Clicca su Steve per sapere come giocare.
       <d3p1:Entities>
         <d3p1:Character>
           <d3p1:Description>Hai incontrato Steve, clicca su di lui per scoprire cosa vuole dirti.</d3p1:Description>
-          <d3p1:Height>230</d3p1:Height>
-          <d3p1:ImageURL>~\Img\Characters\steve.png</d3p1:ImageURL>
-          <d3p1:Inventory i:nil="true" />
-          <d3p1:Name>Steve</d3p1:Name>
-          <d3p1:Visible>false</d3p1:Visible>
-          <d3p1:Width>110</d3p1:Width>
-          <d3p1:X>300</d3p1:X>
-          <d3p1:Y>190</d3p1:Y>
           <d3p1:Dialogue>
             <KeyValueOfstringstring>
               <Key>area1</Key>
@@ -35,6 +27,19 @@ Clicca su Steve per sapere come giocare.
 - Incontrerai delle entità nel tuo cammino, alcune amiche, altre nemiche, scoprirai cosa vogliono da te.</Value>
             </KeyValueOfstringstring>
           </d3p1:Dialogue>
+          <d3p1:Height>230</d3p1:Height>
+          <d3p1:ImageURL>~\Img\Characters\steve.png</d3p1:ImageURL>
+          <d3p1:Inventory>
+            <d3p1:Item i:nil="true" />
+            <d3p1:Item i:nil="true" />
+            <d3p1:Item i:nil="true" />
+            <d3p1:Item i:nil="true" />
+          </d3p1:Inventory>
+          <d3p1:IsVisible>false</d3p1:IsVisible>
+          <d3p1:Name>Steve</d3p1:Name>
+          <d3p1:Width>110</d3p1:Width>
+          <d3p1:X>300</d3p1:X>
+          <d3p1:Y>190</d3p1:Y>
           <d3p1:Health>0</d3p1:Health>
         </d3p1:Character>
       </d3p1:Entities>
@@ -46,7 +51,9 @@ Clicca su Steve per sapere come giocare.
   <KeyValueOfstringSituationwOB_SG4KC>
     <Key>area2</Key>
     <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
-      <d3p1:Actions i:nil="true" />
+      <d3p1:Actions>
+        <string>Raccogli la spada</string>
+      </d3p1:Actions>
       <d3p1:Areas>
         <string i:nil="true" />
         <string i:nil="true" />
@@ -57,20 +64,45 @@ Clicca su Steve per sapere come giocare.
       <d3p1:Entities>
         <d3p1:Character>
           <d3p1:Description i:nil="true" />
+          <d3p1:Dialogue />
           <d3p1:Height>90</d3p1:Height>
           <d3p1:ImageURL>~\Img\Characters\creeper.png</d3p1:ImageURL>
-          <d3p1:Inventory i:nil="true" />
+          <d3p1:Inventory>
+            <d3p1:Item i:nil="true" />
+            <d3p1:Item i:nil="true" />
+            <d3p1:Item i:nil="true" />
+            <d3p1:Item i:nil="true" />
+          </d3p1:Inventory>
+          <d3p1:IsVisible>false</d3p1:IsVisible>
           <d3p1:Name>mob</d3p1:Name>
-          <d3p1:Visible>false</d3p1:Visible>
           <d3p1:Width>100</d3p1:Width>
           <d3p1:X>150</d3p1:X>
           <d3p1:Y>100</d3p1:Y>
-          <d3p1:Dialogue />
           <d3p1:Health>0</d3p1:Health>
         </d3p1:Character>
       </d3p1:Entities>
       <d3p1:ImageURL>~\Img\Areas\area2.png</d3p1:ImageURL>
-      <d3p1:Items i:nil="true" />
+      <d3p1:Items>
+        <d3p1:Item>
+          <d3p1:Description>Qui c'è una spada. Usala per uccidere i tuoi nemici.</d3p1:Description>
+          <d3p1:Dialogue>
+            <KeyValueOfstringstring>
+              <Key>area2</Key>
+              <Value>Hai raccolto la spada.</Value>
+            </KeyValueOfstringstring>
+          </d3p1:Dialogue>
+          <d3p1:Height>90</d3p1:Height>
+          <d3p1:ImageURL>~\Img\Items\sword.png</d3p1:ImageURL>
+          <d3p1:Inventory i:nil="true" />
+          <d3p1:IsVisible>false</d3p1:IsVisible>
+          <d3p1:Name>Spada</d3p1:Name>
+          <d3p1:Width>100</d3p1:Width>
+          <d3p1:X>340</d3p1:X>
+          <d3p1:Y>230</d3p1:Y>
+          <d3p1:IsCollectable>false</d3p1:IsCollectable>
+          <d3p1:Powers i:nil="true" />
+        </d3p1:Item>
+      </d3p1:Items>
       <d3p1:Name>interno del labirinto</d3p1:Name>
     </Value>
   </KeyValueOfstringSituationwOB_SG4KC>
