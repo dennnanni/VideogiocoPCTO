@@ -12,7 +12,7 @@ namespace ProgettoPCTO
     public partial class Default : System.Web.UI.Page
     {
         private Gameplay _game = null;
-        private string _currentAreaID = "area1", _previousAreaID = "area0";
+        private string _currentAreaID = "area1"; //_previousAreaID = "area0";
         private Situation _currentSituation;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -26,7 +26,7 @@ namespace ProgettoPCTO
                 _game = XMLHandler.Read(Server);
                 Session["game"] = _game;
                 Session["currentArea"] = _currentAreaID;
-                Session["previousArea"] = _previousAreaID;
+                //Session["previousArea"] = _previousAreaID;
                 _currentSituation = _game[_currentAreaID];
                 this.LoadSituation(_currentAreaID);
             }
@@ -34,7 +34,7 @@ namespace ProgettoPCTO
             {
                 // Restores last changes 
                 _currentAreaID = Session["currentArea"].ToString();
-                _previousAreaID = Session["previousArea"].ToString();
+                //_previousAreaID = Session["previousArea"].ToString();
                 _game = (Gameplay)Session["game"];
                 _currentSituation = _game[_currentAreaID];
                 this.LoadSituation(_currentAreaID);
@@ -59,7 +59,7 @@ namespace ProgettoPCTO
             this.LoadSituation(_currentSituation.Areas[index]);
 
             Session["currentArea"] = _currentAreaID;
-            Session["previousArea"] = _previousAreaID;
+            //Session["previousArea"] = _previousAreaID;
             Session["gameplay"] = _game;
         }
 
@@ -76,7 +76,7 @@ namespace ProgettoPCTO
                 txtStory.Text += "Hai raggiunto " + s.Name + "\n";
                 txtStory.Text += s.Description;
 
-                _previousAreaID = _currentAreaID;
+                //_previousAreaID = _currentAreaID;
                 _currentAreaID = name;
             }
 
@@ -139,7 +139,7 @@ namespace ProgettoPCTO
 
             // Save the parameters
             Session["currentArea"] = _currentAreaID;
-            Session["previousArea"] = _previousAreaID;
+            //Session["previousArea"] = _previousAreaID;
             Session["gameplay"] = _game;
         }
 
