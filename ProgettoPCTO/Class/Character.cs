@@ -20,9 +20,11 @@ namespace ProgettoPCTO
 
         public Character(string URL) : base(URL)
         {
-            Inventory = new List<Item>();
+        
         }
 
+        [DataMember]
+        public string EffectiveWeapon { get; set; }
        
         [DataMember]
         public int Health { get; set; }

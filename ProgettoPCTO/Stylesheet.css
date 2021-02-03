@@ -79,3 +79,22 @@ body {
     top: 660px;
     left: 240px;
 }
+
+#pnlStats {
+    position: absolute;
+    top: 520px;
+    left: 470px;
+}
+
+#lblExperience {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    
+}
+
+#lblHealth {
+    position: absolute;
+    top: 20px;
+    left: 0px;
+}

@@ -75,7 +75,7 @@ namespace ProgettoPCTO
                 Areas = new string[]
                 {
                     "area2",
-                    "area3",
+                    null,
                     null,
                     null
 
@@ -87,8 +87,8 @@ namespace ProgettoPCTO
                     {
                         Name = "Steve",
                         Description = "Hai incontrato Steve, clicca su di lui per scoprire cosa vuole dirti.",
-                        X = 300,
-                        Y = 190,
+                        X = 320,
+                        Y = 160,
                         Width = 110,
                         Height = 230,
                         Dialogue = new Dictionary<string, string>()
@@ -98,7 +98,7 @@ namespace ProgettoPCTO
                             "degli ambienti che puoi raggiungere. Alcuni passaggi saranno chiusi e ti serviranno degli oggetti per poterli aprire.\n"+
                             "- Potrai trovare oggetti nella tua strada, alcuni ti permetteranno di aprire passaggi e altri ti proteggeranno. Un oggetto "+
                             "può essere messo nell'inventario cliccandoci sopra, se questo non è già pieno; se dovesse esserlo, potrai scegliere " +
-                            "un oggetto da lasciare. Alcuni oggetti scompaiono se lasciati, quindi fai attenzione!\n"+
+                            "un oggetto da lasciare. Gli oggetti scompaiono se lasciati, quindi fai attenzione!\n"+
                             "- Incontrerai delle entità nel tuo cammino, alcune amiche, altre nemiche, scoprirai cosa vogliono da te."},
                         }
                     }
@@ -107,22 +107,29 @@ namespace ProgettoPCTO
 
             _situations["area2"] = new Situation(URL: @"~\Img\Areas\area2.png")
             {
-                Name = "interno del labirinto",
-                Areas = new string[] { null, null, "area1", null },
+                Name = "interno",
+                Areas = new string[] { "area3", null, "area1", null },
                 Actions = new List<string>()
                 {
-                    "Raccogli la spada",
+                    "Raccogli la spada", "Uccidi il creeper", 
                 },
 
                 Entities = new List<Character>()
                 {
                     new Character(URL: @"~\Img\Characters\creeper.png")
                     {
-                        Name = "mob",
+                        Name = "Creeper",
+                        Description = "Hai incontrato creeper! Uccidilo con la spada.",
                         X = 150,
                         Y = 100,
                         Width = 100,
                         Height = 90,
+                        Dialogue = new Dictionary<string, string>()
+                        {
+                            {"area2", "Hai ucciso il creeper!\n" }
+                        },
+                        EffectiveWeapon = "Spada",
+
 
                     }
                 },
@@ -149,8 +156,23 @@ namespace ProgettoPCTO
 
             _situations["area3"] = new Situation(URL: @"~\Img\Areas\area3.png")
             {
-                Name = "acqua",
-                Areas = new string[] { null, null, null, "area1" }
+                Name = "corridoio",
+                Description = "",
+                Areas = new string[] { "area4", null, "area2", null }
+            };
+
+            _situations["area4"] = new Situation(URL: @"~\Img\Areas\area4.png")
+            {
+                Name = "bivio",
+                Description = "Dove vuoi andare ora?",
+                Areas = new string[] { "area5", null, "area3", null }
+            };
+
+            _situations["area5"] = new Situation(URL: @"~\Img\Areas\area5.png")
+            {
+                Name = "vicolo cieco",
+                Description = "L'unica possibilità è tornare indietro...",
+                Areas = new string[] { null, null, "area4", null },
             };
         }
 

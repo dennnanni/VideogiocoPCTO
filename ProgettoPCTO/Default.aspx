@@ -27,7 +27,12 @@
                 <asp:DropDownList ID="drpActions" runat="server" Width="330" Height="50"/>
                 <asp:Button ID="btnDo" runat="server" Text="Agisci" Height="52" Width="92" OnClick="btnDo_Click"/> 
                 <asp:ListBox ID="lstInventory" runat="server" Width="210" Height="130" />
-                <asp:Button ID="btnDrop" runat="server" Text="Lascia" Height="30" Width="210"/>
+                <asp:Button ID="btnDrop" runat="server" Text="Lascia" Height="30" Width="210" OnClick="btnDrop_Click"/>
+                <asp:Panel ID="pnlStats" runat="server" Width="210" Height="130">
+                    <asp:Label ID="lblExperience" runat="server" Text="Esperienza: 0" Width="210" Height="10"></asp:Label>
+                    <asp:Label ID="lblHealth" runat="server" Text="Salute: 100" Width="210" Height="10"></asp:Label>
+                </asp:Panel>
+                
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>

@@ -15,6 +15,8 @@ namespace ProgettoPCTO
         private string _currentAreaID = "area0";
         private Situation _currentSituation;
         private Player _player = new Player(null);
+        private string[] _hostileEntitiesNames = { "creeper", "zombie", "scheletro" };
+        private string selectedAction = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -29,6 +31,7 @@ namespace ProgettoPCTO
                 Session["player"] = _player;
                 Session["game"] = _game;
                 Session["currentArea"] = "area1";
+                selectedAction = drpActions.SelectedValue;
                 _currentSituation = _game["area1"];
                 this.LoadSituation("area1");
             }
@@ -38,6 +41,7 @@ namespace ProgettoPCTO
                 _currentAreaID = Session["currentArea"].ToString();
                 _game = (Gameplay)Session["game"];
                 _player = (Player)Session["player"];
+                selectedAction = drpActions.SelectedValue;
                 _currentSituation = _game[_currentAreaID];
                 this.LoadSituation(_currentAreaID);
 
@@ -100,20 +104,17 @@ namespace ProgettoPCTO
                 {
                     Button btn = pnlCardinals.FindControl("btn" + (Cardinals)i) as Button;
                     btn.Enabled = false;
-                    btn.Text = "";
                 }
                 else
                 {
                     Button btn = pnlCardinals.FindControl("btn" + (Cardinals)i) as Button;
                     btn.Enabled = true;
-                    btn.Text = _game[s.Areas[i]].Name;
                 }
-
             }
 
 
             // Loading all entities in the situation if there are
-            if(s.Entities != null)
+            if (s.Entities != null)
                 foreach (Character e in s.Entities)
                 {
                     if (e.IsVisible)
@@ -140,10 +141,8 @@ namespace ProgettoPCTO
 
         protected void btnDo_Click(object sender, EventArgs e)
         {
-            string actionText = drpActions.SelectedValue;
-
             // If nothing is selected or there are no entities to interact with, the method does nothing
-            if (actionText == "" || _currentSituation.Entities is null && _currentSituation.Items is null)
+            if (selectedAction == "" || _currentSituation.Entities is null && _currentSituation.Items is null)
                 return;
 
             Entity entity = null;
@@ -152,7 +151,7 @@ namespace ProgettoPCTO
                 // Search for the character that fits the action (it is possible to have only one entity of the 
                 // same type in a situation so there's no problem of ambiguity)
                 foreach(Character c in _currentSituation.Entities)
-                    if(actionText.ToLower().Contains(c.Name.ToLower()))
+                    if(selectedAction.ToLower().Contains(c.Name.ToLower()))
                     {
                         entity = c;
                         break;
@@ -161,7 +160,7 @@ namespace ProgettoPCTO
             if(_currentSituation.Items != null)
                 // Search for the item that fits the action (same of above)
                 foreach(Item i in _currentSituation.Items)
-                    if (actionText.ToLower().Contains(i.Name.ToLower()))
+                    if (selectedAction.ToLower().Contains(i.Name.ToLower()))
                     {
                         entity = i;
                         break;
@@ -169,7 +168,7 @@ namespace ProgettoPCTO
 
             if(entity.GetType() == typeof(Item) && (entity as Item).IsCollectable)
             {
-                // TODO: add item to the inventory
+                // Adds the item to the inventory
                 Item item = entity as Item;
                 item.IsVisible = false;
                 item.IsCollectable = false;
@@ -187,21 +186,68 @@ namespace ProgettoPCTO
                     return;
                 }
 
-                // TODO: add item to the graphic inventory
+                // Adds the name to the inventory list
                 lstInventory.Items.Add(item.Name);
 
-                // Remove the item from
+                // Remove the item from the panel
                 pnlImages.Controls.Remove(pnlImages.FindControl("img" + item.Name));
+            }
+
+            // If the monster name is in the action it means it will be killed
+            if (_hostileEntitiesNames.Contains(entity.Name.ToLower()))
+            {
+                Character hostile = entity as Character;
+
+                // Player can only kill the enemy if he has the right item in his inventory
+                if(hostile.EffectiveWeapon != null && _player.Inventory.ContainsKey(hostile.EffectiveWeapon))
+                {
+                    hostile.IsVisible = false;
+                    _player.Experience += 50;
+
+                    // Removes the enemy from the panel and from the situation
+                    _game[_currentAreaID].Entities.Remove(hostile);
+                    pnlImages.Controls.Remove(pnlImages.FindControl("img" + hostile.Name));
+                }
+                else if (hostile.EffectiveWeapon != null)
+                {
+                    txtStory.Text += "Devi avere " + hostile.EffectiveWeapon + " per farlo.\n";
+
+                    return;
+                }
+                else
+                {
+                    // TODO: implement only if an hostile entity wants to talk
+                }
             }
 
             // Shows the dialogue and remove the action from the situation and the drp
             txtStory.Text += entity.Dialogue[_currentAreaID];
-            _game[_currentAreaID].Actions.Remove(actionText);
+            _game[_currentAreaID].Actions.Remove(selectedAction);
 
-            // I don't know why only one instruction does not work
-            drpActions.Items.RemoveAt(drpActions.SelectedIndex);
-            //drpActions.Items.RemoveAt(drpActions.SelectedIndex);
+            // Removes the action from the action list
+            drpActions.Items.Remove(selectedAction);
 
+            Session["gameplay"] = _game;
+            Session["player"] = _player;
+        }
+
+        protected void btnDrop_Click(object sender, EventArgs e)
+        {
+            int selectedIndex = lstInventory.SelectedIndex;
+            if (selectedIndex == -1) // If nothing is selected
+                return;
+
+            string itemName = lstInventory.SelectedValue;
+
+            // Shows the message
+            txtStory.Text += "Hai lasciato " + itemName + "\n";
+
+            Item backup = _player.Inventory[itemName];
+            _player.Drop(backup);
+            lstInventory.Items.RemoveAt(selectedIndex);
+
+            Session["gameplay"] = _game;
+            Session["player"] = _player;
         }
     }
 }

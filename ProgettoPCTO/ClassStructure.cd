@@ -34,7 +34,7 @@
     <Position X="5.5" Y="4.75" Width="2.25" />
     <InheritanceLine Type="ProgettoPCTO.Character" FixedFromPoint="true">
       <Path>
-        <Point X="6.625" Y="4.127" />
+        <Point X="6.625" Y="4.319" />
         <Point X="6.625" Y="4.75" />
       </Path>
     </InheritanceLine>
@@ -57,7 +57,7 @@
   <Class Name="ProgettoPCTO.Character">
     <Position X="5.75" Y="2.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AACACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Class\Character.cs</FileName>
     </TypeIdentifier>
   </Class>

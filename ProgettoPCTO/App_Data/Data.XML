@@ -8,7 +8,7 @@
       </d3p1:Actions>
       <d3p1:Areas>
         <string>area2</string>
-        <string>area3</string>
+        <string i:nil="true" />
         <string i:nil="true" />
         <string i:nil="true" />
       </d3p1:Areas>
@@ -23,18 +23,19 @@ Clicca su Steve per sapere come giocare.
               <Key>area1</Key>
               <Value>Io sono Steve e sarò la tua guida per le prime parti di questa avventura. Adesso ti spiegherò come utilizzare l'interfaccia:
 - puoi muoverti nel gioco con i pulsanti in basso a sinistra in cui sono indicati i nomi degli ambienti che puoi raggiungere. Alcuni passaggi saranno chiusi e ti serviranno degli oggetti per poterli aprire.
-- Potrai trovare oggetti nella tua strada, alcuni ti permetteranno di aprire passaggi e altri ti proteggeranno. Un oggetto può essere messo nell'inventario cliccandoci sopra, se questo non è già pieno; se dovesse esserlo, potrai scegliere un oggetto da lasciare. Alcuni oggetti scompaiono se lasciati, quindi fai attenzione!
+- Potrai trovare oggetti nella tua strada, alcuni ti permetteranno di aprire passaggi e altri ti proteggeranno. Un oggetto può essere messo nell'inventario cliccandoci sopra, se questo non è già pieno; se dovesse esserlo, potrai scegliere un oggetto da lasciare. Gli oggetti scompaiono se lasciati, quindi fai attenzione!
 - Incontrerai delle entità nel tuo cammino, alcune amiche, altre nemiche, scoprirai cosa vogliono da te.</Value>
             </KeyValueOfstringstring>
           </d3p1:Dialogue>
           <d3p1:Height>230</d3p1:Height>
           <d3p1:ImageURL>~\Img\Characters\steve.png</d3p1:ImageURL>
-          <d3p1:Inventory />
+          <d3p1:Inventory i:nil="true" />
           <d3p1:IsVisible>true</d3p1:IsVisible>
           <d3p1:Name>Steve</d3p1:Name>
           <d3p1:Width>110</d3p1:Width>
-          <d3p1:X>300</d3p1:X>
-          <d3p1:Y>190</d3p1:Y>
+          <d3p1:X>320</d3p1:X>
+          <d3p1:Y>160</d3p1:Y>
+          <d3p1:EffectiveWeapon i:nil="true" />
           <d3p1:Health>0</d3p1:Health>
         </d3p1:Character>
       </d3p1:Entities>
@@ -48,9 +49,10 @@ Clicca su Steve per sapere come giocare.
     <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
       <d3p1:Actions>
         <string>Raccogli la spada</string>
+        <string>Uccidi il creeper</string>
       </d3p1:Actions>
       <d3p1:Areas>
-        <string i:nil="true" />
+        <string>area3</string>
         <string i:nil="true" />
         <string>area1</string>
         <string i:nil="true" />
@@ -58,16 +60,23 @@ Clicca su Steve per sapere come giocare.
       <d3p1:Description i:nil="true" />
       <d3p1:Entities>
         <d3p1:Character>
-          <d3p1:Description i:nil="true" />
-          <d3p1:Dialogue />
+          <d3p1:Description>Hai incontrato creeper! Uccidilo con la spada.</d3p1:Description>
+          <d3p1:Dialogue>
+            <KeyValueOfstringstring>
+              <Key>area2</Key>
+              <Value>Hai ucciso il creeper!
+</Value>
+            </KeyValueOfstringstring>
+          </d3p1:Dialogue>
           <d3p1:Height>90</d3p1:Height>
           <d3p1:ImageURL>~\Img\Characters\creeper.png</d3p1:ImageURL>
-          <d3p1:Inventory />
+          <d3p1:Inventory i:nil="true" />
           <d3p1:IsVisible>true</d3p1:IsVisible>
-          <d3p1:Name>mob</d3p1:Name>
+          <d3p1:Name>Creeper</d3p1:Name>
           <d3p1:Width>100</d3p1:Width>
           <d3p1:X>150</d3p1:X>
           <d3p1:Y>100</d3p1:Y>
+          <d3p1:EffectiveWeapon>Spada</d3p1:EffectiveWeapon>
           <d3p1:Health>0</d3p1:Health>
         </d3p1:Character>
       </d3p1:Entities>
@@ -94,7 +103,7 @@ Clicca su Steve per sapere come giocare.
           <d3p1:Powers i:nil="true" />
         </d3p1:Item>
       </d3p1:Items>
-      <d3p1:Name>interno del labirinto</d3p1:Name>
+      <d3p1:Name>interno</d3p1:Name>
     </Value>
   </KeyValueOfstringSituationwOB_SG4KC>
   <KeyValueOfstringSituationwOB_SG4KC>
@@ -102,16 +111,50 @@ Clicca su Steve per sapere come giocare.
     <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
       <d3p1:Actions i:nil="true" />
       <d3p1:Areas>
+        <string>area4</string>
         <string i:nil="true" />
+        <string>area2</string>
         <string i:nil="true" />
-        <string i:nil="true" />
-        <string>area1</string>
       </d3p1:Areas>
-      <d3p1:Description i:nil="true" />
+      <d3p1:Description></d3p1:Description>
       <d3p1:Entities i:nil="true" />
       <d3p1:ImageURL>~\Img\Areas\area3.png</d3p1:ImageURL>
       <d3p1:Items i:nil="true" />
-      <d3p1:Name>acqua</d3p1:Name>
+      <d3p1:Name>corridoio</d3p1:Name>
+    </Value>
+  </KeyValueOfstringSituationwOB_SG4KC>
+  <KeyValueOfstringSituationwOB_SG4KC>
+    <Key>area4</Key>
+    <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Actions i:nil="true" />
+      <d3p1:Areas>
+        <string>area5</string>
+        <string i:nil="true" />
+        <string>area3</string>
+        <string i:nil="true" />
+      </d3p1:Areas>
+      <d3p1:Description>Dove vuoi andare ora?</d3p1:Description>
+      <d3p1:Entities i:nil="true" />
+      <d3p1:ImageURL>~\Img\Areas\area4.png</d3p1:ImageURL>
+      <d3p1:Items i:nil="true" />
+      <d3p1:Name>bivio</d3p1:Name>
+    </Value>
+  </KeyValueOfstringSituationwOB_SG4KC>
+  <KeyValueOfstringSituationwOB_SG4KC>
+    <Key>area5</Key>
+    <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Actions i:nil="true" />
+      <d3p1:Areas>
+        <string i:nil="true" />
+        <string i:nil="true" />
+        <string>area4</string>
+        <string i:nil="true" />
+      </d3p1:Areas>
+      <d3p1:Description>L'unica possibilità è tornare indietro...</d3p1:Description>
+      <d3p1:Entities i:nil="true" />
+      <d3p1:ImageURL>~\Img\Areas\area5.png</d3p1:ImageURL>
+      <d3p1:Items i:nil="true" />
+      <d3p1:Name>vicolo cieco</d3p1:Name>
     </Value>
   </KeyValueOfstringSituationwOB_SG4KC>
 </ArrayOfKeyValueOfstringSituationwOB_SG4KC>

@@ -41,7 +41,7 @@ namespace ProgettoPCTO
         public int Height { get; set; }
 
         [DataMember]
-        public List<Item> Inventory { get; set; }
+        public Dictionary<string, Item> Inventory { get; set; }
 
         [DataMember]
         public bool IsVisible { get; set; } = true;

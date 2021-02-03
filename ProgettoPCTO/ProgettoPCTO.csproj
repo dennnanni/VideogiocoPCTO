@@ -74,6 +74,8 @@
     <Content Include="Img\Areas\area1.png" />
     <Content Include="Img\Areas\area2.png" />
     <Content Include="Img\Areas\area3.png" />
+    <Content Include="Img\Areas\area4.png" />
+    <Content Include="Img\Areas\area5.png" />
     <Content Include="Img\Characters\creeper.png" />
     <Content Include="Img\Characters\player.png" />
     <Content Include="Img\Characters\steve.png" />
