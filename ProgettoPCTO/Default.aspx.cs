@@ -84,8 +84,6 @@ namespace ProgettoPCTO
                 txtStory.Text += "Hai raggiunto " + s.Name + "\n";
                 txtStory.Text += s.Description;
 
-                // Update the current area ID
-                _currentAreaID = name;
             }
 
             drpActions.Items.Clear();
@@ -112,6 +110,10 @@ namespace ProgettoPCTO
                 }
             }
 
+            // Showing stats
+            lblExperience.Text = "Esperienza: " + _player.Experience;
+            lblHealth.Text = "Salute: " + _player.Health;
+
 
             // Loading all entities in the situation if there are
             if (s.Entities != null)
@@ -120,6 +122,8 @@ namespace ProgettoPCTO
                     if (e.IsVisible)
                     {
                         pnlImages.Controls.Add(_game.SetEntityImage(e));
+                        if (_currentAreaID != name)
+                            txtStory.Text += "Hai incontrato " + e.Name + ". " + e.Description + "\n";
                     }
                 }
 
@@ -130,8 +134,14 @@ namespace ProgettoPCTO
                     if (i.IsVisible)
                     {
                         pnlImages.Controls.Add(_game.SetEntityImage(i));
+                        if (_currentAreaID != name)
+                            txtStory.Text += "Hai trovato " + i.Name + ". " + i.Description + "\n";
                     }
                 }
+
+            if (_currentAreaID != name)
+                // Update the current area ID
+                _currentAreaID = name;
 
             // Save the parameters
             Session["currentArea"] = _currentAreaID;
@@ -203,6 +213,10 @@ namespace ProgettoPCTO
                 {
                     hostile.IsVisible = false;
                     _player.Experience += 50;
+                    _player.Health -= 5;
+
+                    lblExperience.Text = "Esperienza: " + _player.Experience;
+                    lblHealth.Text = "Salute: " + _player.Health;
 
                     // Removes the enemy from the panel and from the situation
                     _game[_currentAreaID].Entities.Remove(hostile);

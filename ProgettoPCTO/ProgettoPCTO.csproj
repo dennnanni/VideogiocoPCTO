@@ -73,12 +73,15 @@
     <Content Include="Global.asax" />
     <Content Include="Img\Areas\area1.png" />
     <Content Include="Img\Areas\area2.png" />
+    <Content Include="Img\Areas\area2a.png" />
     <Content Include="Img\Areas\area3.png" />
     <Content Include="Img\Areas\area4.png" />
     <Content Include="Img\Areas\area5.png" />
+    <Content Include="Img\Areas\area5a.png" />
     <Content Include="Img\Characters\creeper.png" />
     <Content Include="Img\Characters\player.png" />
     <Content Include="Img\Characters\steve.png" />
+    <Content Include="Img\Items\healthpotion.png" />
     <Content Include="Img\Items\sword.png" />
     <Content Include="Stylesheet.css" />
     <Content Include="Web.config" />

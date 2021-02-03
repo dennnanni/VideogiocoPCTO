@@ -17,6 +17,7 @@ namespace ProgettoPCTO
         public Player(string URL) : base(URL)
         {
             Inventory = new Dictionary<string, Item>();
+            Health = 100;
         }
 
         [DataMember]
