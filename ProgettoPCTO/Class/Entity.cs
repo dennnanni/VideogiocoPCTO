@@ -46,6 +46,9 @@ namespace ProgettoPCTO
         [DataMember]
         public bool IsVisible { get; set; } = true;
 
+        [DataMember]
+        public string EffectiveWeapon { get; set; }
+
         /// <summary>
         /// Match of a dialogue with a situation, the key is the situation, the value is the dialogue
         /// </summary>

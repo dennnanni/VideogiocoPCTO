@@ -40,12 +40,24 @@ namespace ProgettoPCTO
             Inventory.Add(item.Name, item);
         }
 
-        public void Drop(Item item)
+        public void Drop(string itemName)
         {
             if (Inventory.Count == 0)
                 throw new Exception("L'inventario è vuoto, non puoi lasciare niente!\n");
 
-            Inventory.Remove(item.Name);
+            Inventory.Remove(itemName);
+        }
+
+        public string Cure()
+        {
+            this.Health += 100 / this.Health;
+            return "Hai recuperato alcuni punti salute.";
+        }
+
+        public string Strengthen()
+        {
+            this.Strength += 10;
+            return "Hai aumentato la tua forza.";
         }
     }
 }

@@ -80,6 +80,12 @@ body {
     left: 240px;
 }
 
+#btnUse {
+    position: absolute;
+    top: 660px;
+    left: 350px;
+}
+
 #pnlStats {
     position: absolute;
     top: 520px;

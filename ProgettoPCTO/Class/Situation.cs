@@ -64,6 +64,9 @@ namespace ProgettoPCTO
         }
 
         [DataMember]
+        public string UnlockingItem { get; set; } = null;
+
+        [DataMember]
         public List<string> Actions { get; set; }
 
 

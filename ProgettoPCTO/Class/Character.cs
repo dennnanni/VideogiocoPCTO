@@ -23,8 +23,7 @@ namespace ProgettoPCTO
         
         }
 
-        [DataMember]
-        public string EffectiveWeapon { get; set; }
+        
        
         [DataMember]
         public int Health { get; set; }

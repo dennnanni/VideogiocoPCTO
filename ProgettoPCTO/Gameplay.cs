@@ -169,14 +169,14 @@ namespace ProgettoPCTO
                     {
                         Name = "Pozione della salute",
                         Description = "Restituisce 30 punti salute!",
-                        X = 200,
-                        Y = 300,
+                        X = 240,
+                        Y = 360,
                         Width = 60,
                         Height = 60,
                         IsCollectable = true,
                         Dialogue = new Dictionary<string, string>()
                         {
-                            { "area2a", "Hai aggiunto Poziona della salute al tuo inventario.\n" }
+                            { "area2a", "Hai aggiunto Pozione della salute al tuo inventario.\n" }
                         }
                     }
                 }
@@ -200,7 +200,7 @@ namespace ProgettoPCTO
             {
                 Name = "corridoio",
                 Description = "Prosegui dritto.\n",
-                Areas = new string[] { null, null, "area4", null },
+                Areas = new string[] { "area6", null, "area4", null },
             };
 
             _situations["area5a"] = new Situation(URL: @"~\Img\Areas\area5a.png")
@@ -208,6 +208,99 @@ namespace ProgettoPCTO
                 Name = "vicolo cieco",
                 Description = "L'unica possibilità è tornare indietro...\n",
                 Areas = new string[] { null, null, "area4", null },
+            };
+
+            _situations["area6"] = new Situation(URL: @"~\Img\Areas\area6.png")
+            {
+                Name = "bivio",
+                Description = "Dove vuoi andare?\n",
+                Areas = new string[] { "area7", "area7a", "area5", null },
+            };
+
+            _situations["area7"] = new Situation(URL: @"~\Img\Areas\area7.png")
+            {
+                Name = "bivio",
+                Description = "Dove vuoi andare?\n",
+                Areas = new string[] { null, "area8", "area6", "area8a" },
+            };
+
+            _situations["area7a"] = new Situation(URL: @"~\Img\Areas\area7a.png")
+            {
+                Name = "vicolo cieco",
+                Description = "L'unica possibilità è tornare indietro...\n",
+                Areas = new string[] { null, null, "area6", null },
+            };
+
+            _situations["area8"] = new Situation(URL: @"~\Img\Areas\area8.png")
+            {
+                Name = "corridoio",
+                Description = "Puoi proseguire dritto o esplorare la via sulla destra.\n",
+                Areas = new string[] { "area9", "area9a", "area7", null },
+                
+            };
+
+            _situations["area8a"] = new Situation(URL: @"~\Img\Areas\area8a.png")
+            {
+                Name = "vicolo cieco",
+                Description = "L'unica possibilità è tornare indietro...\n",
+                Actions = new List<string>()
+                {
+                    "Raccogli il piccone",
+                },
+                Areas = new string[] { null, null, "area7", null },
+                Items = new List<Item>()
+                {
+                    new Item(URL: @"~\Img\Items\pickaxe.png")
+                    {
+                        Name = "Piccone",
+                        Description = "Serve per rompere la pietra!",
+                        X = 240,
+                        Y = 360,
+                        Width = 80,
+                        Height = 60,
+                        IsCollectable = true,
+                        Dialogue = new Dictionary<string, string>()
+                        {
+                            { "area8a", "Hai aggiunto Piccone al tuo inventario.\n" }
+                        }
+                    }
+                }
+            };
+
+            _situations["area9"] = new Situation(URL: @"~\Img\Areas\area9.png")
+            {
+                Name = "bivio",
+                Description = "Prosegui o svolti?\n",
+                Areas = new string[] { "area10", "area10a", "area8", null },
+            };
+
+            _situations["area9a"] = new Situation(URL: @"~\Img\Areas\area9a.png")
+            {
+                Name = "vicolo cieco",
+                Description = "L'unica soluzione è tornare indietro...\n",
+                Areas = new string[] { null, null, "area8", null },
+            };
+
+            _situations["area10"] = new Situation(URL: @"~\Img\Areas\area10.png")
+            {
+                Name = "corridoio",
+                Description = "",
+                Areas = new string[] { "area11", null, "area9", null },
+            };
+
+            _situations["area10a"] = new Situation(URL: @"~\Img\Areas\area10a.png")
+            {
+                Name = "vicolo cieco",
+                Description = "L'unica soluzione è tornare indietro...\n",
+                Areas = new string[] { null, null, "area9", null },
+            };
+
+            _situations["area11"] = new Situation(URL: @"~\Img\Areas\area11.png")
+            {
+                Name = "bivio misterioso",
+                Description = "Nella rientranza il pavimento è strano... con un piccone potresti riuscire a romperlo...\n",
+                Areas = new string[] { null, null, "area10", null },
+                UnlockingItem = "Piccone",
             };
         }
 

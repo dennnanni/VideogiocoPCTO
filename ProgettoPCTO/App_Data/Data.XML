@@ -26,6 +26,7 @@
 - Incontrerai delle entità nel tuo cammino, alcune amiche, altre nemiche, scoprirai cosa vogliono da te."</Value>
             </KeyValueOfstringstring>
           </d3p1:Dialogue>
+          <d3p1:EffectiveWeapon i:nil="true" />
           <d3p1:Height>230</d3p1:Height>
           <d3p1:ImageURL>~\Img\Characters\steve.png</d3p1:ImageURL>
           <d3p1:Inventory i:nil="true" />
@@ -34,13 +35,13 @@
           <d3p1:Width>110</d3p1:Width>
           <d3p1:X>320</d3p1:X>
           <d3p1:Y>160</d3p1:Y>
-          <d3p1:EffectiveWeapon i:nil="true" />
           <d3p1:Health>0</d3p1:Health>
         </d3p1:Character>
       </d3p1:Entities>
       <d3p1:ImageURL>~\Img\Areas\area1.png</d3p1:ImageURL>
       <d3p1:Items i:nil="true" />
       <d3p1:Name>ingresso</d3p1:Name>
+      <d3p1:UnlockingItem i:nil="true" />
     </Value>
   </KeyValueOfstringSituationwOB_SG4KC>
   <KeyValueOfstringSituationwOB_SG4KC>
@@ -67,6 +68,7 @@
 </Value>
             </KeyValueOfstringstring>
           </d3p1:Dialogue>
+          <d3p1:EffectiveWeapon>Spada</d3p1:EffectiveWeapon>
           <d3p1:Height>230</d3p1:Height>
           <d3p1:ImageURL>~\Img\Characters\creeper.png</d3p1:ImageURL>
           <d3p1:Inventory i:nil="true" />
@@ -75,7 +77,6 @@
           <d3p1:Width>220</d3p1:Width>
           <d3p1:X>250</d3p1:X>
           <d3p1:Y>160</d3p1:Y>
-          <d3p1:EffectiveWeapon>Spada</d3p1:EffectiveWeapon>
           <d3p1:Health>0</d3p1:Health>
         </d3p1:Character>
       </d3p1:Entities>
@@ -90,6 +91,7 @@
 </Value>
             </KeyValueOfstringstring>
           </d3p1:Dialogue>
+          <d3p1:EffectiveWeapon i:nil="true" />
           <d3p1:Height>90</d3p1:Height>
           <d3p1:ImageURL>~\Img\Items\sword.png</d3p1:ImageURL>
           <d3p1:Inventory i:nil="true" />
@@ -103,6 +105,7 @@
         </d3p1:Item>
       </d3p1:Items>
       <d3p1:Name>interno</d3p1:Name>
+      <d3p1:UnlockingItem i:nil="true" />
     </Value>
   </KeyValueOfstringSituationwOB_SG4KC>
   <KeyValueOfstringSituationwOB_SG4KC>
@@ -127,23 +130,25 @@
           <d3p1:Dialogue>
             <KeyValueOfstringstring>
               <Key>area2a</Key>
-              <Value>Hai aggiunto Poziona della salute al tuo inventario.
+              <Value>Hai aggiunto Pozione della salute al tuo inventario.
 </Value>
             </KeyValueOfstringstring>
           </d3p1:Dialogue>
+          <d3p1:EffectiveWeapon i:nil="true" />
           <d3p1:Height>60</d3p1:Height>
           <d3p1:ImageURL>~\Img\Items\healthpotion.png</d3p1:ImageURL>
           <d3p1:Inventory i:nil="true" />
           <d3p1:IsVisible>true</d3p1:IsVisible>
           <d3p1:Name>Pozione della salute</d3p1:Name>
           <d3p1:Width>60</d3p1:Width>
-          <d3p1:X>200</d3p1:X>
-          <d3p1:Y>300</d3p1:Y>
+          <d3p1:X>240</d3p1:X>
+          <d3p1:Y>360</d3p1:Y>
           <d3p1:IsCollectable>true</d3p1:IsCollectable>
           <d3p1:Powers i:nil="true" />
         </d3p1:Item>
       </d3p1:Items>
       <d3p1:Name>vicolo cieco</d3p1:Name>
+      <d3p1:UnlockingItem i:nil="true" />
     </Value>
   </KeyValueOfstringSituationwOB_SG4KC>
   <KeyValueOfstringSituationwOB_SG4KC>
@@ -161,6 +166,7 @@
       <d3p1:ImageURL>~\Img\Areas\area3.png</d3p1:ImageURL>
       <d3p1:Items i:nil="true" />
       <d3p1:Name>corridoio</d3p1:Name>
+      <d3p1:UnlockingItem i:nil="true" />
     </Value>
   </KeyValueOfstringSituationwOB_SG4KC>
   <KeyValueOfstringSituationwOB_SG4KC>
@@ -178,6 +184,7 @@
       <d3p1:ImageURL>~\Img\Areas\area4.png</d3p1:ImageURL>
       <d3p1:Items i:nil="true" />
       <d3p1:Name>bivio</d3p1:Name>
+      <d3p1:UnlockingItem i:nil="true" />
     </Value>
   </KeyValueOfstringSituationwOB_SG4KC>
   <KeyValueOfstringSituationwOB_SG4KC>
@@ -185,7 +192,7 @@
     <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
       <d3p1:Actions i:nil="true" />
       <d3p1:Areas>
-        <string i:nil="true" />
+        <string>area6</string>
         <string i:nil="true" />
         <string>area4</string>
         <string i:nil="true" />
@@ -196,6 +203,7 @@
       <d3p1:ImageURL>~\Img\Areas\area5.png</d3p1:ImageURL>
       <d3p1:Items i:nil="true" />
       <d3p1:Name>corridoio</d3p1:Name>
+      <d3p1:UnlockingItem i:nil="true" />
     </Value>
   </KeyValueOfstringSituationwOB_SG4KC>
   <KeyValueOfstringSituationwOB_SG4KC>
@@ -214,6 +222,220 @@
       <d3p1:ImageURL>~\Img\Areas\area5a.png</d3p1:ImageURL>
       <d3p1:Items i:nil="true" />
       <d3p1:Name>vicolo cieco</d3p1:Name>
+      <d3p1:UnlockingItem i:nil="true" />
+    </Value>
+  </KeyValueOfstringSituationwOB_SG4KC>
+  <KeyValueOfstringSituationwOB_SG4KC>
+    <Key>area6</Key>
+    <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Actions i:nil="true" />
+      <d3p1:Areas>
+        <string>area7</string>
+        <string>area7a</string>
+        <string>area5</string>
+        <string i:nil="true" />
+      </d3p1:Areas>
+      <d3p1:Description>Dove vuoi andare?
+</d3p1:Description>
+      <d3p1:Entities i:nil="true" />
+      <d3p1:ImageURL>~\Img\Areas\area6.png</d3p1:ImageURL>
+      <d3p1:Items i:nil="true" />
+      <d3p1:Name>bivio</d3p1:Name>
+      <d3p1:UnlockingItem i:nil="true" />
+    </Value>
+  </KeyValueOfstringSituationwOB_SG4KC>
+  <KeyValueOfstringSituationwOB_SG4KC>
+    <Key>area7</Key>
+    <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Actions i:nil="true" />
+      <d3p1:Areas>
+        <string i:nil="true" />
+        <string>area8</string>
+        <string>area6</string>
+        <string>area8a</string>
+      </d3p1:Areas>
+      <d3p1:Description>Dove vuoi andare?
+</d3p1:Description>
+      <d3p1:Entities i:nil="true" />
+      <d3p1:ImageURL>~\Img\Areas\area7.png</d3p1:ImageURL>
+      <d3p1:Items i:nil="true" />
+      <d3p1:Name>bivio</d3p1:Name>
+      <d3p1:UnlockingItem i:nil="true" />
+    </Value>
+  </KeyValueOfstringSituationwOB_SG4KC>
+  <KeyValueOfstringSituationwOB_SG4KC>
+    <Key>area7a</Key>
+    <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Actions i:nil="true" />
+      <d3p1:Areas>
+        <string i:nil="true" />
+        <string i:nil="true" />
+        <string>area6</string>
+        <string i:nil="true" />
+      </d3p1:Areas>
+      <d3p1:Description>L'unica possibilità è tornare indietro...
+</d3p1:Description>
+      <d3p1:Entities i:nil="true" />
+      <d3p1:ImageURL>~\Img\Areas\area7a.png</d3p1:ImageURL>
+      <d3p1:Items i:nil="true" />
+      <d3p1:Name>vicolo cieco</d3p1:Name>
+      <d3p1:UnlockingItem i:nil="true" />
+    </Value>
+  </KeyValueOfstringSituationwOB_SG4KC>
+  <KeyValueOfstringSituationwOB_SG4KC>
+    <Key>area8</Key>
+    <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Actions i:nil="true" />
+      <d3p1:Areas>
+        <string>area9</string>
+        <string>area9a</string>
+        <string>area7</string>
+        <string i:nil="true" />
+      </d3p1:Areas>
+      <d3p1:Description>Puoi proseguire dritto o esplorare la via sulla destra.
+</d3p1:Description>
+      <d3p1:Entities i:nil="true" />
+      <d3p1:ImageURL>~\Img\Areas\area8.png</d3p1:ImageURL>
+      <d3p1:Items i:nil="true" />
+      <d3p1:Name>corridoio</d3p1:Name>
+      <d3p1:UnlockingItem i:nil="true" />
+    </Value>
+  </KeyValueOfstringSituationwOB_SG4KC>
+  <KeyValueOfstringSituationwOB_SG4KC>
+    <Key>area8a</Key>
+    <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Actions>
+        <string>Raccogli il piccone</string>
+      </d3p1:Actions>
+      <d3p1:Areas>
+        <string i:nil="true" />
+        <string i:nil="true" />
+        <string>area7</string>
+        <string i:nil="true" />
+      </d3p1:Areas>
+      <d3p1:Description>L'unica possibilità è tornare indietro...
+</d3p1:Description>
+      <d3p1:Entities i:nil="true" />
+      <d3p1:ImageURL>~\Img\Areas\area8a.png</d3p1:ImageURL>
+      <d3p1:Items>
+        <d3p1:Item>
+          <d3p1:Description>Serve per rompere la pietra!</d3p1:Description>
+          <d3p1:Dialogue>
+            <KeyValueOfstringstring>
+              <Key>area8a</Key>
+              <Value>Hai aggiunto Piccone al tuo inventario.
+</Value>
+            </KeyValueOfstringstring>
+          </d3p1:Dialogue>
+          <d3p1:EffectiveWeapon i:nil="true" />
+          <d3p1:Height>60</d3p1:Height>
+          <d3p1:ImageURL>~\Img\Items\pickaxe.png</d3p1:ImageURL>
+          <d3p1:Inventory i:nil="true" />
+          <d3p1:IsVisible>true</d3p1:IsVisible>
+          <d3p1:Name>Piccone</d3p1:Name>
+          <d3p1:Width>60</d3p1:Width>
+          <d3p1:X>240</d3p1:X>
+          <d3p1:Y>360</d3p1:Y>
+          <d3p1:IsCollectable>true</d3p1:IsCollectable>
+          <d3p1:Powers i:nil="true" />
+        </d3p1:Item>
+      </d3p1:Items>
+      <d3p1:Name>vicolo cieco</d3p1:Name>
+      <d3p1:UnlockingItem i:nil="true" />
+    </Value>
+  </KeyValueOfstringSituationwOB_SG4KC>
+  <KeyValueOfstringSituationwOB_SG4KC>
+    <Key>area9</Key>
+    <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Actions i:nil="true" />
+      <d3p1:Areas>
+        <string>area10</string>
+        <string>area10a</string>
+        <string>area8</string>
+        <string i:nil="true" />
+      </d3p1:Areas>
+      <d3p1:Description>Prosegui o svolti?
+</d3p1:Description>
+      <d3p1:Entities i:nil="true" />
+      <d3p1:ImageURL>~\Img\Areas\area9.png</d3p1:ImageURL>
+      <d3p1:Items i:nil="true" />
+      <d3p1:Name>bivio</d3p1:Name>
+      <d3p1:UnlockingItem i:nil="true" />
+    </Value>
+  </KeyValueOfstringSituationwOB_SG4KC>
+  <KeyValueOfstringSituationwOB_SG4KC>
+    <Key>area9a</Key>
+    <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Actions i:nil="true" />
+      <d3p1:Areas>
+        <string i:nil="true" />
+        <string i:nil="true" />
+        <string>area8</string>
+        <string i:nil="true" />
+      </d3p1:Areas>
+      <d3p1:Description>L'unica soluzione è tornare indietro...
+</d3p1:Description>
+      <d3p1:Entities i:nil="true" />
+      <d3p1:ImageURL>~\Img\Areas\area9a.png</d3p1:ImageURL>
+      <d3p1:Items i:nil="true" />
+      <d3p1:Name>vicolo cieco</d3p1:Name>
+      <d3p1:UnlockingItem i:nil="true" />
+    </Value>
+  </KeyValueOfstringSituationwOB_SG4KC>
+  <KeyValueOfstringSituationwOB_SG4KC>
+    <Key>area10</Key>
+    <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Actions i:nil="true" />
+      <d3p1:Areas>
+        <string>area11</string>
+        <string i:nil="true" />
+        <string>area9</string>
+        <string i:nil="true" />
+      </d3p1:Areas>
+      <d3p1:Description></d3p1:Description>
+      <d3p1:Entities i:nil="true" />
+      <d3p1:ImageURL>~\Img\Areas\area10.png</d3p1:ImageURL>
+      <d3p1:Items i:nil="true" />
+      <d3p1:Name>corridoio</d3p1:Name>
+      <d3p1:UnlockingItem i:nil="true" />
+    </Value>
+  </KeyValueOfstringSituationwOB_SG4KC>
+  <KeyValueOfstringSituationwOB_SG4KC>
+    <Key>area10a</Key>
+    <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Actions i:nil="true" />
+      <d3p1:Areas>
+        <string i:nil="true" />
+        <string i:nil="true" />
+        <string>area9</string>
+        <string i:nil="true" />
+      </d3p1:Areas>
+      <d3p1:Description>L'unica soluzione è tornare indietro...
+</d3p1:Description>
+      <d3p1:Entities i:nil="true" />
+      <d3p1:ImageURL>~\Img\Areas\area10a.png</d3p1:ImageURL>
+      <d3p1:Items i:nil="true" />
+      <d3p1:Name>vicolo cieco</d3p1:Name>
+      <d3p1:UnlockingItem i:nil="true" />
+    </Value>
+  </KeyValueOfstringSituationwOB_SG4KC>
+  <KeyValueOfstringSituationwOB_SG4KC>
+    <Key>area11</Key>
+    <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Actions i:nil="true" />
+      <d3p1:Areas>
+        <string i:nil="true" />
+        <string i:nil="true" />
+        <string>area10</string>
+        <string i:nil="true" />
+      </d3p1:Areas>
+      <d3p1:Description>Nella rientranza il pavimento è strano... con un piccone potresti riuscire a romperlo...
+</d3p1:Description>
+      <d3p1:Entities i:nil="true" />
+      <d3p1:ImageURL>~\Img\Areas\area11.png</d3p1:ImageURL>
+      <d3p1:Items i:nil="true" />
+      <d3p1:Name>bivio misterioso</d3p1:Name>
+      <d3p1:UnlockingItem>Piccone</d3p1:UnlockingItem>
     </Value>
   </KeyValueOfstringSituationwOB_SG4KC>
 </ArrayOfKeyValueOfstringSituationwOB_SG4KC>

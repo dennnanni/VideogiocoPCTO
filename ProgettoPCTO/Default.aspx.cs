@@ -257,11 +257,55 @@ namespace ProgettoPCTO
             txtStory.Text += "Hai lasciato " + itemName + "\n";
 
             Item backup = _player.Inventory[itemName];
-            _player.Drop(backup);
+            _player.Drop(backup.Name);
             lstInventory.Items.RemoveAt(selectedIndex);
 
             Session["gameplay"] = _game;
             Session["player"] = _player;
+        }
+
+        protected void btnUse_Click(object sender, EventArgs e)
+        {
+            string selectedValue = lstInventory.SelectedValue.ToLower();
+            string message = "";
+
+            if(selectedValue == null)
+            {
+                txtStory.Text += "Devi selezionare qualcosa da usare!\n";
+                return;
+            }
+
+            if(!selectedValue.Contains("pozione") && !selectedValue.Contains("armatura"))
+            {
+                txtStory.Text += "Non puoi utilizzare questo oggetto.\n";
+                return;
+            }
+
+            if (selectedValue.Contains("pozione"))
+            {
+                if (selectedValue.Contains("salute"))
+                {
+                    message = _player.Cure();
+                    lblHealth.Text = "Salute: " + _player.Health;
+                }
+                else if (selectedValue.Contains("forza"))
+                {
+                    message = _player.Strengthen();
+                }
+                else if (selectedValue.Contains(""))
+                {
+                    // TODO: some other stats
+                }
+
+                _player.Inventory.Remove(lstInventory.SelectedValue);
+                lstInventory.Items.Remove(lstInventory.SelectedValue);
+                    
+            }
+
+            txtStory.Text += "Hai usato " + selectedValue + ". " + message + "\n";
+
+            Session["player"] = _player;
+            Session["gameplay"] = _game;
         }
     }
 }
