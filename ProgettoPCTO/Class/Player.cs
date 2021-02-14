@@ -32,6 +32,15 @@ namespace ProgettoPCTO
         [DataMember]
         public Power Powers { get; set; }
 
+        public string InventoryToString()
+        {
+            string s = "";
+            foreach (string name in Inventory.Keys)
+                s += name + " ";
+
+            return s;
+        }
+
         public void Collect(Item item)
         {
             if (Inventory.Count == 4)
@@ -48,15 +57,22 @@ namespace ProgettoPCTO
             Inventory.Remove(itemName);
         }
 
-        public string Cure()
+        public string Cure(int value)
         {
-            this.Health += 100 / this.Health;
+            try
+            {
+                this.Health += value;
+            }
+            catch
+            {
+
+            }
             return "Hai recuperato alcuni punti salute.";
         }
 
-        public string Strengthen()
+        public string Strengthen(int val)
         {
-            this.Strength += 10;
+            this.Strength += val;
             return "Hai aumentato la tua forza.";
         }
     }

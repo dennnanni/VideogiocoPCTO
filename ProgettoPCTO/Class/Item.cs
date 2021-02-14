@@ -27,5 +27,8 @@ namespace ProgettoPCTO
             {
             }
         }
+
+        [DataMember]
+        public int Effectiveness { get; set; }
     }
 }

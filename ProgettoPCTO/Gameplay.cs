@@ -64,7 +64,7 @@ namespace ProgettoPCTO
         }
 
 
-        // Cè bisogno di un config file, così fa discretamente schifo, per ora però può rimanere così
+        // C'è bisogno di un config file, così fa discretamente schifo, per ora però può rimanere così
         public void Initialize()
         {
             _situations["area1"] = new Situation(URL: @"~\Img\Areas\area1.png")
@@ -91,16 +91,15 @@ namespace ProgettoPCTO
                         Y = 160,
                         Width = 110,
                         Height = 230,
-                        Dialogue = new Dictionary<string, string>()
-                        {
-                            {"area1", "\"Io sono Steve e sarò la tua guida per le prime parti di questa avventura. Adesso ti spiegherò come " + 
-                            "utilizzare l'interfaccia:\n- puoi muoverti nel gioco con i pulsanti in basso a sinistra in cui sono indicati i nomi " +
-                            "degli ambienti che puoi raggiungere. Alcuni passaggi saranno chiusi e ti serviranno degli oggetti per poterli aprire.\n"+
+                        Dialogue = "\"Io sono Steve e sarò la tua guida per le prime parti di questa avventura. Adesso ti spiegherò come " + 
+                            "utilizzare l'interfaccia:\n- Puoi muoverti nel gioco con i pulsanti in basso a sinistra in cui sono indicate " +
+                            "le direzioni in cui puoi proseguire. Alcuni passaggi saranno chiusi e ti serviranno degli oggetti per poterli aprire.\n" +
+                            "- Puoi trovare le azioni che puoi svolgere nell'ambiente qui sotto, premi \"Agisci\" per svolgere l'azione selezionata.\n " +
                             "- Potrai trovare oggetti nella tua strada, alcuni ti permetteranno di aprire passaggi e altri ti proteggeranno. Un oggetto "+
-                            "può essere messo nell'inventario cliccandoci sopra, se questo non è già pieno; se dovesse esserlo, potrai scegliere " +
+                            "può essere messo nell'inventario attraverso l'azione, se questo non è già pieno; se dovesse esserlo, potrai scegliere " +
                             "un oggetto da lasciare. Gli oggetti scompaiono se lasciati, quindi fai attenzione!\n"+
-                            "- Incontrerai delle entità nel tuo cammino, alcune amiche, altre nemiche, scoprirai cosa vogliono da te.\""},
-                        }
+                            "- Incontrerai delle entità nel tuo cammino, alcune amiche, altre nemiche, scoprirai cosa vogliono da te.\""+
+                            "\nPer iniziare, spostati all'interno del labirinto.\n",
                     }
                 },
             };
@@ -124,12 +123,9 @@ namespace ProgettoPCTO
                         Y = 160,
                         Width = 220,
                         Height = 230,
-                        Dialogue = new Dictionary<string, string>()
-                        {
-                            {"area2", "Hai ucciso il creeper!\n" }
-                        },
+                        Dialogue =  "Hai ucciso il creeper!\n",
                         EffectiveWeapon = "Spada",
-
+                        Damage = 5
 
                     }
                 },
@@ -144,11 +140,7 @@ namespace ProgettoPCTO
                         Y = 360,
                         Width = 100,
                         Height = 90,
-                        Dialogue = new Dictionary<string, string>()
-                        {
-                            {"area2", "Hai aggiunto Spada al tuo inventario!\n" }
-                        },
-
+                        Dialogue = "Hai aggiunto Spada al tuo inventario!\n" 
                     }
                 }
 
@@ -174,10 +166,8 @@ namespace ProgettoPCTO
                         Width = 60,
                         Height = 60,
                         IsCollectable = true,
-                        Dialogue = new Dictionary<string, string>()
-                        {
-                            { "area2a", "Hai aggiunto Pozione della salute al tuo inventario.\n" }
-                        }
+                        Effectiveness = 30,
+                        Dialogue = "Hai aggiunto Pozione della salute al tuo inventario.\n"
                     }
                 }
             };
@@ -259,10 +249,7 @@ namespace ProgettoPCTO
                         Width = 80,
                         Height = 60,
                         IsCollectable = true,
-                        Dialogue = new Dictionary<string, string>()
-                        {
-                            { "area8a", "Hai aggiunto Piccone al tuo inventario.\n" }
-                        }
+                        Dialogue = "Hai aggiunto Piccone al tuo inventario.\n",
                     }
                 }
             };
@@ -299,8 +286,151 @@ namespace ProgettoPCTO
             {
                 Name = "bivio misterioso",
                 Description = "Nella rientranza il pavimento è strano... con un piccone potresti riuscire a romperlo...\n",
-                Areas = new string[] { null, null, "area10", null },
+                Actions = new List<string>()
+                {
+                    "Apri il passaggio",
+                },
+                Areas = new string[] { null, null, "area10", "area12" },
                 UnlockingItem = "Piccone",
+            };
+
+            _situations["area12"] = new Situation(URL: @"~\Img\Areas\area12.png")
+            {
+                Name = "bivio",
+                Description = "Dove vuoi andare?\n",
+                Areas = new string[] { null, "area13a", "area11", "area13" },
+            };
+
+            _situations["area13"] = new Situation(URL: @"~\Img\Areas\area13.png")
+            {
+                Name = "bivio",
+                Description = "Vuoi proseguire dritto o svoltare a sinistra?\n",
+                Areas = new string[] { "area14", null, "area12", "area14a" },
+            };
+
+            _situations["area13a"] = new Situation(URL: @"~\Img\Areas\area13a.png")
+            {
+                Name = "vicolo cieco",
+                Description = "L'unica possibilità è tornare indietro...\n",
+                Actions = new List<string>()
+                {
+                    "Parla con personaggio misterioso",
+                },
+                Areas = new string[] { null, null, "area12", null },
+                Entities = new List<Character>()
+                {
+                    new Character(URL: @"~\Img\Items\misteriouscharacter.png")
+                    {
+                        Name = "Personaggio misterioso",
+                        Description = "Prova a parlargli",
+                        X = 250,
+                        Y = 160,
+                        Width = 220,
+                        Height = 230,
+                        Dialogue = "Non ti è stato detto cosa devi fare qui... Capisco... Devi trovare la chiave che ti " +
+                            "permetterà di uscire. Io non l'ho mai trovata... rimarremo qui per sempre...",
+
+                        
+                    }
+                }
+            };
+
+            _situations["area14"] = new Situation(URL: @"~\Img\Areas\area14.png")
+            {
+                Name = "corridoio",
+                Description = "Bisogna guadare il lago per passare.\n",
+                Areas = new string[] { "$area15", null, "area13", null },
+                Actions = new List<string>()
+                {
+                    "Apri il passaggio."
+                },
+                UnlockingItem = "Scala",
+            };
+
+            _situations["area14a"] = new Situation(URL: @"~\Img\Areas\area14a.png")
+            {
+                Name = "percorso",
+                Description = "Continua ad esplorare oppure torna indietro.\n",
+                Areas = new string[] { "area14b", null, "area13", null },
+            };
+
+            _situations["area14b"] = new Situation(URL: @"~\Img\Areas\area14b.png")
+            {
+                Name = "percorso",
+                Description = "Continua ad esplorare oppure torna indietro.\n",
+                Areas = new string[] { "area14c", null, "area14a", null },
+            };
+
+            _situations["area14c"] = new Situation(URL: @"~\Img\Areas\area14c.png")
+            {
+                Name = "percorso",
+                Description = "Continua ad esplorare oppure torna indietro.\n",
+                Areas = new string[] { "area14d", null, "area14b", null },
+                Actions = new List<string>()
+                {
+                    "Uccidi lo zombie",
+                },
+                Entities = new List<Character>()
+                {
+                    new Character(URL: @"~\Img\Characters\zombie.png")
+                    {
+                        Name = "Zombie",
+                        Description = "Uccidilo con la spada.",
+                        X = 250,
+                        Y = 160,
+                        Width = 220,
+                        Height = 230,
+                        Dialogue = "GRRRRR...\nHai ucciso zombie",
+                        EffectiveWeapon = "Spada",
+                        Damage = 30
+                    }
+                }
+
+            };
+
+            _situations["area14d"] = new Situation(URL: @"~\Img\Areas\area14d.png")
+            {
+                Name = "percorso",
+                Description = "Continua ad esplorare oppure torna indietro.\n",
+                Areas = new string[] { "area14e", null, "area14c", null },
+                Items = new List<Item>()
+                {
+                    new Item(URL: @"~\Img\Items\strengthpotion.png")
+                    {
+                        Name = "Pozione della forza",
+                        Description = "Ti rafforza!",
+                        X = 240,
+                        Y = 360,
+                        Width = 60,
+                        Height = 60,
+                        IsCollectable = true,
+                        Effectiveness = 20,
+                        Dialogue = "Hai aggiunto Pozione della forza al tuo inventario.\n"
+                    }
+                }
+                
+            };
+
+            _situations["area14e"] = new Situation(URL: @"~\Img\Areas\area14e.png")
+            {
+                Name = "vicolo cieco",
+                Description = "Che peccato, tutta questa strada per così poco...\n",
+                Areas = new string[] { null, null, "area14d", null },
+                Entities = new List<Character>()
+                {
+                    new Character(URL: @"~\Img\Characters\skeleton.png")
+                    {
+                        Name = "Scheletro",
+                        Description = "Uccidilo con la spada.",
+                        X = 250,
+                        Y = 160,
+                        Width = 220,
+                        Height = 230,
+                        Dialogue = "Hai ucciso scheletro\n",
+                        EffectiveWeapon = "Spada",
+                        Damage = 30
+                    }
+                }
             };
         }
 

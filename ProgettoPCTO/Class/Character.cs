@@ -13,6 +13,7 @@ namespace ProgettoPCTO
     [KnownType(typeof(Character))]
     public class Character : Entity
     {
+        
         public Character() : this(null)
         {
 
@@ -23,7 +24,8 @@ namespace ProgettoPCTO
         
         }
 
-        
+        [DataMember]
+        public int Damage { get; set; }
        
         [DataMember]
         public int Health { get; set; }

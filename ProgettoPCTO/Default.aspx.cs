@@ -16,6 +16,7 @@ namespace ProgettoPCTO
         private Situation _currentSituation;
         private Player _player = new Player(null);
         private string[] _hostileEntitiesNames = { "creeper", "zombie", "scheletro" };
+        private string[] _friendEntitesNames = { "steve", "personaggio misterioso" };
         private string selectedAction = "";
 
         protected void Page_Load(object sender, EventArgs e)
@@ -72,6 +73,18 @@ namespace ProgettoPCTO
         public void LoadSituation(string name) // Loading by name is much more easy to reuse code
         {
             Situation s = _game[name];
+            bool print = false;
+
+            if (_currentAreaID != name)
+                print = true;
+
+            if (name.Contains('$') || _currentAreaID != "area0" && _game[_currentAreaID].Entities != null && _game[_currentAreaID].Entities.Count != 0 )
+            { 
+                name = _currentAreaID;
+                print = true;
+            }
+
+            s = _game[name];
 
             // Clears the images panel from all controls and sets the background
             pnlImages.Controls.Clear();
@@ -79,9 +92,9 @@ namespace ProgettoPCTO
 
 
             // If the situation is changed
-            if (_currentAreaID != name)
+            if (print)
             {
-                txtStory.Text += "Hai raggiunto " + s.Name + "\n";
+                txtStory.Text = "Hai raggiunto " + s.Name + "\n";
                 txtStory.Text += s.Description;
 
             }
@@ -122,7 +135,7 @@ namespace ProgettoPCTO
                     if (e.IsVisible)
                     {
                         pnlImages.Controls.Add(_game.SetEntityImage(e));
-                        if (_currentAreaID != name)
+                        if (print)
                             txtStory.Text += "Hai incontrato " + e.Name + ". " + e.Description + "\n";
                     }
                 }
@@ -134,7 +147,7 @@ namespace ProgettoPCTO
                     if (i.IsVisible)
                     {
                         pnlImages.Controls.Add(_game.SetEntityImage(i));
-                        if (_currentAreaID != name)
+                        if (print)
                             txtStory.Text += "Hai trovato " + i.Name + ". " + i.Description + "\n";
                     }
                 }
@@ -152,7 +165,7 @@ namespace ProgettoPCTO
         protected void btnDo_Click(object sender, EventArgs e)
         {
             // If nothing is selected or there are no entities to interact with, the method does nothing
-            if (selectedAction == "" || _currentSituation.Entities is null && _currentSituation.Items is null)
+            if (selectedAction == "")
                 return;
 
             Entity entity = null;
@@ -176,66 +189,49 @@ namespace ProgettoPCTO
                         break;
                     }
 
-            if(entity.GetType() == typeof(Item) && (entity as Item).IsCollectable)
+            if(entity != null)
             {
-                // Adds the item to the inventory
-                Item item = entity as Item;
-                item.IsVisible = false;
-                item.IsCollectable = false;
-
-                // Try to add item to the inventory
-                try
+                if (entity.GetType() == typeof(Item) && (entity as Item).IsCollectable)
                 {
-                    _player.Collect(item);
-                    _game[_currentAreaID].Items.Remove(item);
-                }
-                catch (Exception ex)
-                {
-                    // If an exception is generated, inventory is full and next instructions must not be done
-                    txtStory.Text += ex.Message;
-                    return;
+                    ItemHandler(entity as Item);
                 }
 
-                // Adds the name to the inventory list
-                lstInventory.Items.Add(item.Name);
-
-                // Remove the item from the panel
-                pnlImages.Controls.Remove(pnlImages.FindControl("img" + item.Name));
-            }
-
-            // If the monster name is in the action it means it will be killed
-            if (_hostileEntitiesNames.Contains(entity.Name.ToLower()))
-            {
-                Character hostile = entity as Character;
-
-                // Player can only kill the enemy if he has the right item in his inventory
-                if(hostile.EffectiveWeapon != null && _player.Inventory.ContainsKey(hostile.EffectiveWeapon))
+                // If the monster name is in the action it means it will be killed
+                if (_hostileEntitiesNames.Contains(entity.Name.ToLower()))
                 {
-                    hostile.IsVisible = false;
-                    _player.Experience += 50;
-                    _player.Health -= 5;
+                    HostileEntityHandler(entity as Character);
+                }
 
-                    lblExperience.Text = "Esperienza: " + _player.Experience;
-                    lblHealth.Text = "Salute: " + _player.Health;
+                if (_friendEntitesNames.Contains(entity.Name.ToLower()))
+                {
+                    Character friend = entity as Character;
 
                     // Removes the enemy from the panel and from the situation
-                    _game[_currentAreaID].Entities.Remove(hostile);
-                    pnlImages.Controls.Remove(pnlImages.FindControl("img" + hostile.Name));
+                    _game[_currentAreaID].Entities.Remove(friend);
+                    pnlImages.Controls.Remove(pnlImages.FindControl("img" + friend.Name));
                 }
-                else if (hostile.EffectiveWeapon != null)
-                {
-                    txtStory.Text += "Devi avere " + hostile.EffectiveWeapon + " per farlo.\n";
 
-                    return;
+                // Shows the dialogue and remove the action from the situation and the drp
+                txtStory.Text += entity.Dialogue;
+            }
+
+            if (selectedAction.ToLower().Contains("apri"))
+            {
+                if (_player.InventoryToString().Contains(_game[_currentAreaID].UnlockingItem))
+                {
+                    // Replaces the image with the unlocked visual
+                    Situation s = _game[_currentAreaID];
+                    s.ImageURL = s.ImageURL.Replace(_currentAreaID, _currentAreaID + "u");
+                    _game[_currentAreaID] = s;
+                    pnlImages.BackImageUrl = s.ImageURL;
                 }
                 else
                 {
-                    // TODO: implement only if an hostile entity wants to talk
+                    txtStory.Text += "Per aprire questo passaggio devi avere " + _game[_currentAreaID].UnlockingItem + ".\n";
+                    return;
                 }
             }
 
-            // Shows the dialogue and remove the action from the situation and the drp
-            txtStory.Text += entity.Dialogue[_currentAreaID];
             _game[_currentAreaID].Actions.Remove(selectedAction);
 
             // Removes the action from the action list
@@ -264,6 +260,68 @@ namespace ProgettoPCTO
             Session["player"] = _player;
         }
 
+        private void ItemHandler(Item item)
+        {
+            item.IsVisible = false;
+            item.IsCollectable = false;
+
+            // Try to add item to the inventory
+            try
+            {
+                _player.Collect(item);
+                _game[_currentAreaID].Items.Remove(item);
+
+                pnlImages.Controls.Remove(pnlImages.FindControl("img" + item.Name));
+            }
+            catch (Exception ex)
+            {
+                // If an exception is generated, inventory is full and next instructions must not be done
+                txtStory.Text += ex.Message;
+                return;
+            }
+
+            // Adds the name to the inventory list
+            lstInventory.Items.Add(item.Name);
+        }
+
+        private void HostileEntityHandler(Character hostile)
+        {
+            // Player can only kill the enemy if he has the right item in his inventory
+            if (hostile.EffectiveWeapon != null && _player.Inventory.ContainsKey(hostile.EffectiveWeapon))
+            {
+                hostile.IsVisible = false;
+                _player.Experience += 50;
+                _player.Health -= hostile.Damage;
+
+                lblExperience.Text = "Esperienza: " + _player.Experience;
+                lblHealth.Text = "Salute: " + _player.Health;
+
+                // Removes the enemy from the panel and from the situation
+                _game[_currentAreaID].Entities.Remove(hostile);
+                pnlImages.Controls.Remove(pnlImages.FindControl("img" + hostile.Name));
+            }
+            else if (hostile.EffectiveWeapon != null)
+            {
+                txtStory.Text += "Devi avere " + hostile.EffectiveWeapon + " per farlo.\n";
+
+                return;
+            }
+            else
+            {
+                // TODO: implement only if an hostile entity wants to talk
+            }
+        }
+
+        private void FriendEntityHandler()
+        {
+
+        }
+
+        private void SituationHandler()
+        {
+
+        }
+
         protected void btnUse_Click(object sender, EventArgs e)
         {
             string selectedValue = lstInventory.SelectedValue.ToLower();
@@ -285,12 +343,24 @@ namespace ProgettoPCTO
             {
                 if (selectedValue.Contains("salute"))
                 {
-                    message = _player.Cure();
+                    int val = 0;
+                    for (int i = 0; i < _game[_currentAreaID].Items.Count; i++)
+                    {
+                        if (_game[_currentAreaID].Items[i].Name.Contains("salute"))
+                            val = _game[_currentAreaID].Items[i].Effectiveness;
+                    }
+                    message = _player.Cure(val);
                     lblHealth.Text = "Salute: " + _player.Health;
                 }
                 else if (selectedValue.Contains("forza"))
                 {
-                    message = _player.Strengthen();
+                    int val = 0;
+                    for (int i = 0; i < _game[_currentAreaID].Items.Count; i++)
+                    {
+                        if (_game[_currentAreaID].Items[i].Name.Contains("forza"))
+                            val = _game[_currentAreaID].Items[i].Effectiveness;
+                    }
+                    message = _player.Strengthen(val);
                 }
                 else if (selectedValue.Contains(""))
                 {

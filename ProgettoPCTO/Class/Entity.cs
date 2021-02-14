@@ -53,7 +53,7 @@ namespace ProgettoPCTO
         /// Match of a dialogue with a situation, the key is the situation, the value is the dialogue
         /// </summary>
         [DataMember]
-        public Dictionary<string, string> Dialogue { get; set; } = new Dictionary<string, string>();
+        public string Dialogue { get; set; }
 
         public bool Equals(Entity other)
         {
