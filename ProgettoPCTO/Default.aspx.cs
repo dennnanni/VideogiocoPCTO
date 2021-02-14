@@ -217,19 +217,7 @@ namespace ProgettoPCTO
 
             if (selectedAction.ToLower().Contains("apri"))
             {
-                if (_player.InventoryToString().Contains(_game[_currentAreaID].UnlockingItem))
-                {
-                    // Replaces the image with the unlocked visual
-                    Situation s = _game[_currentAreaID];
-                    s.ImageURL = s.ImageURL.Replace(_currentAreaID, _currentAreaID + "u");
-                    _game[_currentAreaID] = s;
-                    pnlImages.BackImageUrl = s.ImageURL;
-                }
-                else
-                {
-                    txtStory.Text += "Per aprire questo passaggio devi avere " + _game[_currentAreaID].UnlockingItem + ".\n";
-                    return;
-                }
+                SituationHandler();
             }
 
             _game[_currentAreaID].Actions.Remove(selectedAction);
@@ -312,14 +300,49 @@ namespace ProgettoPCTO
             }
         }
 
-        private void FriendEntityHandler()
-        {
-
-        }
-
         private void SituationHandler()
         {
+            if (_player.InventoryToString().Contains(_game[_currentAreaID].UnlockingItem))
+            {
+                // Replaces the image with the unlocked visual
+                Situation s = _game[_currentAreaID];
+                s.ImageURL = s.ImageURL.Replace(_currentAreaID, _currentAreaID + "u");
+                s.Name = s.Name.Replace(" misterioso", "");
+                s.Description = "Il passaggio è aperto!";
 
+                if(s.UnlockingItem == "Scala")
+                {
+                    _player.Inventory.Remove(s.UnlockingItem);
+                }
+
+                // Finds the locked area and unlocks it
+                for(int i =  0; i < s.Areas.Length; i++)
+                {
+                    if (s.Areas[i] != null && s.Areas[i].Contains('$'))
+                    {
+                        s.Areas[i] = s.Areas[i].Substring(1);
+                        i = 4;
+                    }
+                }
+
+                // Shows items if there are some
+                if(s.Items != null)
+                {
+                    for (int i = 0; i < s.Items.Count; i++)
+                    {
+                        s.Items[i].IsVisible = true;
+                        s.Actions.Add("Raccogli " + s.Items[i].Name);
+                    }
+                }
+
+                _game[_currentAreaID] = s;
+                this.LoadSituation(_currentAreaID);
+            }
+            else
+            {
+                txtStory.Text += "Per aprire questo passaggio devi avere " + _game[_currentAreaID].UnlockingItem + ".\n";
+                return;
+            }
         }
 
         protected void btnUse_Click(object sender, EventArgs e)
@@ -327,7 +350,7 @@ namespace ProgettoPCTO
             string selectedValue = lstInventory.SelectedValue.ToLower();
             string message = "";
 
-            if(selectedValue == null)
+            if(selectedValue == "")
             {
                 txtStory.Text += "Devi selezionare qualcosa da usare!\n";
                 return;
@@ -344,10 +367,10 @@ namespace ProgettoPCTO
                 if (selectedValue.Contains("salute"))
                 {
                     int val = 0;
-                    for (int i = 0; i < _game[_currentAreaID].Items.Count; i++)
+                    foreach(string index in _player.Inventory.Keys)
                     {
-                        if (_game[_currentAreaID].Items[i].Name.Contains("salute"))
-                            val = _game[_currentAreaID].Items[i].Effectiveness;
+                        if (_player.Inventory[index].Name.Contains("salute"))
+                            val = _player.Inventory[index].Effectiveness;
                     }
                     message = _player.Cure(val);
                     lblHealth.Text = "Salute: " + _player.Health;

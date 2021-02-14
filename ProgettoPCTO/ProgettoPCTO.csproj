@@ -84,6 +84,7 @@
     <Content Include="Img\Areas\area14c.png" />
     <Content Include="Img\Areas\area14d.png" />
     <Content Include="Img\Areas\area14e.png" />
+    <Content Include="Img\Areas\area14u.png" />
     <Content Include="Img\Areas\area15.png" />
     <Content Include="Img\Areas\area16.png" />
     <Content Include="Img\Areas\area16a.png" />
@@ -93,6 +94,7 @@
     <Content Include="Img\Areas\area18.png" />
     <Content Include="Img\Areas\area18a.png" />
     <Content Include="Img\Areas\area18b.png" />
+    <Content Include="Img\Areas\area18u.png" />
     <Content Include="Img\Areas\area19.png" />
     <Content Include="Img\Areas\area19a.png" />
     <Content Include="Img\Areas\area2.png" />
@@ -117,6 +119,7 @@
     <Content Include="Img\Characters\skeleton.png" />
     <Content Include="Img\Characters\steve.png" />
     <Content Include="Img\Characters\zombie.png" />
+    <Content Include="Img\Items\ladder.png" />
     <Content Include="Img\Items\strengthpotion.png" />
     <Content Include="Img\Items\healthpotion.png" />
     <Content Include="Img\Items\pickaxe.png" />

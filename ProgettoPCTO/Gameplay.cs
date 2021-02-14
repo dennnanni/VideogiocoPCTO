@@ -291,6 +291,22 @@ namespace ProgettoPCTO
                     "Apri il passaggio",
                 },
                 Areas = new string[] { null, null, "area10", "area12" },
+                Items = new List<Item>()
+                {
+                    new Item(URL: @"~\Img\Items\ladder.png")
+                    {
+                        Name = "Scala",
+                        Description = "Puoi usarla per superare delle avversità.",
+                        X = 310,
+                        Y = 360,
+                        Width = 60,
+                        Height = 60,
+                        IsCollectable = true,
+                        IsVisible = false,
+                        Dialogue = "Hai aggiunto Scala al tuo inventario.\n"
+
+                    }
+                },
                 UnlockingItem = "Piccone",
             };
 
@@ -392,6 +408,10 @@ namespace ProgettoPCTO
             {
                 Name = "percorso",
                 Description = "Continua ad esplorare oppure torna indietro.\n",
+                Actions = new List<string>()
+                {
+                    "Raccogli la pozione della forza",
+                },
                 Areas = new string[] { "area14e", null, "area14c", null },
                 Items = new List<Item>()
                 {
@@ -415,6 +435,11 @@ namespace ProgettoPCTO
             {
                 Name = "vicolo cieco",
                 Description = "Che peccato, tutta questa strada per così poco...\n",
+                Actions = new List<string>()
+                {
+                    "Uccidi lo scheletro", 
+                    "Raccogli la scala",
+                },
                 Areas = new string[] { null, null, "area14d", null },
                 Entities = new List<Character>()
                 {
@@ -430,7 +455,30 @@ namespace ProgettoPCTO
                         EffectiveWeapon = "Spada",
                         Damage = 30
                     }
-                }
+                },
+                Items = new List<Item>()
+                {
+                    new Item(URL: @"~\Img\Items\ladder.png")
+                    {
+                        Name = "Scala",
+                        Description = "Puoi usarla per superare delle avversità.",
+                        X = 310,
+                        Y = 360,
+                        Width = 60,
+                        Height = 60,
+                        IsCollectable = true,
+                        IsVisible = false,
+                        Dialogue = "Hai aggiunto Scala al tuo inventario.\n"
+
+                    }
+                },
+            };
+
+            _situations["area15"] = new Situation(URL: @"~\Img\Areas\area15.png")
+            {
+                Name = "percorso",
+                Description = "Continua ad esplorare oppure torna indietro.\n",
+                Areas = new string[] { null, null, "area14", null },
             };
         }
 

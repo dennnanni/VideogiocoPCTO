@@ -418,7 +418,25 @@ Per iniziare, spostati all'interno del labirinto.
 </d3p1:Description>
       <d3p1:Entities i:nil="true" />
       <d3p1:ImageURL>~\Img\Areas\area11.png</d3p1:ImageURL>
-      <d3p1:Items i:nil="true" />
+      <d3p1:Items>
+        <d3p1:Item>
+          <d3p1:Description>Puoi usarla per superare delle avversità.</d3p1:Description>
+          <d3p1:Dialogue>Hai aggiunto Scala al tuo inventario.
+</d3p1:Dialogue>
+          <d3p1:EffectiveWeapon i:nil="true" />
+          <d3p1:Height>60</d3p1:Height>
+          <d3p1:ImageURL>~\Img\Items\ladder.png</d3p1:ImageURL>
+          <d3p1:Inventory i:nil="true" />
+          <d3p1:IsVisible>false</d3p1:IsVisible>
+          <d3p1:Name>Scala</d3p1:Name>
+          <d3p1:Width>60</d3p1:Width>
+          <d3p1:X>310</d3p1:X>
+          <d3p1:Y>360</d3p1:Y>
+          <d3p1:Effectiveness>0</d3p1:Effectiveness>
+          <d3p1:IsCollectable>true</d3p1:IsCollectable>
+          <d3p1:Powers i:nil="true" />
+        </d3p1:Item>
+      </d3p1:Items>
       <d3p1:Name>bivio misterioso</d3p1:Name>
       <d3p1:UnlockingItem>Piccone</d3p1:UnlockingItem>
     </Value>
@@ -598,7 +616,9 @@ Hai ucciso zombie</d3p1:Dialogue>
   <KeyValueOfstringSituationwOB_SG4KC>
     <Key>area14d</Key>
     <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
-      <d3p1:Actions i:nil="true" />
+      <d3p1:Actions>
+        <string>Raccogli la pozione della forza</string>
+      </d3p1:Actions>
       <d3p1:Areas>
         <string>area14e</string>
         <string i:nil="true" />
@@ -635,7 +655,10 @@ Hai ucciso zombie</d3p1:Dialogue>
   <KeyValueOfstringSituationwOB_SG4KC>
     <Key>area14e</Key>
     <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
-      <d3p1:Actions i:nil="true" />
+      <d3p1:Actions>
+        <string>Uccidi lo scheletro</string>
+        <string>Raccogli la scala</string>
+      </d3p1:Actions>
       <d3p1:Areas>
         <string i:nil="true" />
         <string i:nil="true" />
@@ -663,8 +686,45 @@ Hai ucciso zombie</d3p1:Dialogue>
         </d3p1:Character>
       </d3p1:Entities>
       <d3p1:ImageURL>~\Img\Areas\area14e.png</d3p1:ImageURL>
-      <d3p1:Items i:nil="true" />
+      <d3p1:Items>
+        <d3p1:Item>
+          <d3p1:Description>Puoi usarla per superare delle avversità.</d3p1:Description>
+          <d3p1:Dialogue>Hai aggiunto Scala al tuo inventario.
+</d3p1:Dialogue>
+          <d3p1:EffectiveWeapon i:nil="true" />
+          <d3p1:Height>60</d3p1:Height>
+          <d3p1:ImageURL>~\Img\Items\ladder.png</d3p1:ImageURL>
+          <d3p1:Inventory i:nil="true" />
+          <d3p1:IsVisible>false</d3p1:IsVisible>
+          <d3p1:Name>Scala</d3p1:Name>
+          <d3p1:Width>60</d3p1:Width>
+          <d3p1:X>310</d3p1:X>
+          <d3p1:Y>360</d3p1:Y>
+          <d3p1:Effectiveness>0</d3p1:Effectiveness>
+          <d3p1:IsCollectable>true</d3p1:IsCollectable>
+          <d3p1:Powers i:nil="true" />
+        </d3p1:Item>
+      </d3p1:Items>
       <d3p1:Name>vicolo cieco</d3p1:Name>
+      <d3p1:UnlockingItem i:nil="true" />
+    </Value>
+  </KeyValueOfstringSituationwOB_SG4KC>
+  <KeyValueOfstringSituationwOB_SG4KC>
+    <Key>area15</Key>
+    <Value xmlns:d3p1="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+      <d3p1:Actions i:nil="true" />
+      <d3p1:Areas>
+        <string i:nil="true" />
+        <string i:nil="true" />
+        <string>area14</string>
+        <string i:nil="true" />
+      </d3p1:Areas>
+      <d3p1:Description>Continua ad esplorare oppure torna indietro.
+</d3p1:Description>
+      <d3p1:Entities i:nil="true" />
+      <d3p1:ImageURL>~\Img\Areas\area15.png</d3p1:ImageURL>
+      <d3p1:Items i:nil="true" />
+      <d3p1:Name>percorso</d3p1:Name>
       <d3p1:UnlockingItem i:nil="true" />
     </Value>
   </KeyValueOfstringSituationwOB_SG4KC>
