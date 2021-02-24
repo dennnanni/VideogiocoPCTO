@@ -71,6 +71,7 @@
     <Content Include="App_Data\Data.XML" />
     <Content Include="App_Data\SavedData.XML" />
     <Content Include="Default.aspx" />
+    <Content Include="Errore.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Img\Areas\area11u.png" />
     <Content Include="Img\Areas\area1.png" />
@@ -140,6 +141,13 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Class\Entity.cs" />
+    <Compile Include="Errore.aspx.cs">
+      <DependentUpon>Errore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Errore.aspx.designer.cs">
+      <DependentUpon>Errore.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Gameplay.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

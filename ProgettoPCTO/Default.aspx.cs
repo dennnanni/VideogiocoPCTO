@@ -415,13 +415,21 @@ namespace ProgettoPCTO
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            _game.Save(Server);
+            if (!_game.Save(Server))
+            {
+                Page.Response.Redirect("~/Errore.aspx", true);
+            }
         }
 
         protected void btnLoad_Click(object sender, EventArgs e)
         {
             // Reads from the file which contains saved data
             _game = _game.Restore(Server);
+
+            if (_game == null)
+            {
+                Page.Response.Redirect("~/Errore.aspx", true);
+            }
 
             lstInventory.Items.Clear();
             foreach(string itemName in _game.PlayerProfile.Inventory.Keys)
@@ -443,17 +451,7 @@ namespace ProgettoPCTO
             _game = _game.SetUp(Server);
             if(_game == null)
             {
-                foreach(var control in this.Controls)
-                {
-
-                }
-                TextBox txtErrore = new TextBox();
-                txtErrore.Text = "OH NO, QUALCOSA E' ANDATO STORTO!\nCONTROLLA IL FILE DI CONFIGURAZIONE E RIPROVA.";
-                txtErrore.Style["top"] = "20px";
-                txtErrore.Style["left"] = "50px";
-                txtErrore.Style["font-size"] = "50px";
-                this.Controls.Add(txtErrore);
-                return;
+                Page.Response.Redirect("~/Errore.aspx", true);
             }
             _currentAreaID = "area0";
             _game.CurrentAreaID = "area1";
@@ -464,5 +462,6 @@ namespace ProgettoPCTO
             lstInventory.Items.Clear();
             this.LoadSituation(_game.CurrentAreaID);
         }
+
     }
 }

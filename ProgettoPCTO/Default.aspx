@@ -37,9 +37,9 @@
                 <asp:Button ID="btnSave" runat="server" Text="Salva" Height="50" Width="210" OnClick="btnSave_Click"/>
                 <asp:Button ID="btnLoad" runat="server" Text="Carica profilo" Height="50" Width="210" OnClick="btnLoad_Click"/>
                 <asp:Button ID="btnRestart" runat="server" Text="Ricomincia" Height="50" Width="210" OnClick="btnRestart_Click"/>
-                
             </ContentTemplate>
         </asp:UpdatePanel>
+        
     </form>
 </body>
 </html>

@@ -705,7 +705,7 @@ namespace ProgettoPCTO
         {
             try
             {
-                return XMLHandler.Read(server, "~/App_Data/Data1.XML");
+                return XMLHandler.Read(server, "~/App_Data/Data.XML");
             }
             catch (Exception ex)
             {
