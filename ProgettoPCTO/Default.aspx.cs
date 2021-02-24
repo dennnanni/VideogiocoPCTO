@@ -293,9 +293,11 @@ namespace ProgettoPCTO
                 catch (Exception ex)
                 {
                     txtStory.Text = ex.Message;
-                    foreach(Button b in pnlCardinals.Controls)
+                    foreach(Control b in pnlCardinals.Controls)
                     {
-                        b.Enabled = false;
+                        Button button = b as Button;
+                        if(button != null)
+                            button.Enabled = false;
                     }
                     btnDo.Enabled = false;
                     btnDrop.Enabled = false;
@@ -320,10 +322,6 @@ namespace ProgettoPCTO
                 txtStory.Text += "Devi avere " + hostile.EffectiveWeapon + " per farlo.\n";
 
                 return;
-            }
-            else
-            {
-                // TODO: implement only if an hostile entity wants to talk
             }
         }
 
@@ -424,10 +422,6 @@ namespace ProgettoPCTO
                     message = _game.PlayerProfile.Strengthen(val);
                     lblStrength.Text = "Forza: " + _game.PlayerProfile.Strength;
                 }
-                else if (selectedItem.Contains(""))
-                {
-                    // TODO: some other stats
-                }
 
                 _game.PlayerProfile.Inventory.Remove(lstInventory.SelectedValue);
                 lstInventory.Items.Remove(lstInventory.SelectedValue);
@@ -498,9 +492,11 @@ namespace ProgettoPCTO
             selectedAction = drpActions.SelectedValue;
             _currentSituation = _game["area1"];
             Session["gameplay"] = _game;
-            foreach (Button b in pnlCardinals.Controls)
+            foreach (Control b in pnlCardinals.Controls)
             {
-                b.Enabled = true;
+                Button button = b as Button;
+                if (button != null)
+                    button.Enabled = true;
             }
             btnDo.Enabled = true;
             btnDrop.Enabled = true;

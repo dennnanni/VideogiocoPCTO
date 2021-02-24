@@ -91,7 +91,7 @@ Per iniziare, spostati all'interno del labirinto.
             <X>250</X>
             <Y>160</Y>
             <Health>100</Health>
-            <Strength>110</Strength>
+            <Strength>5</Strength>
           </Character>
         </Entities>
         <ImageURL>~\Img\Areas\area2.png</ImageURL>
