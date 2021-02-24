@@ -16,15 +16,15 @@ namespace ProgettoPCTO
         private Situation _currentSituation;
         private string[] _hostileEntitiesNames = { "creeper", "zombie", "scheletro" };
         private string[] _friendEntitesNames = { "steve", "personaggio misterioso" };
+        private string[] _weaponsNames = { "spada", "piccone" };
         private string selectedAction = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                //XMLHandler.Write(new Gameplay(), Server, "~/App_Data/Data.XML");
                 // Creates the gameplay and loads the first situation
-                _game = XMLHandler.Read(Server, "~/App_Data/Data.XML");
+                _game = new Gameplay().SetUp(Server);
                 Session["player"] = _game.PlayerProfile;
                 Session["gameplay"] = _game;
                 selectedAction = drpActions.SelectedValue;
@@ -237,6 +237,12 @@ namespace ProgettoPCTO
 
             string itemName = lstInventory.SelectedValue;
 
+            if (_weaponsNames.Contains(itemName.ToLower()))
+            {
+                txtStory.Text += "\"Non credo sia sensato lasciare un'arma... con cosa pensi di proteggerti?\"\n";
+                return;
+            }
+
             // Shows the message
             txtStory.Text += "Hai lasciato " + itemName + "\n";
 
@@ -279,7 +285,26 @@ namespace ProgettoPCTO
             {
                 hostile.IsVisible = false;
                 _game.PlayerProfile.Experience += 50;
-                _game.PlayerProfile.Health = _game.PlayerProfile.Health - hostile.Strength;
+
+                try
+                {
+                    _game.PlayerProfile.Health = _game.PlayerProfile.Health - hostile.Strength;
+                }
+                catch (Exception ex)
+                {
+                    txtStory.Text = ex.Message;
+                    foreach(Button b in pnlCardinals.Controls)
+                    {
+                        b.Enabled = false;
+                    }
+                    btnDo.Enabled = false;
+                    btnDrop.Enabled = false;
+                    btnUse.Enabled = false;
+                    btnSave.Enabled = false;
+
+                    return;
+                }
+                
 
                 // Updates all labels
                 lblExperience.Text = "Esperienza: " + _game.PlayerProfile.Experience;
@@ -380,6 +405,7 @@ namespace ProgettoPCTO
                     // Searches the potion in the inventory and get its effectiveness
                     foreach(string index in _game.PlayerProfile.Inventory.Keys)
                     {
+                        // Gets potion effectiveness
                         if (_game.PlayerProfile.Inventory[index].Name.Contains("salute"))
                             val = _game.PlayerProfile.Inventory[index].Effectiveness;
                     }
@@ -391,6 +417,7 @@ namespace ProgettoPCTO
                     int val = 0;
                     foreach (string index in _game.PlayerProfile.Inventory.Keys)
                     {
+                        // Gets potion effectiveness
                         if (_game.PlayerProfile.Inventory[index].Name.Contains("forza"))
                             val = _game.PlayerProfile.Inventory[index].Effectiveness;
                     }
@@ -439,6 +466,16 @@ namespace ProgettoPCTO
                 lstInventory.Items.Add(itemName);
             }
 
+            // Enables the interface
+            foreach (Button b in pnlCardinals.Controls)
+            {
+                b.Enabled = true;
+            }
+            btnDo.Enabled = true;
+            btnDrop.Enabled = true;
+            btnUse.Enabled = true;
+            btnSave.Enabled = true;
+
             // Stores the gameplay structure
             Session["gameplay"] = _game;
             Session["player"] = _game.PlayerProfile;
@@ -461,6 +498,14 @@ namespace ProgettoPCTO
             selectedAction = drpActions.SelectedValue;
             _currentSituation = _game["area1"];
             Session["gameplay"] = _game;
+            foreach (Button b in pnlCardinals.Controls)
+            {
+                b.Enabled = true;
+            }
+            btnDo.Enabled = true;
+            btnDrop.Enabled = true;
+            btnUse.Enabled = true;
+            btnSave.Enabled = true;
             lstInventory.Items.Clear();
             this.LoadSituation(_game.CurrentAreaID);
         }

@@ -39,7 +39,7 @@
             <Dialogue>"Io sono Steve e sarò la tua guida per le prime parti di questa avventura. Adesso ti spiegherò come utilizzare l'interfaccia:
 - Puoi muoverti nel gioco con i pulsanti in basso a sinistra in cui sono indicate le direzioni in cui puoi proseguire. Alcuni passaggi saranno chiusi e ti serviranno degli oggetti per poterli aprire.
 - Puoi trovare le azioni che puoi svolgere nell'ambiente qui sotto, premi "Agisci" per svolgere l'azione selezionata.
- - Potrai trovare oggetti nella tua strada, alcuni ti permetteranno di aprire passaggi e altri ti proteggeranno. Un oggetto può essere messo nell'inventario attraverso l'azione, se questo non è già pieno; se dovesse esserlo, potrai scegliere un oggetto da lasciare. Gli oggetti scompaiono se lasciati, quindi fai attenzione!
+- Potrai trovare oggetti nella tua strada, alcuni ti permetteranno di aprire passaggi e altri ti proteggeranno. Un oggetto può essere messo nell'inventario attraverso l'azione, se questo non è già pieno; se dovesse esserlo, potrai scegliere un oggetto da lasciare. Gli oggetti scompaiono se lasciati, quindi fai attenzione!
 - Incontrerai delle entità nel tuo cammino, alcune amiche, altre nemiche, scoprirai cosa vogliono da te."
 Per iniziare, spostati all'interno del labirinto.
 </Dialogue>
@@ -91,7 +91,7 @@ Per iniziare, spostati all'interno del labirinto.
             <X>250</X>
             <Y>160</Y>
             <Health>100</Health>
-            <Strength>5</Strength>
+            <Strength>110</Strength>
           </Character>
         </Entities>
         <ImageURL>~\Img\Areas\area2.png</ImageURL>
@@ -511,7 +511,7 @@ Per iniziare, spostati all'interno del labirinto.
         <Entities>
           <Character>
             <Description>Prova a parlargli</Description>
-            <Dialogue>Non ti è stato detto cosa devi fare qui... Capisco... Devi trovare la chiave che ti permetterà di uscire. Io non l'ho mai trovata... rimarremo qui per sempre...</Dialogue>
+            <Dialogue>"Non ti è stato detto cosa devi fare qui... Capisco... Devi trovare la chiave che ti permetterà di uscire. Io non l'ho mai trovata... rimarremo qui per sempre..."</Dialogue>
             <EffectiveWeapon i:nil="true" />
             <Height>230</Height>
             <ImageURL>~\Img\Characters\character.png</ImageURL>
