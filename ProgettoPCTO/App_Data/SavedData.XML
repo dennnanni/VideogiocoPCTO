@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Gameplay xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
-  <CurrentAreaID i:nil="true" />
+  <CurrentAreaID>area1</CurrentAreaID>
   <PlayerProfile>
     <Description i:nil="true" />
     <Dialogue i:nil="true" />
@@ -17,6 +17,7 @@
     <Strength>50</Strength>
     <Armor>0</Armor>
     <Experience>0</Experience>
+    <Powers i:nil="true" />
   </PlayerProfile>
   <Situations xmlns:d2p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
     <d2p1:KeyValueOfstringSituationwOB_SG4KC>
@@ -111,6 +112,7 @@ Per iniziare, spostati all'interno del labirinto.
             <Y>360</Y>
             <Effectiveness>0</Effectiveness>
             <IsCollectable>true</IsCollectable>
+            <Powers i:nil="true" />
           </Item>
         </Items>
         <Name>interno</Name>
@@ -149,6 +151,7 @@ Per iniziare, spostati all'interno del labirinto.
             <Y>360</Y>
             <Effectiveness>30</Effectiveness>
             <IsCollectable>true</IsCollectable>
+            <Powers i:nil="true" />
           </Item>
         </Items>
         <Name>vicolo cieco</Name>
@@ -337,6 +340,7 @@ Per iniziare, spostati all'interno del labirinto.
             <Y>280</Y>
             <Effectiveness>0</Effectiveness>
             <IsCollectable>true</IsCollectable>
+            <Powers i:nil="true" />
           </Item>
         </Items>
         <Name>vicolo cieco</Name>
@@ -450,6 +454,7 @@ Per iniziare, spostati all'interno del labirinto.
             <Y>300</Y>
             <Effectiveness>0</Effectiveness>
             <IsCollectable>true</IsCollectable>
+            <Powers i:nil="true" />
           </Item>
         </Items>
         <Name>bivio misterioso</Name>
@@ -564,6 +569,7 @@ Per iniziare, spostati all'interno del labirinto.
             <Y>360</Y>
             <Effectiveness>30</Effectiveness>
             <IsCollectable>true</IsCollectable>
+            <Powers i:nil="true" />
           </Item>
         </Items>
         <Name>corridoio</Name>
@@ -678,6 +684,7 @@ Hai ucciso zombie</Dialogue>
             <Y>360</Y>
             <Effectiveness>20</Effectiveness>
             <IsCollectable>true</IsCollectable>
+            <Powers i:nil="true" />
           </Item>
         </Items>
         <Name>percorso</Name>
@@ -734,6 +741,7 @@ Hai ucciso zombie</Dialogue>
             <Y>360</Y>
             <Effectiveness>0</Effectiveness>
             <IsCollectable>true</IsCollectable>
+            <Powers i:nil="true" />
           </Item>
         </Items>
         <Name>vicolo cieco</Name>
@@ -929,6 +937,7 @@ Hai ucciso zombie</Dialogue>
             <Y>190</Y>
             <Effectiveness>0</Effectiveness>
             <IsCollectable>true</IsCollectable>
+            <Powers i:nil="true" />
           </Item>
         </Items>
         <Name>vicolo cieco</Name>
@@ -999,7 +1008,7 @@ Hai ucciso zombie</Dialogue>
           <d2p1:string>Apri la porta</d2p1:string>
         </Actions>
         <Areas>
-          <d2p1:string>$area22</d2p1:string>
+          <d2p1:string>area22</d2p1:string>
           <d2p1:string i:nil="true" />
           <d2p1:string>area20</d2p1:string>
           <d2p1:string i:nil="true" />

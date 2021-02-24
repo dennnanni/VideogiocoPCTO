@@ -20,15 +20,6 @@ namespace ProgettoPCTO
         public bool IsCollectable { get; set; } = true;
 
         [DataMember]
-        public Power Powers
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
-        [DataMember]
         public int Effectiveness { get; set; }
     }
 }

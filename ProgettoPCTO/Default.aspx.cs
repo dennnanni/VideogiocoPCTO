@@ -22,10 +22,7 @@ namespace ProgettoPCTO
         {
             if (!IsPostBack)
             {
-                // Da togliere, necessario per fase debug
-                //Gameplay game = new Gameplay();
-                //XMLHandler.Write(game, Server, "~/App_Data/Data.XML");
-
+                //XMLHandler.Write(new Gameplay(), Server, "~/App_Data/Data.XML");
                 // Creates the gameplay and loads the first situation
                 _game = XMLHandler.Read(Server, "~/App_Data/Data.XML");
                 Session["player"] = _game.PlayerProfile;
@@ -284,6 +281,7 @@ namespace ProgettoPCTO
                 _game.PlayerProfile.Experience += 50;
                 _game.PlayerProfile.Health = _game.PlayerProfile.Health - hostile.Strength;
 
+                // Updates all labels
                 lblExperience.Text = "Esperienza: " + _game.PlayerProfile.Experience;
                 lblHealth.Text = "Salute: " + _game.PlayerProfile.Health;
                 lblStrength.Text = "Forza: " + _game.PlayerProfile.Strength;
@@ -315,6 +313,7 @@ namespace ProgettoPCTO
                 s.Name = s.Name.Replace(" misteriosa", "");
                 s.Description = "Il passaggio è aperto!";
 
+                // Checks if it is something that should be removed from the inventory
                 if(s.UnlockingItem == "Scala" || s.UnlockingItem == "Totem")
                 {
                     _game.PlayerProfile.Inventory.Remove(s.UnlockingItem);
@@ -341,11 +340,12 @@ namespace ProgettoPCTO
                     }
                 }
 
+                // Removes the action
                 s.Actions.Remove(selectedAction);
                 
-
                 _game[_currentAreaID] = s;
                 this.LoadSituation(_currentAreaID);
+
                 return true;
             }
             else
@@ -417,7 +417,8 @@ namespace ProgettoPCTO
         {
             if (!_game.Save(Server))
             {
-                Page.Response.Redirect("~/Errore.aspx", true);
+                txtStory.Text += "IMPOSSIBILE SALVARE I PROGRESSI.\n";
+                return;
             }
         }
 
@@ -428,7 +429,8 @@ namespace ProgettoPCTO
 
             if (_game == null)
             {
-                Page.Response.Redirect("~/Errore.aspx", true);
+                txtStory.Text += "NESSUN PROGRESSO SALVATO!\n";
+                return;
             }
 
             lstInventory.Items.Clear();

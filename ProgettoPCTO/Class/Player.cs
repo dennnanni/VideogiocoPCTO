@@ -28,9 +28,6 @@ namespace ProgettoPCTO
         [DataMember]
         public int Experience { get; set; }
 
-        [DataMember]
-        public Power Powers { get; set; }
-
         public string InventoryToString()
         {
             string s = "";

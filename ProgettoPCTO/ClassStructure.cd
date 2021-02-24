@@ -3,53 +3,28 @@
   <Class Name="ProgettoPCTO.Gameplay">
     <Position X="8.25" Y="4.5" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAIEAAAAAAAAgQAACAAAAAQAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <HashCode>AAIEAIBAAAAAhQgACAACAAQAAAAAAAAAAAAAAAgAAAA=</HashCode>
       <FileName>Gameplay.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ProgettoPCTO.Item">
     <Position X="0.5" Y="2.25" Width="2" />
-    <AssociationLine Name="Powers" Type="ProgettoPCTO.Power">
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.11" Y="0.177" />
-      </MemberNameLabel>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAQAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Class\Item.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Powers" />
-    </ShowAsAssociation>
-  </Class>
-  <Class Name="ProgettoPCTO.Power">
-    <Position X="0.75" Y="4.5" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAACAAAAAAgAAAAAAAAAAQAAABAAAAAEAAAAAAAQAA=</HashCode>
-      <FileName>Class\Power.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Orientation="Left" Position="0.2" />
   </Class>
   <Class Name="ProgettoPCTO.Player">
-    <Position X="5.5" Y="4.75" Width="2.25" />
-    <InheritanceLine Type="ProgettoPCTO.Character" FixedFromPoint="true">
-      <Path>
-        <Point X="6.625" Y="4.127" />
-        <Point X="6.625" Y="4.75" />
-      </Path>
-    </InheritanceLine>
+    <Position X="3.25" Y="4.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAgAAAQAgAAAAAAAAAAAABQAAABEAAAAAAAQAA=</HashCode>
+      <HashCode>AAAAAAAgAAAQAoAAAAAAAAAAAAAQAAAAEAAAAAAAQAA=</HashCode>
       <FileName>Class\Player.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Powers" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="ProgettoPCTO.Situation">
     <Position X="8.25" Y="0.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIAAgCAAIBAAAAAQAAACAAAAAAAEAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAIAAgCAAIBAAAAAQAAACAEAAAAAEAAAAAAAA=</HashCode>
       <FileName>Class\Situation.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -57,7 +32,7 @@
   <Class Name="ProgettoPCTO.Character">
     <Position X="5.75" Y="2.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAACAAAAAEAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Class\Character.cs</FileName>
     </TypeIdentifier>
   </Class>
