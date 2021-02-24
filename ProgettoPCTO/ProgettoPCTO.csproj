@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Data.XML" />
+    <Content Include="App_Data\SavedData.XML" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Img\Areas\area11u.png" />
@@ -94,14 +95,15 @@
     <Content Include="Img\Areas\area18.png" />
     <Content Include="Img\Areas\area18a.png" />
     <Content Include="Img\Areas\area18b.png" />
-    <Content Include="Img\Areas\area18u.png" />
+    <Content Include="Img\Areas\area18au.png" />
     <Content Include="Img\Areas\area19.png" />
     <Content Include="Img\Areas\area19a.png" />
     <Content Include="Img\Areas\area2.png" />
     <Content Include="Img\Areas\area10a.png" />
     <Content Include="Img\Areas\area20.png" />
     <Content Include="Img\Areas\area21.png" />
-    <Content Include="Img\Areas\area21a.png" />
+    <Content Include="Img\Areas\area21u.png" />
+    <Content Include="Img\Areas\area22.gif" />
     <Content Include="Img\Areas\area9a.png" />
     <Content Include="Img\Areas\area2a.png" />
     <Content Include="Img\Areas\area3.png" />
@@ -114,12 +116,13 @@
     <Content Include="Img\Areas\area8a.png" />
     <Content Include="Img\Areas\area9.png" />
     <Content Include="Img\Areas\area7.png" />
+    <Content Include="Img\Characters\character.png" />
     <Content Include="Img\Characters\creeper.png" />
-    <Content Include="Img\Characters\misteriouscharacter.png" />
     <Content Include="Img\Characters\skeleton.png" />
     <Content Include="Img\Characters\steve.png" />
     <Content Include="Img\Characters\zombie.png" />
     <Content Include="Img\Items\ladder.png" />
+    <Content Include="Img\Items\magictotem.png" />
     <Content Include="Img\Items\strengthpotion.png" />
     <Content Include="Img\Items\healthpotion.png" />
     <Content Include="Img\Items\pickaxe.png" />

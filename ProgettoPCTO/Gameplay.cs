@@ -35,11 +35,18 @@ namespace ProgettoPCTO
             _situations.Add(key, situation);
         }
 
+        [DataMember]
         public Dictionary<string, Situation> Situations
         {
             get => _situations;
             set => _situations = value;
         }
+
+        [DataMember]
+        public Player PlayerProfile { get; set; }
+        
+        [DataMember]
+        public string CurrentAreaID { get; set; }
 
         /// <summary>
         /// Indexer of the dictionary
@@ -64,9 +71,11 @@ namespace ProgettoPCTO
         }
 
 
-        // C'è bisogno di un config file, così fa discretamente schifo, per ora però può rimanere così
+        // DA TOGLIERE ALLA FINE DEL PROGETTO
         public void Initialize()
         {
+            PlayerProfile = new Player(URL: null);
+
             _situations["area1"] = new Situation(URL: @"~\Img\Areas\area1.png")
             {
                 Name = "ingresso",
@@ -125,7 +134,7 @@ namespace ProgettoPCTO
                         Height = 230,
                         Dialogue =  "Hai ucciso il creeper!\n",
                         EffectiveWeapon = "Spada",
-                        Damage = 5
+                        Strength = 5
 
                     }
                 },
@@ -244,8 +253,8 @@ namespace ProgettoPCTO
                     {
                         Name = "Piccone",
                         Description = "Serve per rompere la pietra!",
-                        X = 240,
-                        Y = 360,
+                        X = 380,
+                        Y = 280,
                         Width = 80,
                         Height = 60,
                         IsCollectable = true,
@@ -297,8 +306,8 @@ namespace ProgettoPCTO
                     {
                         Name = "Scala",
                         Description = "Puoi usarla per superare delle avversità.",
-                        X = 310,
-                        Y = 360,
+                        X = 430,
+                        Y = 300,
                         Width = 60,
                         Height = 60,
                         IsCollectable = true,
@@ -314,7 +323,7 @@ namespace ProgettoPCTO
             {
                 Name = "bivio",
                 Description = "Dove vuoi andare?\n",
-                Areas = new string[] { null, "area13a", "area11", "area13" },
+                Areas = new string[] { null, "area13", "area11", "area13a" },
             };
 
             _situations["area13"] = new Situation(URL: @"~\Img\Areas\area13.png")
@@ -335,13 +344,13 @@ namespace ProgettoPCTO
                 Areas = new string[] { null, null, "area12", null },
                 Entities = new List<Character>()
                 {
-                    new Character(URL: @"~\Img\Items\misteriouscharacter.png")
+                    new Character(URL: @"~\Img\Characters\character.png")
                     {
                         Name = "Personaggio misterioso",
                         Description = "Prova a parlargli",
-                        X = 250,
+                        X = 400,
                         Y = 160,
-                        Width = 220,
+                        Width = 120,
                         Height = 230,
                         Dialogue = "Non ti è stato detto cosa devi fare qui... Capisco... Devi trovare la chiave che ti " +
                             "permetterà di uscire. Io non l'ho mai trovata... rimarremo qui per sempre...",
@@ -358,9 +367,25 @@ namespace ProgettoPCTO
                 Areas = new string[] { "$area15", null, "area13", null },
                 Actions = new List<string>()
                 {
-                    "Apri il passaggio."
+                    "Apri il passaggio",
+                    "Raccogli la pozione della salute"
                 },
                 UnlockingItem = "Scala",
+                Items = new List<Item>()
+                {
+                    new Item(URL: @"~\Img\Items\healthpotion.png")
+                    {
+                        Name = "Pozione della salute",
+                        Description = "Restituisce 30 punti salute!",
+                        X = 240,
+                        Y = 360,
+                        Width = 60,
+                        Height = 60,
+                        IsCollectable = true,
+                        Effectiveness = 30,
+                        Dialogue = "Hai aggiunto Pozione della salute al tuo inventario.\n"
+                    }
+                }
             };
 
             _situations["area14a"] = new Situation(URL: @"~\Img\Areas\area14a.png")
@@ -394,11 +419,11 @@ namespace ProgettoPCTO
                         Description = "Uccidilo con la spada.",
                         X = 250,
                         Y = 160,
-                        Width = 220,
+                        Width = 200,
                         Height = 230,
                         Dialogue = "GRRRRR...\nHai ucciso zombie",
                         EffectiveWeapon = "Spada",
-                        Damage = 30
+                        Strength = 30
                     }
                 }
 
@@ -453,7 +478,7 @@ namespace ProgettoPCTO
                         Height = 230,
                         Dialogue = "Hai ucciso scheletro\n",
                         EffectiveWeapon = "Spada",
-                        Damage = 30
+                        Strength = 20
                     }
                 },
                 Items = new List<Item>()
@@ -464,10 +489,10 @@ namespace ProgettoPCTO
                         Description = "Puoi usarla per superare delle avversità.",
                         X = 310,
                         Y = 360,
-                        Width = 60,
-                        Height = 60,
+                        Width = 100,
+                        Height = 100,
                         IsCollectable = true,
-                        IsVisible = false,
+                        IsVisible = true,
                         Dialogue = "Hai aggiunto Scala al tuo inventario.\n"
 
                     }
@@ -476,9 +501,146 @@ namespace ProgettoPCTO
 
             _situations["area15"] = new Situation(URL: @"~\Img\Areas\area15.png")
             {
+                Name = "incroncio",
+                Description = "Puoi andare in tutte le direzioni.\n",
+                Areas = new string[] { "area16a", "area16b", "area14", "area16" },
+            };
+
+            _situations["area16"] = new Situation(URL: @"~\Img\Areas\area16.png")
+            {
                 Name = "percorso",
                 Description = "Continua ad esplorare oppure torna indietro.\n",
-                Areas = new string[] { null, null, "area14", null },
+                Areas = new string[] { "area17", null, "area15", null },
+            };
+
+            _situations["area16a"] = new Situation(URL: @"~\Img\Areas\area16a.png")
+            {
+                Name = "vicolo cieco",
+                Description = "Puoi solo tornare indietro...\n",
+                Actions = new List<string>()
+                {
+                    "Uccidi lo scheletro"
+                },
+                Areas = new string[] { null, null, "area15", null },
+                Entities = new List<Character>()
+                {
+                    new Character(URL: @"~\Img\Characters\skeleton.png")
+                    {
+                        Name = "Scheletro",
+                        Description = "Uccidilo con la spada.",
+                        X = 250,
+                        Y = 160,
+                        Width = 200,
+                        Height = 230,
+                        Dialogue = "Hai ucciso scheletro\n",
+                        EffectiveWeapon = "Spada",
+                        Strength = 15
+                    }
+                },
+            };
+
+            _situations["area16b"] = new Situation(URL: @"~\Img\Areas\area16b.png")
+            {
+                Name = "vicolo cieco",
+                Description = "Non è la tua giornata fortunata, torna indietro.\n",
+                Areas = new string[] { null, null, "area15", null },
+            };
+
+            _situations["area17"] = new Situation(URL: @"~\Img\Areas\area17.png")
+            {
+                Name = "muro misterioso",
+                Description = "Questo muro si potrebbe rompere con un piccone.\n",
+                Areas = new string[] { "$area18a", "area16", null, "area18" },
+                Actions = new List<string>()
+                {
+                    "Apri il passaggio"
+                },
+                UnlockingItem = "Piccone"
+
+            };
+
+            _situations["area18"] = new Situation(URL: @"~\Img\Areas\area18.png")
+            {
+                Name = "percorso",
+                Description = "Continua ad esplorare oppure torna indietro.\n",
+                Areas = new string[] { "area19", null, "area17", null },
+            };
+
+            _situations["area18a"] = new Situation(URL: @"~\Img\Areas\area18a.png")
+            {
+                Name = "luogo segreto",
+                Description = "Puoi proseguire solo utilizzando una scala...\n",
+                Areas = new string[] { null, "$area18b", "area17", null },
+                Actions = new List<string>()
+                {
+                    "Apri il passaggio"
+                },
+                UnlockingItem = "Scala"
+            };
+
+            _situations["area18b"] = new Situation(URL: @"~\Img\Areas\area18b.png")
+            {
+                Name = "vicolo cieco",
+                Description = "Questo vicolo cieco è speciale.\n",
+                Areas = new string[] { null, null, "area18a", null },
+                Actions = new List<string>()
+                {
+                    "Raccogli il totem magico"
+                },
+                Items = new List<Item>()
+                {
+                    new Item(URL: @"~\Img\Items\magictotem.png")
+                    {
+                        Name = "Totem magico",
+                        Description = "E' la chiave di tutto.\n",
+                        X = 350,
+                        Y = 190,
+                        Width = 120,
+                        Height = 60,
+                        Dialogue = "Hai aggiunto totem magico al tuo inventario.\n",
+
+                    }
+                }
+            };
+
+            _situations["area19"] = new Situation(URL: @"~\Img\Areas\area19.png")
+            {
+                Name = "bivio",
+                Description = "Continua ad esplorare oppure torna indietro.\n",
+                Areas = new string[] { null, "area19a", "area18", "area20" },
+            };
+
+            _situations["area19a"] = new Situation(URL: @"~\Img\Areas\area19a.png")
+            {
+                Name = "vicolo cieco",
+                Description = "Puoi solo tornare indietro... finiranno questi tempi bui.\n",
+                Areas = new string[] { null, null, "area19", null },
+            };
+
+            _situations["area20"] = new Situation(URL: @"~\Img\Areas\area20.png")
+            {
+                Name = "percorso",
+                Description = "Continua ad esplorare oppure torna indietro.\n",
+                Areas = new string[] { "area21", null, "area19", null },
+            };
+
+            _situations["area21"] = new Situation(URL: @"~\Img\Areas\area21.png")
+            {
+                Name = "porta misteriosa",
+                Description = "Questa porta si può aprire con un oggetto magico..\n",
+                Areas = new string[] { "area22", null, "area20", null },
+                Actions = new List<string>()
+                {
+                    "Apri la porta"
+                },
+                UnlockingItem = "Totem"
+            };
+
+            _situations["area22"] = new Situation(URL: @"~\Img\Areas\area22.gif")
+            {
+                Name = "VITTORIA",
+                Description = "Sei sopravvissuto!",
+                Areas = new string[] { null, null, null, null },
             };
         }
 
@@ -493,6 +655,63 @@ namespace ProgettoPCTO
             img.Style["top"] = e.Y + "px";
             img.ID = "img" + e.Name;
             return img;
+        }
+
+        /// <summary>
+        /// Saves the profile to make it possiblo to load it again
+        /// </summary>
+        /// <param name="server"></param>
+        /// <returns>If the saving process goes well returns true</returns>
+        public bool Save(HttpServerUtility server)
+        {
+            try
+            {
+                XMLHandler.Write(this, server, "~/App_Data/SavedData.XML");
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+
+            return true;
+            
+        }
+
+
+        /// <summary>
+        /// Loads the last saving, if there are no parameters in saving file, returns the initial game
+        /// </summary>
+        /// <param name="server"></param>
+        /// <returns>Saved game if there is, basic game if there isn't, null if problems show up</returns>
+        public Gameplay Restore(HttpServerUtility server)
+        {
+            try
+            {
+                return XMLHandler.Read(server, "~/App_Data/SavedData.XML");
+            }
+            catch (Exception ex)
+            {
+                return SetUp(server);
+            }
+
+        }
+
+        /// <summary>
+        /// Sets up the entire game
+        /// </summary>
+        /// <param name="server"></param>
+        /// <returns></returns>
+        public Gameplay SetUp(HttpServerUtility server)
+        {
+            try
+            {
+                return XMLHandler.Read(server, "~/App_Data/Data1.XML");
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
         }
     }
 }

@@ -13,6 +13,7 @@ namespace ProgettoPCTO
     [KnownType(typeof(Character))]
     public class Character : Entity
     {
+        private int _health = 100;
         
         public Character() : this(null)
         {
@@ -24,11 +25,28 @@ namespace ProgettoPCTO
         
         }
 
+
         [DataMember]
-        public int Damage { get; set; }
-       
+        public int Strength { get; set; }
+
         [DataMember]
-        public int Health { get; set; }
+        public int Health
+        {
+            get
+            {
+                return _health;
+            }
+
+            set
+            {
+                _health = value;
+                if (_health > 100)
+                    _health = 100;
+                else if (_health <= 0)
+                    throw new Exception("Sei morto.");
+                
+            }
+        }
 
     }
 }

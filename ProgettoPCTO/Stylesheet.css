@@ -104,3 +104,27 @@ body {
     top: 20px;
     left: 0px;
 }
+
+#lblStrength {
+    position: absolute;
+    top: 40px;
+    left: 0px;
+}
+
+#btnSave {
+    position: absolute;
+    top: 640px;
+    left: 650px;
+}
+
+#btnRestart {
+    position: absolute;
+    top: 520px;
+    left: 650px;
+}
+
+#btnLoad {
+    position: absolute;
+    top: 580px;
+    left: 650px;
+}

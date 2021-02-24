@@ -18,16 +18,15 @@ namespace ProgettoPCTO
         {
             Inventory = new Dictionary<string, Item>();
             Health = 100;
+            Strength = 50;
         }
+
 
         [DataMember]
         public int Armor { get; set; }
 
         [DataMember]
         public int Experience { get; set; }
-
-        [DataMember]
-        public int Strength { get; set; }
 
         [DataMember]
         public Power Powers { get; set; }
@@ -45,6 +44,9 @@ namespace ProgettoPCTO
         {
             if (Inventory.Count == 4)
                 throw new Exception("L'inventario è pieno! Lascia un oggetto per poter raccogliere " + item.Name + "\n");
+
+            if (Inventory.ContainsKey(item.Name))
+                throw new Exception("Non puoi avere due oggetti dello stesso tipo nell'inventario.\n");
 
             Inventory.Add(item.Name, item);
         }
@@ -72,7 +74,9 @@ namespace ProgettoPCTO
 
         public string Strengthen(int val)
         {
-            this.Strength += val;
+            int forza = Strength;
+            int forzaaumentata = forza + val;
+            Strength = forzaaumentata;
             return "Hai aumentato la tua forza.";
         }
     }
