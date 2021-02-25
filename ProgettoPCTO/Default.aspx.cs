@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 namespace ProgettoPCTO
 {
-    enum Cardinals : int { North, East, South, West }
+    enum Cardinals : int { Avanti, Destra, Indietro, Sinistra }
     public partial class Default : System.Web.UI.Page
     {
         private Gameplay _game = null;

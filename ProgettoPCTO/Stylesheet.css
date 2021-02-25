@@ -32,25 +32,25 @@ body {
     left: 10px;
 }
 
-#btnNorth {
+#btnAvanti {
     position: absolute;
     top: 0px;
     left: 55px;
 }
 
-#btnEast {
+#btnDestra {
     position: absolute;
     top: 60px;
     left: 110px;
 }
 
-#btnSouth {
+#btnIndietro {
     position: absolute;
     top: 120px;
     left: 55px;
 }
 
-#btnWest {
+#btnSinistra {
     position: absolute;
     top: 60px;
     left: 0px;

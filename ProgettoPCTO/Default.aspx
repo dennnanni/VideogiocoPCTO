@@ -18,10 +18,10 @@
             <ContentTemplate>
                 <asp:Panel ID="pnlImages" runat="server" Width="850" Height="500"></asp:Panel>
                 <asp:Panel ID="pnlCardinals" runat="server" Width="210" Height="170px">
-                    <asp:Button ID="btnNorth" runat="server" Width="100" Height="50" Text="North" OnClick="btnCardinal_Click"/>
-                    <asp:Button ID="btnEast" runat="server" Width="100" Height="50" Text="East" OnClick="btnCardinal_Click"/>
-                    <asp:Button ID="btnSouth" runat="server" Width="100" Height="50" Text="South" OnClick="btnCardinal_Click"/>
-                    <asp:Button ID="btnWest" runat="server" Width="100" Height="50" Text="West" OnClick="btnCardinal_Click"/>
+                    <asp:Button ID="btnAvanti" runat="server" Width="100" Height="50" Text="Avanti" OnClick="btnCardinal_Click"/>
+                    <asp:Button ID="btnDestra" runat="server" Width="100" Height="50" Text="Destra" OnClick="btnCardinal_Click"/>
+                    <asp:Button ID="btnIndietro" runat="server" Width="100" Height="50" Text="Indietro" OnClick="btnCardinal_Click"/>
+                    <asp:Button ID="btnSinistra" runat="server" Width="100" Height="50" Text="Sinistra" OnClick="btnCardinal_Click"/>
                 </asp:Panel>
                 <asp:TextBox ID="txtStory" runat="server" TextMode="MultiLine" Width="420" Height="430" ReadOnly="True"></asp:TextBox>
                 <asp:DropDownList ID="drpActions" runat="server" Width="330" Height="50"/>

@@ -60,40 +60,40 @@ namespace ProgettoPCTO
         protected global::System.Web.UI.WebControls.Panel pnlCardinals;
 
         /// <summary>
-        /// Controllo btnNorth.
+        /// Controllo btnAvanti.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnNorth;
+        protected global::System.Web.UI.WebControls.Button btnAvanti;
 
         /// <summary>
-        /// Controllo btnEast.
+        /// Controllo btnDestra.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEast;
+        protected global::System.Web.UI.WebControls.Button btnDestra;
 
         /// <summary>
-        /// Controllo btnSouth.
+        /// Controllo btnIndietro.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSouth;
+        protected global::System.Web.UI.WebControls.Button btnIndietro;
 
         /// <summary>
-        /// Controllo btnWest.
+        /// Controllo btnSinistra.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnWest;
+        protected global::System.Web.UI.WebControls.Button btnSinistra;
 
         /// <summary>
         /// Controllo txtStory.
