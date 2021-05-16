@@ -25,6 +25,8 @@ namespace ProgettoPCTO
         
         }
 
+        [DataMember]
+        public int IdCharacter { get; set; }
 
         [DataMember]
         public int Strength { get; set; }

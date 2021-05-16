@@ -27,6 +27,9 @@ namespace ProgettoPCTO
         }
 
         [DataMember]
+        public int IdSituation { get; set; }
+
+        [DataMember]
         public string Description { get; set; }
 
         [DataMember]

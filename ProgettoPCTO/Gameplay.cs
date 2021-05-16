@@ -46,6 +46,9 @@ namespace ProgettoPCTO
         
         [DataMember]
         public string CurrentAreaID { get; set; }
+        
+        [DataMember]
+        public int IdGameplay { get; set; }
 
         /// <summary>
         /// Indexer of the dictionary

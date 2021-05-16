@@ -17,6 +17,9 @@ namespace ProgettoPCTO
         }
 
         [DataMember]
+        public int IdItem { get; set; }
+
+        [DataMember]
         public bool IsCollectable { get; set; } = true;
 
         [DataMember]

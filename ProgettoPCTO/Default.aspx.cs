@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+using System.Data.SqlClient;
+
 namespace ProgettoPCTO
 {
     enum Cardinals : int { Avanti, Destra, Indietro, Sinistra }
@@ -17,7 +19,8 @@ namespace ProgettoPCTO
         private string[] _hostileEntitiesNames = { "creeper", "zombie", "scheletro" };
         private string[] _friendEntitesNames = { "steve", "personaggio misterioso" };
         private string[] _weaponsNames = { "spada", "piccone" };
-        private string selectedAction = "";
+        private string _selectedAction = ""; // Back up from the drop down list
+        private string _username = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -27,7 +30,7 @@ namespace ProgettoPCTO
                 _game = new Gameplay().SetUp(Server);
                 Session["player"] = _game.PlayerProfile;
                 Session["gameplay"] = _game;
-                selectedAction = drpActions.SelectedValue;
+                _selectedAction = drpActions.SelectedValue;
                 _currentSituation = _game["area1"];
                 this.LoadSituation("area1");
             }
@@ -36,7 +39,7 @@ namespace ProgettoPCTO
                 // Restores last changes 
                 _game = (Gameplay)Session["gameplay"];
                 _game.PlayerProfile = (Player)Session["player"];
-                selectedAction = drpActions.SelectedValue;
+                _selectedAction = drpActions.SelectedValue;
                 _currentSituation = _game[_game.CurrentAreaID];
                 this.LoadSituation(_game.CurrentAreaID);
 
@@ -160,7 +163,7 @@ namespace ProgettoPCTO
         protected void btnDo_Click(object sender, EventArgs e)
         {
             // If nothing is selected or there are no entities to interact with, the method does nothing
-            if (selectedAction == "")
+            if (_selectedAction == "")
                 return;
 
             Entity entity = null;
@@ -169,7 +172,7 @@ namespace ProgettoPCTO
                 // Search for the character that fits the action (it is possible to have only one entity of the 
                 // same type in a situation so there's no problem of ambiguity)
                 foreach(Character c in _currentSituation.Entities)
-                    if(selectedAction.ToLower().Contains(c.Name.ToLower()))
+                    if(_selectedAction.ToLower().Contains(c.Name.ToLower()))
                     {
                         entity = c;
                         break;
@@ -178,7 +181,7 @@ namespace ProgettoPCTO
             if(_currentSituation.Items != null)
                 // Search for the item that fits the action (same of above)
                 foreach(Item i in _currentSituation.Items)
-                    if (selectedAction.ToLower().Contains(i.Name.ToLower()))
+                    if (_selectedAction.ToLower().Contains(i.Name.ToLower()))
                     {
                         entity = i;
                         break;
@@ -213,16 +216,16 @@ namespace ProgettoPCTO
                 txtStory.Text += entity.Dialogue;
             }
 
-            if (selectedAction.ToLower().Contains("apri"))
+            if (_selectedAction.ToLower().Contains("apri"))
             {
                 if (!SituationHandler())
                     return;
             }
 
-            _game[_currentAreaID].Actions.Remove(selectedAction);
+            _game[_currentAreaID].Actions.Remove(_selectedAction);
 
             // Removes the action from the action list
-            drpActions.Items.Remove(selectedAction);
+            drpActions.Items.Remove(_selectedAction);
 
             _game.CurrentAreaID = _currentAreaID;
             Session["gameplay"] = _game;
@@ -364,7 +367,7 @@ namespace ProgettoPCTO
                 }
 
                 // Removes the action
-                s.Actions.Remove(selectedAction);
+                s.Actions.Remove(_selectedAction);
                 
                 _game[_currentAreaID] = s;
                 this.LoadSituation(_currentAreaID);
@@ -473,7 +476,7 @@ namespace ProgettoPCTO
             // Stores the gameplay structure
             Session["gameplay"] = _game;
             Session["player"] = _game.PlayerProfile;
-            selectedAction = drpActions.SelectedValue;
+            _selectedAction = drpActions.SelectedValue;
             _currentSituation = _game[_game.CurrentAreaID];
 
             this.LoadSituation(_game.CurrentAreaID);
@@ -489,7 +492,7 @@ namespace ProgettoPCTO
             _currentAreaID = "area0";
             _game.CurrentAreaID = "area1";
             Session["player"] = _game.PlayerProfile;
-            selectedAction = drpActions.SelectedValue;
+            _selectedAction = drpActions.SelectedValue;
             _currentSituation = _game["area1"];
             Session["gameplay"] = _game;
             foreach (Control b in pnlCardinals.Controls)
