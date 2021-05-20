@@ -48,8 +48,8 @@ CREATE TABLE Image(
 	Width INT,
 	Heigth INT,
 	Dialogue VARCHAR(100),
-	IsCharacter BIT,
-	IsItem BIT,
+	IsCharacter BIT DEFAULT 0,
+	IsItem BIT DEFAULT 0,
 	IDSituation INT REFERENCES Situation(IDSituation)
 );
 
@@ -65,7 +65,6 @@ CREATE TABLE Item(
 CREATE TABLE Character(
 	IDCharacter INT PRIMARY KEY NOT NULL IDENTITY(1,1),
 	Strength INT CHECK(Strength >= 0),
-	Health INT CHECK(Health >= 0),
 	IsVisible BIT NOT NULL,
 	EffectiveWeapon CHAR(15),
 	IDImage INT REFERENCES Image(IDImage) ON DELETE CASCADE ON UPDATE CASCADE
@@ -73,6 +72,7 @@ CREATE TABLE Character(
 
 CREATE TABLE Player(
 	IDCharacter INT PRIMARY KEY NOT NULL REFERENCES Character(IDCharacter),
+	Health INT CHECK(Health >= 0),
 	Armor INT CHECK(Armor >= 0),
 	Experience INT CHECK(Experience >= 0),
 	IDGameplay INT REFERENCES Gameplay(IDGameplay) ON DELETE CASCADE ON UPDATE CASCADE

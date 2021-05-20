@@ -12,6 +12,8 @@ namespace ProgettoPCTO
     [DataContract]
     public class Player : Character
     {
+        private int _health;
+
         public Player() : this(null) { }
 
         public Player(string URL) : base(URL)
@@ -21,6 +23,24 @@ namespace ProgettoPCTO
             Strength = 50;
         }
 
+        [DataMember]
+        public int Health
+        {
+            get
+            {
+                return _health;
+            }
+
+            set
+            {
+                _health = value;
+                if (_health > 100)
+                    _health = 100;
+                else if (_health <= 0)
+                    throw new Exception("Sei morto.");
+
+            }
+        }
 
         [DataMember]
         public int Armor { get; set; }

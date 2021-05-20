@@ -277,7 +277,11 @@ namespace ProgettoPCTO
                 // Write gameplay associated with the account
                 InsertGameplay(username, g, conn);
                 InsertSituation(g.IdGameplay, g.Situations, conn);
-
+                foreach(Situation s in g.Situations.Values)
+                {
+                    InsertCharacterAndImage(s.IdSituation, g, conn);
+                    InsertItemAndImage()
+                }
             }
         }
 
@@ -328,9 +332,37 @@ namespace ProgettoPCTO
             }
         }
 
-        private void InsertImagesAndEntities(int idSituation, Gameplay g, SqlConnection conn)
+        private void InsertCharacterAndImage(int idSituation, List<Entity> entities, SqlConnection conn)
         {
+            foreach(Entity e in entities)
+            {
+                SqlCommand insertImage = new SqlCommand(@"INSERT INTO Image(Name, Description, X, Y, ImageURL, Width, Height, Dialogue, IDSituation)
+                                                          VALUES (@Name, @Description, @X, @Y, @ImageURL, @Width, @Height, @Dialogue, @IdSituation);", conn);
 
+                SqlCommand insertChar = new SqlCommand(@"INSERT INTO Character VALUES (@Strength, @IsVisible, @EffectiveWeapon, @IDImage);", conn);
+
+                insertImage.Parameters.AddWithValue("@Name", e.Name);
+                insertImage.Parameters.AddWithValue("@Description", e.Description);
+                insertImage.Parameters.AddWithValue("@X", e.X);
+                insertImage.Parameters.AddWithValue("@Y", e.Y);
+                insertImage.Parameters.AddWithValue("@ImageURL", e.ImageURL);
+                insertImage.Parameters.AddWithValue("@Width", e.Width);
+                insertImage.Parameters.AddWithValue("@Height", e.Height);
+                insertImage.Parameters.AddWithValue("@Dialogue", e.Dialogue);
+                insertImage.Parameters.AddWithValue("@IsCharacter", true);
+                insertImage.Parameters.AddWithValue("@IdSituation", idSituation);
+
+                insertImage.ExecuteNonQuery();
+                insertImage.Dispose();
+
+                insertChar.Parameters.AddWithValue("@Strength", e.Strength);
+                insertChar.Parameters.AddWithValue("@IsVisible", e.Strength);
+                insertChar.Parameters.AddWithValue("@EffectiveWeapon", e.EffectiveWeapon);
+                insertChar.Parameters.AddWithValue("@IDImage", e.IdCharacter);
+
+                insertChar.ExecuteNonQuery();
+                insertChar.Dispose();
+            }
         }
 
 

@@ -31,24 +31,6 @@ namespace ProgettoPCTO
         [DataMember]
         public int Strength { get; set; }
 
-        [DataMember]
-        public int Health
-        {
-            get
-            {
-                return _health;
-            }
-
-            set
-            {
-                _health = value;
-                if (_health > 100)
-                    _health = 100;
-                else if (_health <= 0)
-                    throw new Exception("Sei morto.");
-                
-            }
-        }
 
     }
 }
