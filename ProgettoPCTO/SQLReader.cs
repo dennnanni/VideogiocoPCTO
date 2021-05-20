@@ -275,11 +275,63 @@ namespace ProgettoPCTO
             using(SqlConnection conn = new SqlConnection(_connectionString))
             {
                 // Write gameplay associated with the account
-               
+                InsertGameplay(username, g, conn);
+                InsertSituation(g.IdGameplay, g.Situations, conn);
+
             }
         }
 
-        public void InsertAccount()
+        public void InsertAccount(string username, string password)
+        {
+            using(SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                SqlCommand insert = new SqlCommand(@"INSERT INTO Account VALUES (@Username, @Password);", conn);
+
+                insert.Parameters.AddWithValue("@Username", username);
+                insert.Parameters.AddWithValue("@Password", Helper.HashPassword(password));
+
+                insert.ExecuteNonQuery();
+            }
+        }
+
+        private void InsertGameplay(string username, Gameplay g, SqlConnection conn)
+        {
+            SqlCommand insert = new SqlCommand(@"INSERT INTO Gameplay VALUES (@CurrentArea, @Username);", conn);
+
+            insert.Parameters.AddWithValue("@Username", username);
+            insert.Parameters.AddWithValue("@CurrentArea", g.CurrentAreaID);
+
+            insert.ExecuteNonQuery();
+        }
+
+        private void InsertSituation(int idGameplay, Dictionary<string, Situation> situations, SqlConnection conn)
+        {
+            foreach(KeyValuePair<string, Situation> el in situations)
+            {
+                SqlCommand insert = new SqlCommand(@"INSERT INTO Situation 
+                                                     VALUES (@Title, @Name, @Description, @ImageURL, @UnlockingItem, 
+                                                     @IdGameplay, @IdForward, @IdRight, @IdBackward, @IdLeft);", conn);
+
+                insert.Parameters.AddWithValue("@Title", el.Key);
+                insert.Parameters.AddWithValue("@Name", el.Value.Name);
+                insert.Parameters.AddWithValue("@Description", el.Value.Description);
+                insert.Parameters.AddWithValue("@ImageURL", el.Value.ImageURL);
+                insert.Parameters.AddWithValue("@UnlockingItem", el.Value.UnlockingItem);
+                insert.Parameters.AddWithValue("@IdGameplay", idGameplay);
+                insert.Parameters.AddWithValue("@IdForward", el.Value.Areas[0]);
+                insert.Parameters.AddWithValue("@IdRight", el.Value.Areas[1]);
+                insert.Parameters.AddWithValue("@IdBackward", el.Value.Areas[2]);
+                insert.Parameters.AddWithValue("@IdLeft", el.Value.Areas[3]);
+
+                insert.ExecuteNonQuery();
+                insert.Dispose();
+            }
+        }
+
+        private void InsertImagesAndEntities(int idSituation)
+        {
+
+        }
 
 
         #endregion
