@@ -279,6 +279,8 @@ namespace ProgettoPCTO
             }
         }
 
+        public void InsertAccount()
+
 
         #endregion
 
