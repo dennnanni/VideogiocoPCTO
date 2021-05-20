@@ -108,7 +108,7 @@ namespace ProgettoPCTO
             if (idPlayer == -1)
                 return null;
 
-            SqlCommand select = new SqlCommand(@"SELECT I.Name, I.Description, I.X, I.Y, I.ImageURL, I.Width, I.Height,
+            SqlCommand select = new SqlCommand(@"SELECT I.IDImage, I.Name, I.Description, I.X, I.Y, I.ImageURL, I.Width, I.Height,
                                                         I.Dialogue, IT.IsCollectable, IT.IsVisible, IT.Effectiveness
                                                  FROM Item AS IT INNER JOIN 
                                                       Image AS I ON IT.IDImage = I.IDImage
@@ -123,6 +123,7 @@ namespace ProgettoPCTO
             {
                 dict.Add(reader["Name"].ToString().TrimEnd(null), new Item(reader["ImageURL"].ToString().TrimEnd(null))
                 {
+                    IdImage = int.Parse(reader["IDImage"].ToString().TrimEnd(null)),
                     Name = reader["Name"].ToString().TrimEnd(null),
                     Description = reader["Description"].ToString().TrimEnd(null),
                     X = int.Parse(reader["X"].ToString().TrimEnd(null)),
@@ -143,7 +144,7 @@ namespace ProgettoPCTO
         #region Select of characters and items
         private Player ReadPlayer(int idGameplay, SqlConnection conn)
         {
-            SqlCommand select = new SqlCommand(@"SELECT C.Strength, C.Health, C.IsVisible, P.IDPlayer, P.Armor, P.Experience
+            SqlCommand select = new SqlCommand(@"SELECT C.Strength, C.IsVisible, P.IDPlayer, P.Armor, P.Health, P.Experience
                                                  FROM Player AS P INNER JOIN 
                                                       Character AS C ON P.IDPlayer = C.IDCharacter
                                                  WHERE I.IDGameplay = @Id", conn);
@@ -171,7 +172,7 @@ namespace ProgettoPCTO
 
         private List<Character> ReadCharacters(int idSituation, SqlConnection conn)
         {
-            SqlCommand select = new SqlCommand(@"SELECT I.Name, I.Description, I.X, I.Y, I.ImageURL, I.Width, I.Height,
+            SqlCommand select = new SqlCommand(@"SELECT I.IDImage, I.Name, I.Description, I.X, I.Y, I.ImageURL, I.Width, I.Height,
                                                         I.Dialogue, C.Health, C.Strength, C.IsVisible, C.EffectiveWeapon
                                                  FROM Image AS I INNER JOIN 
                                                       Character AS C ON I.IDImage = C.IDImage
@@ -185,6 +186,7 @@ namespace ProgettoPCTO
             {
                 list.Add(new Character(reader["ImageURL"].ToString().TrimEnd(null))
                 {
+                    IdImage = int.Parse(reader["IDImage"].ToString().TrimEnd(null)),
                     IdCharacter = int.Parse(reader["IDCharacter"].ToString().TrimEnd(null)),
                     Name = reader["Name"].ToString().TrimEnd(null),
                     Description = reader["Description"].ToString().TrimEnd(null),
@@ -193,7 +195,6 @@ namespace ProgettoPCTO
                     Width = int.Parse(reader["Width"].ToString().TrimEnd(null)),
                     Height = int.Parse(reader["Height"].ToString().TrimEnd(null)),
                     Dialogue = reader["Dialogue"].ToString().TrimEnd(null),
-                    Health = int.Parse(reader["Health"].ToString().TrimEnd(null)),
                     Strength = int.Parse(reader["Strength"].ToString().TrimEnd(null)),
                     IsVisible = int.Parse(reader["IsVisible"].ToString().TrimEnd(null)) != 0,
                     EffectiveWeapon = reader["EffectiveWeapon"].ToString().TrimEnd(null)
@@ -207,7 +208,7 @@ namespace ProgettoPCTO
 
         private List<Item> ReadItems(int idSituation, SqlConnection conn)
         {
-            SqlCommand select = new SqlCommand(@"SELECT I.Name, I.Description, I.X, I.Y, I.ImageURL, I.Width, I.Height,
+            SqlCommand select = new SqlCommand(@"SELECT I.IDImage, I.Name, I.Description, I.X, I.Y, I.ImageURL, I.Width, I.Height,
                                                         I.Dialogue, IT.IsCollectable, IT.IsVisible, IT.Effectiveness
                                                  FROM Image AS I INNER JOIN 
                                                       Item AS IT ON I.IDImage = IT.IDImage
@@ -221,6 +222,7 @@ namespace ProgettoPCTO
             {
                 list.Add(new Item(reader["ImageURL"].ToString().TrimEnd(null))
                 {
+                    IdImage = int.Parse(reader["IDImage"].ToString().TrimEnd(null)),
                     IdItem = int.Parse(reader["IDCharacter"].ToString().TrimEnd(null)),
                     Name = reader["Name"].ToString().TrimEnd(null),
                     Description = reader["Description"].ToString().TrimEnd(null),
@@ -279,8 +281,8 @@ namespace ProgettoPCTO
                 InsertSituation(g.IdGameplay, g.Situations, conn);
                 foreach(Situation s in g.Situations.Values)
                 {
-                    InsertCharacterAndImage(s.IdSituation, g, conn);
-                    InsertItemAndImage()
+                    List<Entity> entities = new List<Entity>(s.Entities);
+                    entities.AddRange(s.Items);
                 }
             }
         }
@@ -306,6 +308,11 @@ namespace ProgettoPCTO
             insert.Parameters.AddWithValue("@CurrentArea", g.CurrentAreaID);
 
             insert.ExecuteNonQuery();
+        }
+
+        private void InsertPlayer(int idGameplay, Player p, SqlConnection conn)
+        {
+            SqlCommand insert = new SqlCommand(@"INSERT INTO Player VALUES (@Health, @Armor, @Experience, @IDGameplay);", conn);
         }
 
         private void InsertSituation(int idGameplay, Dictionary<string, Situation> situations, SqlConnection conn)
@@ -339,8 +346,6 @@ namespace ProgettoPCTO
                 SqlCommand insertImage = new SqlCommand(@"INSERT INTO Image(Name, Description, X, Y, ImageURL, Width, Height, Dialogue, IDSituation)
                                                           VALUES (@Name, @Description, @X, @Y, @ImageURL, @Width, @Height, @Dialogue, @IdSituation);", conn);
 
-                SqlCommand insertChar = new SqlCommand(@"INSERT INTO Character VALUES (@Strength, @IsVisible, @EffectiveWeapon, @IDImage);", conn);
-
                 insertImage.Parameters.AddWithValue("@Name", e.Name);
                 insertImage.Parameters.AddWithValue("@Description", e.Description);
                 insertImage.Parameters.AddWithValue("@X", e.X);
@@ -349,19 +354,28 @@ namespace ProgettoPCTO
                 insertImage.Parameters.AddWithValue("@Width", e.Width);
                 insertImage.Parameters.AddWithValue("@Height", e.Height);
                 insertImage.Parameters.AddWithValue("@Dialogue", e.Dialogue);
-                insertImage.Parameters.AddWithValue("@IsCharacter", true);
                 insertImage.Parameters.AddWithValue("@IdSituation", idSituation);
 
                 insertImage.ExecuteNonQuery();
                 insertImage.Dispose();
 
-                insertChar.Parameters.AddWithValue("@Strength", e.Strength);
-                insertChar.Parameters.AddWithValue("@IsVisible", e.Strength);
-                insertChar.Parameters.AddWithValue("@EffectiveWeapon", e.EffectiveWeapon);
-                insertChar.Parameters.AddWithValue("@IDImage", e.IdCharacter);
+                if(e.GetType() == typeof(Character))
+                {
+                    Character c = (Character)e;
+                    SqlCommand update = new SqlCommand(@"UPDATE Character SET IsCharacter = 1;", conn);
 
-                insertChar.ExecuteNonQuery();
-                insertChar.Dispose();
+                    SqlCommand insertChar = new SqlCommand("INSERT INTO Character VALUES (@Strength, @IsVisible, @EffectiveWeapon, @IDImage);", conn);
+
+                    insertChar.Parameters.AddWithValue("@Strength", c.Strength);
+                    insertChar.Parameters.AddWithValue("@IsVisbile", c.IsVisible);
+                    insertChar.Parameters.AddWithValue("@EffectiveWeapon", c.EffectiveWeapon);
+                    insertChar.Parameters.AddWithValue("@IDImage", c.IdCharacter);
+                }
+                else if (e.GetType() == typeof(Item))
+                {
+                    SqlCommand update = new SqlCommand(@"UPDATE Character SET IsItem = 1;", conn);
+
+                }
             }
         }
 

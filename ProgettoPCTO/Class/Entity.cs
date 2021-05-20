@@ -20,6 +20,9 @@ namespace ProgettoPCTO
         }
 
         [DataMember]
+        public int IdImage { get; set; }
+
+        [DataMember]
         public int X { get; set; }
 
         [DataMember]
