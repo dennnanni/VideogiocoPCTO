@@ -328,7 +328,7 @@ namespace ProgettoPCTO
             }
         }
 
-        private void InsertImagesAndEntities(int idSituation)
+        private void InsertImagesAndEntities(int idSituation, Gameplay g, SqlConnection conn)
         {
 
         }
