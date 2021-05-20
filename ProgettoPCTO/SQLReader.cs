@@ -14,6 +14,8 @@ namespace ProgettoPCTO
             _connectionString = connectionString;
         }
 
+        #region Reader
+
         public Gameplay ReadData(string username)
         {
             Gameplay g = new Gameplay();
@@ -260,6 +262,30 @@ namespace ProgettoPCTO
             reader.Close();
             return list;
         }
+
+        #endregion
+
+        #region Writer
+        /* 
+         * To Do List:
+         * Character, Item, Player, Action, Gameplay, Account, Image
+         */
+        public void WriteData(string username, Gameplay g)
+        {
+            using(SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                // Write gameplay associated with the account
+               
+            }
+        }
+
+
+        #endregion
+
+
+        #region Updater
+
+        #endregion
     }
 
 }
