@@ -1,1 +1,1138 @@
-﻿
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Gameplay xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/ProgettoPCTO">
+  <CurrentAreaID i:nil="true" />
+  <IdGameplay>0</IdGameplay>
+  <PlayerProfile>
+    <Description i:nil="true" />
+    <Dialogue i:nil="true" />
+    <EffectiveWeapon i:nil="true" />
+    <Height>0</Height>
+    <IdImage>0</IdImage>
+    <ImageURL i:nil="true" />
+    <Inventory xmlns:d3p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    <IsVisible>true</IsVisible>
+    <Name i:nil="true" />
+    <Width>0</Width>
+    <X>0</X>
+    <Y>0</Y>
+    <IdCharacter>0</IdCharacter>
+    <Strength>50</Strength>
+    <Armor>0</Armor>
+    <Experience>0</Experience>
+    <Health>100</Health>
+  </PlayerProfile>
+  <Situations xmlns:d2p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area1</d2p1:Key>
+      <d2p1:Value>
+        <Actions>
+          <d2p1:string>Parla con Steve</d2p1:string>
+        </Actions>
+        <Areas>
+          <d2p1:string>area2</d2p1:string>
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Benvenuto, da qui inizia la tua avventura.
+</Description>
+        <Entities>
+          <Character>
+            <Description>Parla con lui per scoprire cosa vuole dirti.</Description>
+            <Dialogue>"Io sono Steve e sarò la tua guida per le prime parti di questa avventura. Adesso ti spiegherò come utilizzare l'interfaccia:
+- Puoi muoverti nel gioco con i pulsanti in basso a sinistra in cui sono indicate le direzioni in cui puoi proseguire. Alcuni passaggi saranno chiusi e ti serviranno degli oggetti per poterli aprire.
+- Puoi trovare le azioni che puoi svolgere nell'ambiente qui sotto, premi "Agisci" per svolgere l'azione selezionata.
+ - Potrai trovare oggetti nella tua strada, alcuni ti permetteranno di aprire passaggi e altri ti proteggeranno. Un oggetto può essere messo nell'inventario attraverso l'azione, se questo non è già pieno; se dovesse esserlo, potrai scegliere un oggetto da lasciare. Gli oggetti scompaiono se lasciati, quindi fai attenzione!
+- Incontrerai delle entità nel tuo cammino, alcune amiche, altre nemiche, scoprirai cosa vogliono da te."
+Per iniziare, spostati all'interno del labirinto.
+</Dialogue>
+            <EffectiveWeapon i:nil="true" />
+            <Height>230</Height>
+            <IdImage>0</IdImage>
+            <ImageURL>~\Img\Characters\steve.png</ImageURL>
+            <Inventory i:nil="true" />
+            <IsVisible>true</IsVisible>
+            <Name>Steve</Name>
+            <Width>110</Width>
+            <X>320</X>
+            <Y>160</Y>
+            <IdCharacter>0</IdCharacter>
+            <Strength>0</Strength>
+          </Character>
+        </Entities>
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area1.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>ingresso</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area2</d2p1:Key>
+      <d2p1:Value>
+        <Actions>
+          <d2p1:string>Raccogli la spada</d2p1:string>
+          <d2p1:string>Uccidi il creeper</d2p1:string>
+        </Actions>
+        <Areas>
+          <d2p1:string>area3</d2p1:string>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area1</d2p1:string>
+          <d2p1:string>area2a</d2p1:string>
+        </Areas>
+        <Description i:nil="true" />
+        <Entities>
+          <Character>
+            <Description>Uccidilo con la spada.</Description>
+            <Dialogue>Hai ucciso il creeper!
+</Dialogue>
+            <EffectiveWeapon>Spada</EffectiveWeapon>
+            <Height>230</Height>
+            <IdImage>0</IdImage>
+            <ImageURL>~\Img\Characters\creeper.png</ImageURL>
+            <Inventory i:nil="true" />
+            <IsVisible>true</IsVisible>
+            <Name>Creeper</Name>
+            <Width>220</Width>
+            <X>250</X>
+            <Y>160</Y>
+            <IdCharacter>0</IdCharacter>
+            <Strength>5</Strength>
+          </Character>
+        </Entities>
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area2.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items>
+          <Item>
+            <Description>Usala per uccidere i tuoi nemici.</Description>
+            <Dialogue>Hai aggiunto Spada al tuo inventario!
+</Dialogue>
+            <EffectiveWeapon i:nil="true" />
+            <Height>90</Height>
+            <IdImage>0</IdImage>
+            <ImageURL>~\Img\Items\sword.png</ImageURL>
+            <Inventory i:nil="true" />
+            <IsVisible>true</IsVisible>
+            <Name>Spada</Name>
+            <Width>100</Width>
+            <X>440</X>
+            <Y>360</Y>
+            <Effectiveness>0</Effectiveness>
+            <IdItem>0</IdItem>
+            <IsCollectable>true</IsCollectable>
+          </Item>
+        </Items>
+        <Name>interno</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area2a</d2p1:Key>
+      <d2p1:Value>
+        <Actions>
+          <d2p1:string>Raccogli la pozione della salute</d2p1:string>
+        </Actions>
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area2</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>L'unica soluzione è tornare indietro...
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area2a.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items>
+          <Item>
+            <Description>Restituisce 30 punti salute!</Description>
+            <Dialogue>Hai aggiunto Pozione della salute al tuo inventario.
+</Dialogue>
+            <EffectiveWeapon i:nil="true" />
+            <Height>60</Height>
+            <IdImage>0</IdImage>
+            <ImageURL>~\Img\Items\healthpotion.png</ImageURL>
+            <Inventory i:nil="true" />
+            <IsVisible>true</IsVisible>
+            <Name>Pozione della salute</Name>
+            <Width>60</Width>
+            <X>240</X>
+            <Y>360</Y>
+            <Effectiveness>30</Effectiveness>
+            <IdItem>0</IdItem>
+            <IsCollectable>true</IsCollectable>
+          </Item>
+        </Items>
+        <Name>vicolo cieco</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area3</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string>area4</d2p1:string>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area2</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description></Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area3.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>corridoio</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area4</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string>area5a</d2p1:string>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area3</d2p1:string>
+          <d2p1:string>area5</d2p1:string>
+        </Areas>
+        <Description>Dove vuoi andare ora?</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area4.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>bivio</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area5</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string>area6</d2p1:string>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area4</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Prosegui dritto.
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area5.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>corridoio</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area5a</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area4</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>L'unica possibilità è tornare indietro...
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area5a.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>vicolo cieco</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area6</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string>area7</d2p1:string>
+          <d2p1:string>area7a</d2p1:string>
+          <d2p1:string>area5</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Dove vuoi andare?
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area6.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>bivio</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area7</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area8</d2p1:string>
+          <d2p1:string>area6</d2p1:string>
+          <d2p1:string>area8a</d2p1:string>
+        </Areas>
+        <Description>Dove vuoi andare?
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area7.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>bivio</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area7a</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area6</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>L'unica possibilità è tornare indietro...
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area7a.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>vicolo cieco</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area8</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string>area9</d2p1:string>
+          <d2p1:string>area9a</d2p1:string>
+          <d2p1:string>area7</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Puoi proseguire dritto o esplorare la via sulla destra.
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area8.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>corridoio</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area8a</d2p1:Key>
+      <d2p1:Value>
+        <Actions>
+          <d2p1:string>Raccogli il piccone</d2p1:string>
+        </Actions>
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area7</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>L'unica possibilità è tornare indietro...
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area8a.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items>
+          <Item>
+            <Description>Serve per rompere la pietra!</Description>
+            <Dialogue>Hai aggiunto Piccone al tuo inventario.
+</Dialogue>
+            <EffectiveWeapon i:nil="true" />
+            <Height>60</Height>
+            <IdImage>0</IdImage>
+            <ImageURL>~\Img\Items\pickaxe.png</ImageURL>
+            <Inventory i:nil="true" />
+            <IsVisible>true</IsVisible>
+            <Name>Piccone</Name>
+            <Width>80</Width>
+            <X>380</X>
+            <Y>280</Y>
+            <Effectiveness>0</Effectiveness>
+            <IdItem>0</IdItem>
+            <IsCollectable>true</IsCollectable>
+          </Item>
+        </Items>
+        <Name>vicolo cieco</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area9</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string>area10</d2p1:string>
+          <d2p1:string>area10a</d2p1:string>
+          <d2p1:string>area8</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Prosegui o svolti?
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area9.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>bivio</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area9a</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area8</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>L'unica soluzione è tornare indietro...
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area9a.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>vicolo cieco</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area10</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string>area11</d2p1:string>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area9</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description></Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area10.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>corridoio</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area10a</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area9</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>L'unica soluzione è tornare indietro...
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area10a.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>vicolo cieco</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area11</d2p1:Key>
+      <d2p1:Value>
+        <Actions>
+          <d2p1:string>Apri il passaggio</d2p1:string>
+        </Actions>
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area10</d2p1:string>
+          <d2p1:string>area12</d2p1:string>
+        </Areas>
+        <Description>Nella rientranza il pavimento è strano... con un piccone potresti riuscire a romperlo...
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area11.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items>
+          <Item>
+            <Description>Puoi usarla per superare delle avversità.</Description>
+            <Dialogue>Hai aggiunto Scala al tuo inventario.
+</Dialogue>
+            <EffectiveWeapon i:nil="true" />
+            <Height>60</Height>
+            <IdImage>0</IdImage>
+            <ImageURL>~\Img\Items\ladder.png</ImageURL>
+            <Inventory i:nil="true" />
+            <IsVisible>false</IsVisible>
+            <Name>Scala</Name>
+            <Width>60</Width>
+            <X>430</X>
+            <Y>300</Y>
+            <Effectiveness>0</Effectiveness>
+            <IdItem>0</IdItem>
+            <IsCollectable>true</IsCollectable>
+          </Item>
+        </Items>
+        <Name>bivio misterioso</Name>
+        <UnlockingItem>Piccone</UnlockingItem>
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area12</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area13</d2p1:string>
+          <d2p1:string>area11</d2p1:string>
+          <d2p1:string>area13a</d2p1:string>
+        </Areas>
+        <Description>Dove vuoi andare?
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area12.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>bivio</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area13</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string>area14</d2p1:string>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area12</d2p1:string>
+          <d2p1:string>area14a</d2p1:string>
+        </Areas>
+        <Description>Vuoi proseguire dritto o svoltare a sinistra?
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area13.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>bivio</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area13a</d2p1:Key>
+      <d2p1:Value>
+        <Actions>
+          <d2p1:string>Parla con personaggio misterioso</d2p1:string>
+        </Actions>
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area12</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>L'unica possibilità è tornare indietro...
+</Description>
+        <Entities>
+          <Character>
+            <Description>Prova a parlargli</Description>
+            <Dialogue>Non ti è stato detto cosa devi fare qui... Capisco... Devi trovare la chiave che ti permetterà di uscire. Io non l'ho mai trovata... rimarremo qui per sempre...</Dialogue>
+            <EffectiveWeapon i:nil="true" />
+            <Height>230</Height>
+            <IdImage>0</IdImage>
+            <ImageURL>~\Img\Characters\character.png</ImageURL>
+            <Inventory i:nil="true" />
+            <IsVisible>true</IsVisible>
+            <Name>Personaggio misterioso</Name>
+            <Width>120</Width>
+            <X>400</X>
+            <Y>160</Y>
+            <IdCharacter>0</IdCharacter>
+            <Strength>0</Strength>
+          </Character>
+        </Entities>
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area13a.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>vicolo cieco</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area14</d2p1:Key>
+      <d2p1:Value>
+        <Actions>
+          <d2p1:string>Apri il passaggio</d2p1:string>
+          <d2p1:string>Raccogli la pozione della salute</d2p1:string>
+        </Actions>
+        <Areas>
+          <d2p1:string>area15</d2p1:string>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area13</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Bisogna guadare il lago per passare.
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area14.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items>
+          <Item>
+            <Description>Restituisce 30 punti salute!</Description>
+            <Dialogue>Hai aggiunto Pozione della salute al tuo inventario.
+</Dialogue>
+            <EffectiveWeapon i:nil="true" />
+            <Height>60</Height>
+            <IdImage>0</IdImage>
+            <ImageURL>~\Img\Items\healthpotion.png</ImageURL>
+            <Inventory i:nil="true" />
+            <IsVisible>true</IsVisible>
+            <Name>Pozione della salute</Name>
+            <Width>60</Width>
+            <X>240</X>
+            <Y>360</Y>
+            <Effectiveness>30</Effectiveness>
+            <IdItem>0</IdItem>
+            <IsCollectable>true</IsCollectable>
+          </Item>
+        </Items>
+        <Name>corridoio</Name>
+        <UnlockingItem>Scala</UnlockingItem>
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area14a</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string>area14b</d2p1:string>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area13</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Continua ad esplorare oppure torna indietro.
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area14a.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>percorso</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area14b</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string>area14c</d2p1:string>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area14a</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Continua ad esplorare oppure torna indietro.
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area14b.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>percorso</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area14c</d2p1:Key>
+      <d2p1:Value>
+        <Actions>
+          <d2p1:string>Uccidi lo zombie</d2p1:string>
+        </Actions>
+        <Areas>
+          <d2p1:string>area14d</d2p1:string>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area14b</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Continua ad esplorare oppure torna indietro.
+</Description>
+        <Entities>
+          <Character>
+            <Description>Uccidilo con la spada.</Description>
+            <Dialogue>GRRRRR...
+Hai ucciso zombie</Dialogue>
+            <EffectiveWeapon>Spada</EffectiveWeapon>
+            <Height>230</Height>
+            <IdImage>0</IdImage>
+            <ImageURL>~\Img\Characters\zombie.png</ImageURL>
+            <Inventory i:nil="true" />
+            <IsVisible>true</IsVisible>
+            <Name>Zombie</Name>
+            <Width>200</Width>
+            <X>250</X>
+            <Y>160</Y>
+            <IdCharacter>0</IdCharacter>
+            <Strength>30</Strength>
+          </Character>
+        </Entities>
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area14c.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>percorso</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area14d</d2p1:Key>
+      <d2p1:Value>
+        <Actions>
+          <d2p1:string>Raccogli la pozione della forza</d2p1:string>
+        </Actions>
+        <Areas>
+          <d2p1:string>area14e</d2p1:string>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area14c</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Continua ad esplorare oppure torna indietro.
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area14d.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items>
+          <Item>
+            <Description>Ti rafforza!</Description>
+            <Dialogue>Hai aggiunto Pozione della forza al tuo inventario.
+</Dialogue>
+            <EffectiveWeapon i:nil="true" />
+            <Height>60</Height>
+            <IdImage>0</IdImage>
+            <ImageURL>~\Img\Items\strengthpotion.png</ImageURL>
+            <Inventory i:nil="true" />
+            <IsVisible>true</IsVisible>
+            <Name>Pozione della forza</Name>
+            <Width>60</Width>
+            <X>240</X>
+            <Y>360</Y>
+            <Effectiveness>20</Effectiveness>
+            <IdItem>0</IdItem>
+            <IsCollectable>true</IsCollectable>
+          </Item>
+        </Items>
+        <Name>percorso</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area14e</d2p1:Key>
+      <d2p1:Value>
+        <Actions>
+          <d2p1:string>Uccidi lo scheletro</d2p1:string>
+          <d2p1:string>Raccogli la scala</d2p1:string>
+        </Actions>
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area14d</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Che peccato, tutta questa strada per così poco...
+</Description>
+        <Entities>
+          <Character>
+            <Description>Uccidilo con la spada.</Description>
+            <Dialogue>Hai ucciso scheletro
+</Dialogue>
+            <EffectiveWeapon>Spada</EffectiveWeapon>
+            <Height>230</Height>
+            <IdImage>0</IdImage>
+            <ImageURL>~\Img\Characters\skeleton.png</ImageURL>
+            <Inventory i:nil="true" />
+            <IsVisible>true</IsVisible>
+            <Name>Scheletro</Name>
+            <Width>220</Width>
+            <X>250</X>
+            <Y>160</Y>
+            <IdCharacter>0</IdCharacter>
+            <Strength>20</Strength>
+          </Character>
+        </Entities>
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area14e.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items>
+          <Item>
+            <Description>Puoi usarla per superare delle avversità.</Description>
+            <Dialogue>Hai aggiunto Scala al tuo inventario.
+</Dialogue>
+            <EffectiveWeapon i:nil="true" />
+            <Height>100</Height>
+            <IdImage>0</IdImage>
+            <ImageURL>~\Img\Items\ladder.png</ImageURL>
+            <Inventory i:nil="true" />
+            <IsVisible>true</IsVisible>
+            <Name>Scala</Name>
+            <Width>100</Width>
+            <X>310</X>
+            <Y>360</Y>
+            <Effectiveness>0</Effectiveness>
+            <IdItem>0</IdItem>
+            <IsCollectable>true</IsCollectable>
+          </Item>
+        </Items>
+        <Name>vicolo cieco</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area15</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string>area16a</d2p1:string>
+          <d2p1:string>area16b</d2p1:string>
+          <d2p1:string>area14</d2p1:string>
+          <d2p1:string>area16</d2p1:string>
+        </Areas>
+        <Description>Puoi andare in tutte le direzioni.
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area15.png</ImageURL>
+        <IsLocked>true</IsLocked>
+        <Items i:nil="true" />
+        <Name>incroncio</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area16</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string>area17</d2p1:string>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area15</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Continua ad esplorare oppure torna indietro.
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area16.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>percorso</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area16a</d2p1:Key>
+      <d2p1:Value>
+        <Actions>
+          <d2p1:string>Uccidi lo scheletro</d2p1:string>
+        </Actions>
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area15</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Puoi solo tornare indietro...
+</Description>
+        <Entities>
+          <Character>
+            <Description>Uccidilo con la spada.</Description>
+            <Dialogue>Hai ucciso scheletro
+</Dialogue>
+            <EffectiveWeapon>Spada</EffectiveWeapon>
+            <Height>230</Height>
+            <IdImage>0</IdImage>
+            <ImageURL>~\Img\Characters\skeleton.png</ImageURL>
+            <Inventory i:nil="true" />
+            <IsVisible>true</IsVisible>
+            <Name>Scheletro</Name>
+            <Width>200</Width>
+            <X>250</X>
+            <Y>160</Y>
+            <IdCharacter>0</IdCharacter>
+            <Strength>15</Strength>
+          </Character>
+        </Entities>
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area16a.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>vicolo cieco</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area16b</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area15</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Non è la tua giornata fortunata, torna indietro.
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area16b.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>vicolo cieco</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area17</d2p1:Key>
+      <d2p1:Value>
+        <Actions>
+          <d2p1:string>Apri il passaggio</d2p1:string>
+        </Actions>
+        <Areas>
+          <d2p1:string>area18a</d2p1:string>
+          <d2p1:string>area16</d2p1:string>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area18</d2p1:string>
+        </Areas>
+        <Description>Questo muro si potrebbe rompere con un piccone.
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area17.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>muro misterioso</Name>
+        <UnlockingItem>Piccone</UnlockingItem>
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area18</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string>area19</d2p1:string>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area17</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Continua ad esplorare oppure torna indietro.
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area18.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>percorso</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area18a</d2p1:Key>
+      <d2p1:Value>
+        <Actions>
+          <d2p1:string>Apri il passaggio</d2p1:string>
+        </Actions>
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area18b</d2p1:string>
+          <d2p1:string>area17</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Puoi proseguire solo utilizzando una scala...
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area18a.png</ImageURL>
+        <IsLocked>true</IsLocked>
+        <Items i:nil="true" />
+        <Name>luogo segreto</Name>
+        <UnlockingItem>Scala</UnlockingItem>
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area18b</d2p1:Key>
+      <d2p1:Value>
+        <Actions>
+          <d2p1:string>Raccogli il totem magico</d2p1:string>
+        </Actions>
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area18a</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Questo vicolo cieco è speciale.
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area18b.png</ImageURL>
+        <IsLocked>true</IsLocked>
+        <Items>
+          <Item>
+            <Description>E' la chiave di tutto.
+</Description>
+            <Dialogue>Hai aggiunto totem magico al tuo inventario.
+</Dialogue>
+            <EffectiveWeapon i:nil="true" />
+            <Height>60</Height>
+            <IdImage>0</IdImage>
+            <ImageURL>~\Img\Items\magictotem.png</ImageURL>
+            <Inventory i:nil="true" />
+            <IsVisible>true</IsVisible>
+            <Name>Totem magico</Name>
+            <Width>120</Width>
+            <X>350</X>
+            <Y>190</Y>
+            <Effectiveness>0</Effectiveness>
+            <IdItem>0</IdItem>
+            <IsCollectable>true</IsCollectable>
+          </Item>
+        </Items>
+        <Name>vicolo cieco</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area19</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area19a</d2p1:string>
+          <d2p1:string>area18</d2p1:string>
+          <d2p1:string>area20</d2p1:string>
+        </Areas>
+        <Description>Continua ad esplorare oppure torna indietro.
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area19.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>bivio</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area19a</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area19</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Puoi solo tornare indietro... finiranno questi tempi bui.
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area19a.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>vicolo cieco</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area20</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string>area21</d2p1:string>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area19</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Continua ad esplorare oppure torna indietro.
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area20.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>percorso</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area21</d2p1:Key>
+      <d2p1:Value>
+        <Actions>
+          <d2p1:string>Apri la porta</d2p1:string>
+        </Actions>
+        <Areas>
+          <d2p1:string>area22</d2p1:string>
+          <d2p1:string i:nil="true" />
+          <d2p1:string>area20</d2p1:string>
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Questa porta si può aprire con un oggetto magico..
+</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area21.png</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>porta misteriosa</Name>
+        <UnlockingItem>Totem</UnlockingItem>
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+    <d2p1:KeyValueOfstringSituationwOB_SG4KC>
+      <d2p1:Key>area22</d2p1:Key>
+      <d2p1:Value>
+        <Actions i:nil="true" />
+        <Areas>
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+          <d2p1:string i:nil="true" />
+        </Areas>
+        <Description>Sei sopravvissuto!</Description>
+        <Entities i:nil="true" />
+        <IdSituation>0</IdSituation>
+        <ImageURL>~\Img\Areas\area22.gif</ImageURL>
+        <IsLocked>false</IsLocked>
+        <Items i:nil="true" />
+        <Name>VITTORIA</Name>
+        <UnlockingItem i:nil="true" />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSituationwOB_SG4KC>
+  </Situations>
+</Gameplay>

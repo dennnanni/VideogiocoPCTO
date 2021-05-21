@@ -128,6 +128,9 @@
     <Content Include="Img\Items\healthpotion.png" />
     <Content Include="Img\Items\pickaxe.png" />
     <Content Include="Img\Items\sword.png" />
+    <Content Include="SQLScript\PCTO-createtables.sql" />
+    <Content Include="SQLScript\PCTO-insert.sql" />
+    <Content Include="SQLScript\PCTO-select.sql" />
     <Content Include="Stylesheet.css" />
     <Content Include="Web.config" />
   </ItemGroup>

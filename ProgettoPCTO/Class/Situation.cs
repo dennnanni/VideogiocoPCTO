@@ -70,7 +70,7 @@ namespace ProgettoPCTO
         public string UnlockingItem { get; set; } = null;
 
         [DataMember]
-        public bool IsLocked { get; set; } = false;
+        public bool IsUnlocked { get; set; } = true;
 
         [DataMember]
         public List<string> Actions { get; set; }

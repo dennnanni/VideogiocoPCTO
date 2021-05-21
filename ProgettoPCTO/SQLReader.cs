@@ -52,9 +52,10 @@ namespace ProgettoPCTO
 
         private Dictionary<string, Situation> ReadSituations(int idGameplay, SqlConnection conn)
         {
-            SqlCommand select = new SqlCommand(@"SELECT IDSituation, Title, Name, Description, ImageURL, UnlockingItem, IDForward, IDRight, IDBackward, IDLeft
-                                                 FROM Situation 
-                                                 WHERE Situation.IDGameplay = @Gameplay", conn);
+            SqlCommand select = new SqlCommand(@"SELECT S.IDSituation, S.Title, S.Name, S.Description, S.ImageURL, S.UnlockingItem, S.IDForward, S.IDRight, S.IDBackward, S.IDLeft, SV.Unlocked
+                                                 FROM Situation AS S LEFT JOIN 
+                                                      SituationVariable AS SV ON S.IDSituation = SV.IDInstance
+                                                      WHERE SV.IDGameplay = 1 OR SV.IDInstance IS NULL;", conn);
             select.Parameters.AddWithValue("@Gameplay", idGameplay);
 
             SqlDataReader reader = select.ExecuteReader();
@@ -72,19 +73,28 @@ namespace ProgettoPCTO
                     Description = reader["Description"].ToString().TrimEnd(null),
                     Areas = new string[]
                     {
-                        GetTitle(reader["IDForward"].ToString().TrimEnd(null) == "" ? int.Parse(reader[5].ToString().TrimEnd(null)) : -1, conn),
-                        GetTitle(reader["IDRight"].ToString().TrimEnd(null) == "" ? int.Parse(reader[5].ToString().TrimEnd(null)) : -1, conn),
-                        GetTitle(reader["IDBackward"].ToString().TrimEnd(null) == "" ? int.Parse(reader[5].ToString().TrimEnd(null)) : -1, conn),
-                        GetTitle(reader["IDLeft"].ToString().TrimEnd(null) == "" ? int.Parse(reader[5].ToString().TrimEnd(null)) : -1, conn)
+                        reader["IDForward"].ToString().TrimEnd(null),
+                        reader["IDRight"].ToString().TrimEnd(null),
+                        reader["IDBackward"].ToString().TrimEnd(null),
+                        reader["IDLeft"].ToString().TrimEnd(null)
                     },
                     UnlockingItem = reader["UnlockingItem"].ToString().TrimEnd(null),
-                    Entities = ReadCharacters(id, conn),
-                    Items = ReadItems(id, conn),
-                    Actions = ReadAction(id, idGameplay, conn)
+                    IsUnlocked = reader["Unlocked"].GetType() == typeof(DBNull) ? true : (bool)reader["Unlocked"]
                 });
-            }
 
+            }
             reader.Close();
+
+            foreach(string title in dict.Keys)
+            {
+                dict[title].Areas[0] = GetTitle(int.TryParse(dict[title].Areas[0], out int n0) ? n0 : -1, conn);
+                dict[title].Areas[1] = GetTitle(int.TryParse(dict[title].Areas[1], out int n1) ? n1 : -1, conn);
+                dict[title].Areas[2] = GetTitle(int.TryParse(dict[title].Areas[2], out int n2) ? n2 : -1, conn);
+                dict[title].Areas[3] = GetTitle(int.TryParse(dict[title].Areas[3], out int n3) ? n3 : -1, conn);
+                dict[title].Entities = ReadCharacters(dict[title].IdSituation, conn);
+                dict[title].Items = ReadItems(dict[title].IdSituation, conn);
+                dict[title].Actions = ReadAction(dict[title].IdSituation, idGameplay, conn);
+            }
 
             return dict;
         }
@@ -96,11 +106,11 @@ namespace ProgettoPCTO
 
             SqlCommand select = new SqlCommand(@"SELECT Title
                                                  FROM Situation 
-                                                 WHERE Situation = @Id", conn);
+                                                 WHERE IDSituation = @Id", conn);
             select.Parameters.AddWithValue("@Id", id);
 
             SqlDataReader reader = select.ExecuteReader();
-
+            reader.Read();
             string value = reader[0].ToString().TrimEnd(null);
             reader.Close();
             return value;
@@ -178,7 +188,7 @@ namespace ProgettoPCTO
         private List<Character> ReadCharacters(int idSituation, SqlConnection conn)
         {
             SqlCommand select = new SqlCommand(@"SELECT I.IDImage, I.Name, I.Description, I.X, I.Y, I.ImageURL, I.Width, I.Height,
-                                                        I.Dialogue, C.Health, C.Strength, C.IsVisible, C.EffectiveWeapon
+                                                        I.Dialogue, C.IDCharacter, C.Strength, C.IsVisible, C.EffectiveWeapon
                                                  FROM Image AS I INNER JOIN 
                                                       Character AS C ON I.IDImage = C.IDImage
                                                  WHERE I.IDSituation = @Situation AND I.IsCharacter = 1", conn);
@@ -201,7 +211,7 @@ namespace ProgettoPCTO
                     Height = int.Parse(reader["Height"].ToString().TrimEnd(null)),
                     Dialogue = reader["Dialogue"].ToString().TrimEnd(null),
                     Strength = int.Parse(reader["Strength"].ToString().TrimEnd(null)),
-                    IsVisible = int.Parse(reader["IsVisible"].ToString().TrimEnd(null)) != 0,
+                    IsVisible = (bool)reader["IsVisible"],
                     EffectiveWeapon = reader["EffectiveWeapon"].ToString().TrimEnd(null)
                 });
             }

@@ -26,7 +26,6 @@ CREATE TABLE Situation(
 	Description VARCHAR(100),
 	ImageURL VARCHAR(50),
 	UnlockingItem CHAR(15),
-	IDGameplay INT REFERENCES Gameplay(IDGameplay),
 	IDForward INT REFERENCES Situation(IDSituation),
 	IDRight INT REFERENCES Situation(IDSituation),
 	IDBackward INT REFERENCES Situation(IDSituation),
@@ -34,21 +33,28 @@ CREATE TABLE Situation(
 	
 );
 
+CREATE TABLE SituationVariable(
+	IDInstance INT PRIMARY KEY NOT NULL REFERENCES Situation(IDSituation),
+	Unlocked BIT DEFAULT 0,
+	IDGameplay INT REFERENCES Gameplay(IDGameplay)
+);
+
 CREATE TABLE Action(
 	IDSituation INT REFERENCES Situation(IDSituation) ON DELETE CASCADE,
-	Dialogue VARCHAR(100)
+	Dialogue VARCHAR(100),
+	IDGameplay INT REFERENCES Gameplay(IDGameplay)
 );
 
 CREATE TABLE Image(
 	IDImage INT PRIMARY KEY NOT NULL IDENTITY(1,1),
 	Name CHAR(20),
-	Description VARCHAR(1000),
+	Description VARCHAR(100),
 	X REAL,
 	Y REAL,
 	ImageURL VARCHAR(50),
 	Width INT,
-	Heigth INT,
-	Dialogue VARCHAR(100),
+	Height INT,
+	Dialogue VARCHAR(1000),
 	IsCharacter BIT DEFAULT 0,
 	IsItem BIT DEFAULT 0,
 	IDSituation INT REFERENCES Situation(IDSituation)

@@ -94,7 +94,7 @@ namespace ProgettoPCTO
         {
             try
             {
-                XMLHandler.Write(this, server, "~/App_Data/SavedData.XML");
+                XMLHandler.Write(this, server, "~/App_Data/Data.XML");
                 
             }
             catch(Exception ex)
@@ -442,7 +442,7 @@ namespace ProgettoPCTO
             {
                 Name = "corridoio",
                 Description = "Bisogna guadare il lago per passare.\n",
-                Areas = new string[] { "$area15", null, "area13", null },
+                Areas = new string[] { "area15", null, "area13", null },
                 Actions = new List<string>()
                 {
                     "Apri il passaggio",
@@ -581,6 +581,7 @@ namespace ProgettoPCTO
             {
                 Name = "incroncio",
                 Description = "Puoi andare in tutte le direzioni.\n",
+                IsUnlocked = false,
                 Areas = new string[] { "area16a", "area16b", "area14", "area16" },
             };
 
@@ -628,7 +629,7 @@ namespace ProgettoPCTO
             {
                 Name = "muro misterioso",
                 Description = "Questo muro si potrebbe rompere con un piccone.\n",
-                Areas = new string[] { "$area18a", "area16", null, "area18" },
+                Areas = new string[] { "area18a", "area16", null, "area18" },
                 Actions = new List<string>()
                 {
                     "Apri il passaggio"
@@ -648,11 +649,12 @@ namespace ProgettoPCTO
             {
                 Name = "luogo segreto",
                 Description = "Puoi proseguire solo utilizzando una scala...\n",
-                Areas = new string[] { null, "$area18b", "area17", null },
+                Areas = new string[] { null, "area18b", "area17", null },
                 Actions = new List<string>()
                 {
                     "Apri il passaggio"
                 },
+                IsUnlocked = false,
                 UnlockingItem = "Scala"
             };
 
@@ -661,6 +663,7 @@ namespace ProgettoPCTO
                 Name = "vicolo cieco",
                 Description = "Questo vicolo cieco è speciale.\n",
                 Areas = new string[] { null, null, "area18a", null },
+                IsUnlocked = false,
                 Actions = new List<string>()
                 {
                     "Raccogli il totem magico"

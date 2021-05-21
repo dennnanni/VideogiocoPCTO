@@ -26,6 +26,10 @@ namespace ProgettoPCTO
         {
             if (!IsPostBack)
             {
+                _game = new Gameplay();
+                _game.Initialize();
+                _game.Save(Server);
+
                 // Creates the gameplay and loads the first situation
                 _game = new Gameplay().SetUp(Server);
                 Session["player"] = _game.PlayerProfile;
@@ -78,7 +82,7 @@ namespace ProgettoPCTO
             if (_currentAreaID != name)
                 print = true;
 
-            if (name.Contains('$') || _currentAreaID != "area0" && _game[_currentAreaID].Entities != null && _game[_currentAreaID].Entities.Count != 0 )
+            if (!_game[name].IsUnlocked || _currentAreaID != "area0" && _game[_currentAreaID].Entities != null && _game[_currentAreaID].Entities.Count != 0 )
             { 
                 name = _currentAreaID;
                 print = true;
@@ -352,9 +356,9 @@ namespace ProgettoPCTO
                 // Finds the locked area and unlocks it
                 for(int i =  0; i < s.Areas.Length; i++)
                 {
-                    if (s.Areas[i] != null && s.Areas[i].Contains('$'))
+                    if (s.Areas[i] != null && !_game[s.Areas[i]].IsUnlocked)
                     {
-                        s.Areas[i] = s.Areas[i].Substring(1);
+                        _game[s.Areas[i]].IsUnlocked = true;
                         i = 4;
                     }
                 }
