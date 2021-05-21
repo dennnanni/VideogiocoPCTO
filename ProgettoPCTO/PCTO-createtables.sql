@@ -4,6 +4,7 @@ CREATE DATABASE Videogame;
 GO
 
 USE Videogame
+GO
 
 CREATE TABLE Account(
 	Username CHAR(15) PRIMARY KEY NOT NULL,
@@ -21,7 +22,7 @@ CREATE TABLE Gameplay(
 CREATE TABLE Situation(
 	IDSituation INT PRIMARY KEY NOT NULL IDENTITY(1,1),
 	Title VARCHAR(7),
-	Name CHAR(7),
+	Name CHAR(20),
 	Description VARCHAR(100),
 	ImageURL VARCHAR(50),
 	UnlockingItem CHAR(15),
@@ -41,7 +42,7 @@ CREATE TABLE Action(
 CREATE TABLE Image(
 	IDImage INT PRIMARY KEY NOT NULL IDENTITY(1,1),
 	Name CHAR(20),
-	Description VARCHAR(100),
+	Description VARCHAR(1000),
 	X REAL,
 	Y REAL,
 	ImageURL VARCHAR(50),
@@ -77,10 +78,6 @@ CREATE TABLE Player(
 	Experience INT CHECK(Experience >= 0),
 	IDGameplay INT REFERENCES Gameplay(IDGameplay) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-ALTER TABLE Situation
-ADD CONSTRAINT FKItem
-FOREIGN KEY (IDUnlockingItem) REFERENCES Image(IDImage);
 
 ALTER TABLE Item
 ADD CONSTRAINT FKPlayer

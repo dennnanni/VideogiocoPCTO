@@ -33,6 +33,9 @@ namespace ProgettoPCTO
                 _selectedAction = drpActions.SelectedValue;
                 _currentSituation = _game["area1"];
                 this.LoadSituation("area1");
+
+                SQLReader reader = new SQLReader("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
+                reader.ReadData("default");
             }
             else
             {

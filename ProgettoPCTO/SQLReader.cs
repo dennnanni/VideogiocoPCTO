@@ -9,7 +9,7 @@ namespace ProgettoPCTO
     public class SQLReader
     {
         private string _connectionString = "";
-        public SQLReader(Gameplay g, string connectionString)
+        public SQLReader(string connectionString)
         {
             _connectionString = connectionString;
         }
@@ -24,6 +24,7 @@ namespace ProgettoPCTO
             {
                 // TODO: Selezione nel database dei valori associati all'account
 
+                conn.Open();
                 ReadGameplay(username, g, conn);
                 g.PlayerProfile = ReadPlayer(g.IdGameplay, conn);
                 g.Situations = ReadSituations(g.IdGameplay, conn);
@@ -36,13 +37,15 @@ namespace ProgettoPCTO
         {
             SqlCommand select = new SqlCommand(@"SELECT IDGameplay, CurrentAreaID 
                                                  FROM Gameplay 
-                                                 WHERE Gameplay.Username = @Username", conn);
-            select.Parameters.AddWithValue("@Username", username);
+                                                 WHERE Gameplay.Username = 'default'", conn);
+            //select.Parameters.AddWithValue("@Username", username);
 
             SqlDataReader reader = select.ExecuteReader();
 
-            g.IdGameplay = int.Parse(reader[0].ToString());
-            g.CurrentAreaID = reader[1].ToString().TrimEnd(null);
+            reader.Read();
+
+            g.IdGameplay = int.Parse(reader["IDGameplay"].ToString());
+            g.CurrentAreaID = reader["CurrentAreaID"].ToString().TrimEnd(null);
 
             reader.Close();
         }
@@ -77,7 +80,7 @@ namespace ProgettoPCTO
                     UnlockingItem = reader["UnlockingItem"].ToString().TrimEnd(null),
                     Entities = ReadCharacters(id, conn),
                     Items = ReadItems(id, conn),
-                    Actions = ReadAction(id, conn)
+                    Actions = ReadAction(id, idGameplay, conn)
                 });
             }
 
@@ -112,7 +115,7 @@ namespace ProgettoPCTO
                                                         I.Dialogue, IT.IsCollectable, IT.IsVisible, IT.Effectiveness
                                                  FROM Item AS IT INNER JOIN 
                                                       Image AS I ON IT.IDImage = I.IDImage
-                                                 WHERE I.IDPlayer = @Id", conn);
+                                                 WHERE IT.IDPlayer = @Id", conn);
             select.Parameters.AddWithValue("@Id", idPlayer);
 
             SqlDataReader reader = select.ExecuteReader();
@@ -133,7 +136,7 @@ namespace ProgettoPCTO
                     Dialogue = reader["Dialogue"].ToString().TrimEnd(null),
                     IsCollectable = int.Parse(reader["IsCollectable"].ToString().TrimEnd(null)) != 0,
                     IsVisible = int.Parse(reader["IsVisible"].ToString().TrimEnd(null)) != 0,
-                    Effectiveness = int.Parse(reader["IsVisible"].ToString().TrimEnd(null))
+                    Effectiveness = int.Parse(reader["Effectiveness"].ToString().TrimEnd(null))
                 });
             }
 
@@ -144,28 +147,30 @@ namespace ProgettoPCTO
         #region Select of characters and items
         private Player ReadPlayer(int idGameplay, SqlConnection conn)
         {
-            SqlCommand select = new SqlCommand(@"SELECT C.Strength, C.IsVisible, P.IDPlayer, P.Armor, P.Health, P.Experience
+            SqlCommand select = new SqlCommand(@"SELECT C.Strength, C.IsVisible, P.IDCharacter, P.Armor, P.Health, P.Experience
                                                  FROM Player AS P INNER JOIN 
-                                                      Character AS C ON P.IDPlayer = C.IDCharacter
-                                                 WHERE I.IDGameplay = @Id", conn);
+                                                      Character AS C ON P.IDCharacter = C.IDCharacter
+                                                 WHERE P.IDGameplay = @Id", conn);
             select.Parameters.AddWithValue("@Id", idGameplay);
 
             SqlDataReader reader = select.ExecuteReader();
             reader.Read();
-            int id = int.Parse(reader["IDPlayer"].ToString().TrimEnd(null));
+            int id = int.Parse(reader["IDCharacter"].ToString().TrimEnd(null));
 
             Player p = new Player()
             {
                 IdCharacter = id,
                 Strength = int.Parse(reader["Strength"].ToString().TrimEnd(null)),
                 Health = int.Parse(reader["Health"].ToString().TrimEnd(null)),
-                IsVisible = int.Parse(reader["IsVisible"].ToString().TrimEnd(null)) != 0,
+                IsVisible = (bool)reader["IsVisible"],
                 Armor = int.Parse(reader["Armor"].ToString().TrimEnd(null)),
-                Experience = int.Parse(reader["Experience"].ToString().TrimEnd(null)),
-                Inventory = GetInventoryItems(id, conn)
+                Experience = int.Parse(reader["Experience"].ToString().TrimEnd(null))
             };
 
             reader.Close();
+            p.Inventory = GetInventoryItems(id, conn);
+
+            
 
             return p;
         }
@@ -245,12 +250,13 @@ namespace ProgettoPCTO
 
         #endregion
 
-        private List<string> ReadAction(int idSituation, SqlConnection conn)
+        private List<string> ReadAction(int idSituation, int idGameplay, SqlConnection conn)
         {
             SqlCommand select = new SqlCommand(@"SELECT Dialogue
                                                  FROM Action 
-                                                 WHERE IdAction = @Id", conn);
+                                                 WHERE IDSituation = @Id AND IDGameplay = @IdGame", conn);
             select.Parameters.AddWithValue("@Id", idSituation);
+            select.Parameters.AddWithValue("@IdGame", idGameplay);
 
             SqlDataReader reader = select.ExecuteReader();
 
@@ -329,10 +335,10 @@ namespace ProgettoPCTO
                 insert.Parameters.AddWithValue("@ImageURL", el.Value.ImageURL);
                 insert.Parameters.AddWithValue("@UnlockingItem", el.Value.UnlockingItem);
                 insert.Parameters.AddWithValue("@IdGameplay", idGameplay);
-                insert.Parameters.AddWithValue("@IdForward", el.Value.Areas[0]);
-                insert.Parameters.AddWithValue("@IdRight", el.Value.Areas[1]);
-                insert.Parameters.AddWithValue("@IdBackward", el.Value.Areas[2]);
-                insert.Parameters.AddWithValue("@IdLeft", el.Value.Areas[3]);
+                insert.Parameters.AddWithValue("@IdForward", situations[el.Value.Areas[0]].IdSituation);
+                insert.Parameters.AddWithValue("@IdRight", situations[el.Value.Areas[1]].IdSituation);
+                insert.Parameters.AddWithValue("@IdBackward", situations[el.Value.Areas[2]].IdSituation);
+                insert.Parameters.AddWithValue("@IdLeft", situations[el.Value.Areas[3]].IdSituation);
 
                 insert.ExecuteNonQuery();
                 insert.Dispose();
@@ -359,29 +365,43 @@ namespace ProgettoPCTO
                 insertImage.ExecuteNonQuery();
                 insertImage.Dispose();
 
-                if(e.GetType() == typeof(Character))
+                if (e.GetType() == typeof(Character))
                 {
                     Character c = (Character)e;
                     SqlCommand update = new SqlCommand(@"UPDATE Character SET IsCharacter = 1;", conn);
+                    update.ExecuteNonQuery();
 
                     SqlCommand insertChar = new SqlCommand("INSERT INTO Character VALUES (@Strength, @IsVisible, @EffectiveWeapon, @IDImage);", conn);
 
                     insertChar.Parameters.AddWithValue("@Strength", c.Strength);
-                    insertChar.Parameters.AddWithValue("@IsVisbile", c.IsVisible);
+                    insertChar.Parameters.AddWithValue("@IsVisible", c.IsVisible);
                     insertChar.Parameters.AddWithValue("@EffectiveWeapon", c.EffectiveWeapon);
-                    insertChar.Parameters.AddWithValue("@IDImage", c.IdCharacter);
+                    insertChar.Parameters.AddWithValue("@IDImage", c.IdImage);
+
+                    insertChar.ExecuteNonQuery();
+                    insertChar.Dispose();
                 }
                 else if (e.GetType() == typeof(Item))
                 {
+                    Item i = (Item)e;
                     SqlCommand update = new SqlCommand(@"UPDATE Character SET IsItem = 1;", conn);
+                    update.ExecuteNonQuery();
 
+                    SqlCommand insertItem = new SqlCommand("INSERT INTO Item VALUES (@IsCollectable, @IsVisible, @Effectiveness, NULL, @IDImage);", conn);
+
+                    insertItem.Parameters.AddWithValue("@IsCollectable", i.IsCollectable);
+                    insertItem.Parameters.AddWithValue("@IsVisible", i.IsVisible);
+                    insertItem.Parameters.AddWithValue("@Effectiveness", i.Effectiveness);
+                    insertItem.Parameters.AddWithValue("@IDImage", i.IdImage);
+
+                    insertItem.ExecuteNonQuery();
+                    insertItem.Dispose();
                 }
             }
         }
 
 
         #endregion
-
 
         #region Updater
 
