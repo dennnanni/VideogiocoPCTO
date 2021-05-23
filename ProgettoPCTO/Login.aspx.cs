@@ -13,28 +13,6 @@ namespace ProgettoPCTO
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (!Page.IsPostBack)
-            //{
-            //    if (Request.QueryString["action"] == "reset")
-            //    {
-            //        pnlContainer.Visible = false;
-            //        // pnlContainerReset.Visible = true;
-            //        // pnlContainerSignUp.Visible = false;
-            //    }
-            //    else if (Request.QueryString["action"] == "signup")
-            //    {
-            //        pnlContainer.Visible = false;
-            //        // pnlContainerReset.Visible = false;
-            //        // pnlContainerSignUp.Visible = true;
-            //    }
-            //    else
-            //    {
-            //        pnlContainer.Visible = true;
-            //        // pnlContainerReset.Visible = false;
-            //        // pnlContainerSignUp.Visible = false;
-            //    }
-
-            //}
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
@@ -42,10 +20,13 @@ namespace ProgettoPCTO
             string username = txtUsername.Text;
             string password = Helper.HashPassword(txtPassword.Text);
 
-            if (true)//Helper.Authenticate(username, password, "Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;"))
+            // change
+            if (true || Helper.Authenticate(username, txtPassword.Text, "Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;"))
             {
                 Session["user"] = username;
-                Response.Redirect(String.Format("Default.aspx"));
+                //SQLCommands command = new SQLCommands("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
+                //command.InsertAccount(username, "provaa", password);
+                Page.Response.Redirect("~/Default.aspx", true);
             }
             else
             {

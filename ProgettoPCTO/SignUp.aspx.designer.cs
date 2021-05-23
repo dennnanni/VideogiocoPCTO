@@ -11,7 +11,7 @@ namespace ProgettoPCTO
 {
 
 
-    public partial class Login
+    public partial class SignUp
     {
 
         /// <summary>
@@ -60,6 +60,24 @@ namespace ProgettoPCTO
         protected global::System.Web.UI.WebControls.TextBox txtUsername;
 
         /// <summary>
+        /// Controllo lblEmail.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmail;
+
+        /// <summary>
+        /// Controllo txtEmail.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEmail;
+
+        /// <summary>
         /// Controllo lblPassword.
         /// </summary>
         /// <remarks>
@@ -78,30 +96,21 @@ namespace ProgettoPCTO
         protected global::System.Web.UI.WebControls.TextBox txtPassword;
 
         /// <summary>
-        /// Controllo btnLogin.
+        /// Controllo btnRegister.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLogin;
+        protected global::System.Web.UI.WebControls.Button btnRegister;
 
         /// <summary>
-        /// Controllo hypResetPassword.
+        /// Controllo hypLogin.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hypResetPassword;
-
-        /// <summary>
-        /// Controllo hypSignUp.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hypSignUp;
+        protected global::System.Web.UI.WebControls.HyperLink hypLogin;
     }
 }

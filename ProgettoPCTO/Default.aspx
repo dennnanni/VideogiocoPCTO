@@ -6,7 +6,7 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Avventura testuale</title>
-    <link rel="stylesheet" href="Stylesheet.css"/>
+    <link rel="stylesheet" href="~/Stylesheets/Stylesheet.css"/>
 </head>
 <body>
     <form id="form1" runat="server">

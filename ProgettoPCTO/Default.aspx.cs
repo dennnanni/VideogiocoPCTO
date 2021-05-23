@@ -28,18 +28,27 @@ namespace ProgettoPCTO
 
         private Gameplay Game
         {
-            get => (Gameplay)Session["Game"];
-            set => Session["Game"] = value;
+            get => (Gameplay)Session["game"];
+            set => Session["game"] = value;
+        }
+
+        private SQLCommands Commands
+        {
+            get => (SQLCommands)Session["commands"];
+            set => Session["commands"] = value;
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                
+
                 // Creates the gameplay and loads the first situation
-                //_game = new Gameplay().SetUp(Server);
-                SQLReader reader = new SQLReader("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
-                _game = reader.ReadData("default");
+                _game = new Gameplay().SetUp(Server);
+                Commands = new SQLCommands("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
+                Commands.WriteData("default", _game);
+                _game = Commands.ReadData("default");
                 Game = _game;
                 _selectedAction = drpActions.SelectedValue;
                 _currentSituation = _game["area1"];
@@ -446,11 +455,13 @@ namespace ProgettoPCTO
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            if (!_game.Save(Server))
-            {
-                txtStory.Text += "IMPOSSIBILE SALVARE I PROGRESSI.\n";
-                return;
-            }
+            Commands.WriteData(Username, Game);
+
+            //if (!_game.Save(Server))
+            //{
+            //    txtStory.Text += "IMPOSSIBILE SALVARE I PROGRESSI.\n";
+            //    return;
+            //}
         }
 
         protected void btnLoad_Click(object sender, EventArgs e)

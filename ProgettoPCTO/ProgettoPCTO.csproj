@@ -129,11 +129,13 @@
     <Content Include="Img\Items\pickaxe.png" />
     <Content Include="Img\Items\sword.png" />
     <Content Include="Login.aspx" />
+    <Content Include="SignUp.aspx" />
     <Content Include="SQLScript\PCTO-createtables.sql" />
     <Content Include="SQLScript\PCTO-insert.sql" />
     <Content Include="SQLScript\PCTO-select.sql" />
-    <Content Include="Stylesheet.css" />
-    <Content Include="StylesheetLogin.css" />
+    <Content Include="Stylesheets\Stylesheet.css" />
+    <Content Include="Stylesheets\StylesheetSignup.css" />
+    <Content Include="Stylesheets\StylesheetLogin.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -170,7 +172,14 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Class\Situation.cs" />
-    <Compile Include="SQLReader.cs" />
+    <Compile Include="SignUp.aspx.cs">
+      <DependentUpon>SignUp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SignUp.aspx.designer.cs">
+      <DependentUpon>SignUp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SQLCommands.cs" />
     <Compile Include="XMLHandler.cs" />
   </ItemGroup>
   <ItemGroup>

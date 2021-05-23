@@ -1,0 +1,88 @@
+﻿body {
+}
+
+#pnlContainer {
+    position: absolute;
+    border: solid;
+    top: 10px;
+    left: 10px;
+    border-color: black;
+    border-width: 5px;
+    height: 270px;
+    width: 350px;
+}
+
+#txtUsername {
+    position: absolute;
+    top: 60px;
+    left: 140px;
+    width: 170px;
+}
+
+#txtEmail {
+    position: absolute;
+    top: 100px;
+    left: 140px;
+    width: 170px;
+}
+
+#txtPassword {
+    position: absolute;
+    top: 140px;
+    left: 140px;
+    width: 170px;
+}
+
+#lblUsername {
+    position: absolute;
+    left: 20px;
+    top: 60px;
+    width: 100px;
+    display: block;
+    text-align: center;
+}
+
+#lblEmail {
+    position: absolute;
+    left: 20px;
+    top: 100px;
+    width: 100px;
+    display: block;
+    text-align: center;
+}
+
+#lblPassword {
+    position: absolute;
+    left: 20px;
+    top: 140px;
+    width: 100px;
+    display: block;
+    text-align: center;
+}
+
+#lblTitle {
+    position: absolute;
+    top: 20px;
+    font-size: 20px;
+    left: 25px;
+    width: 300px;
+    text-align: center;
+    display: block;
+}
+
+#btnRegister {
+    position: absolute;
+    width: 100px;
+    height: 25px;
+    top: 180px;
+    left: 125px;
+}
+
+#hypLogin {
+    position: absolute;
+    top: 230px;
+    width: 350px;
+    display: block;
+    text-align: center;
+}
+

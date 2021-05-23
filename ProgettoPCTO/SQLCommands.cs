@@ -6,10 +6,10 @@ using System.Data.SqlClient;
 
 namespace ProgettoPCTO
 {
-    public class SQLReader
+    public class SQLCommands
     {
         private string _connectionString = "";
-        public SQLReader(string connectionString)
+        public SQLCommands(string connectionString)
         {
             _connectionString = connectionString;
         }
@@ -33,6 +33,31 @@ namespace ProgettoPCTO
             return g;
         }
 
+        public bool ValidateUsernameAndEmail(string username, string email)
+        {
+            using(SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand select = new SqlCommand("SELECT Username, Email FROM Account WHERE Username = @Username OR Email = @Email;", conn);
+                select.Parameters.AddWithValue("@Username", username);
+                select.Parameters.AddWithValue("@Email", email);
+
+                SqlDataReader reader = select.ExecuteReader();
+                if(reader.Read())
+                {
+                    reader.Close();
+                    return false;
+                }
+                else
+                {
+                    reader.Close();
+                    return true;
+                }
+
+            }
+        }
+
         private void ReadGameplay(string username, Gameplay g, SqlConnection conn)
         {
             SqlCommand select = new SqlCommand(@"SELECT IDGameplay, CurrentAreaID 
@@ -54,8 +79,7 @@ namespace ProgettoPCTO
         {
             SqlCommand select = new SqlCommand(@"SELECT S.IDSituation, S.Title, S.Name, S.Description, S.ImageURL, S.UnlockingItem, S.IDForward, S.IDRight, S.IDBackward, S.IDLeft, SV.Unlocked
                                                  FROM Situation AS S LEFT JOIN 
-                                                      SituationVariable AS SV ON S.IDSituation = SV.IDInstance
-                                                 WHERE SV.IDGameplay = @Gameplay OR SV.IDInstance IS NULL;", conn);
+                                                      SituationVariable AS SV ON S.IDSituation = SV.IDInstance;", conn);
             select.Parameters.AddWithValue("@Gameplay", idGameplay);
 
             SqlDataReader reader = select.ExecuteReader();
@@ -78,27 +102,53 @@ namespace ProgettoPCTO
                         reader["IDBackward"].ToString().TrimEnd(null),
                         reader["IDLeft"].ToString().TrimEnd(null)
                     },
-                    UnlockingItem = reader["UnlockingItem"].ToString().TrimEnd(null),
-                    IsUnlocked = reader["Unlocked"].GetType() == typeof(DBNull) ? true : (bool)reader["Unlocked"]
+                    UnlockingItem = reader["UnlockingItem"].ToString().TrimEnd(null)
                 });
 
             }
             reader.Close();
 
+            // It values the properties of the object with the data which require to be read from the db by another reader
             foreach(string title in dict.Keys)
             {
                 dict[title].Areas[0] = GetTitle(int.TryParse(dict[title].Areas[0], out int n0) ? n0 : -1, conn);
                 dict[title].Areas[1] = GetTitle(int.TryParse(dict[title].Areas[1], out int n1) ? n1 : -1, conn);
                 dict[title].Areas[2] = GetTitle(int.TryParse(dict[title].Areas[2], out int n2) ? n2 : -1, conn);
                 dict[title].Areas[3] = GetTitle(int.TryParse(dict[title].Areas[3], out int n3) ? n3 : -1, conn);
-                dict[title].Entities = ReadCharacters(dict[title].IdSituation, conn);
-                dict[title].Items = ReadItems(dict[title].IdSituation, conn);
+                dict[title].Entities = ReadCharacters(dict[title].IdSituation, idGameplay, conn);
+                dict[title].Items = ReadItems(dict[title].IdSituation, idGameplay, conn);
                 dict[title].Actions = ReadAction(dict[title].IdSituation, idGameplay, conn);
             }
+
+            // Reads data from the variables table
+            SqlCommand selectVariables = new SqlCommand(@"SELECT IDInstance, Unlocked
+                                                          FROM SituationVariable
+                                                          WHERE IDGameplay = @IDGameplay", conn);
+
+            selectVariables.Parameters.AddWithValue("@IDGameplay", idGameplay);
+
+            reader = selectVariables.ExecuteReader();
+            while (reader.Read())
+            {
+                // Finds the name of the situation using Linq
+                string title = (from dictEl in dict
+                               where dictEl.Value.IdSituation == int.Parse(reader[0].ToString().TrimEnd(null))
+                               select dictEl.Key).First();
+
+                dict[title].IsUnlocked = (bool)reader[1];
+            }
+
+            reader.Close();
 
             return dict;
         }
 
+        /// <summary>
+        /// Gets situation title given the ID
+        /// </summary>
+        /// <param name="id">Situation ID</param>
+        /// <param name="conn">Connection to the db</param>
+        /// <returns>The title of the situation</returns>
         private string GetTitle(int id, SqlConnection conn)
         {
             if (id == -1)
@@ -118,13 +168,18 @@ namespace ProgettoPCTO
 
         private int GetIdentityValue(string table, SqlConnection conn)
         {
-            SqlCommand identity = new SqlCommand($"DBCC CHECKIDENT('{table}', NORESEED);", conn);
+            SqlCommand identity = new SqlCommand($"SELECT IDENT_CURRENT('{table}');", conn);
 
-            object id = identity.ExecuteScalar();
+            SqlDataReader reader = identity.ExecuteReader();
+
+            reader.Read();
+            object id = reader[0];
+            reader.Close();
+
             if (id is null)
                 return -1;
             else
-                return (int)id;
+                return int.Parse(id.ToString());
         }
 
         private Dictionary<string, Item> GetInventoryItems(int idPlayer, SqlConnection conn)
@@ -196,14 +251,15 @@ namespace ProgettoPCTO
             return p;
         }
 
-        private List<Character> ReadCharacters(int idSituation, SqlConnection conn)
+        private List<Character> ReadCharacters(int idSituation, int idGameplay, SqlConnection conn)
         {
             SqlCommand select = new SqlCommand(@"SELECT I.IDImage, I.Name, I.Description, I.X, I.Y, I.ImageURL, I.Width, I.Height,
                                                         I.Dialogue, C.IDCharacter, C.Strength, C.IsVisible, C.EffectiveWeapon
                                                  FROM Image AS I INNER JOIN 
                                                       Character AS C ON I.IDImage = C.IDImage
-                                                 WHERE I.IDSituation = @Situation AND I.IsCharacter = 1", conn);
+                                                 WHERE I.IDSituation = @Situation AND I.IsCharacter = 1 AND C.IDGameplay = @IDGameplay", conn);
             select.Parameters.AddWithValue("@Situation", idSituation);
+            select.Parameters.AddWithValue("@IDGameplay", idGameplay);
 
             SqlDataReader reader = select.ExecuteReader();
             List<Character> list = new List<Character>();
@@ -232,14 +288,15 @@ namespace ProgettoPCTO
             return list;
         }
 
-        private List<Item> ReadItems(int idSituation, SqlConnection conn)
+        private List<Item> ReadItems(int idSituation, int idGameplay, SqlConnection conn)
         {
             SqlCommand select = new SqlCommand(@"SELECT I.IDImage, I.Name, I.Description, I.X, I.Y, I.ImageURL, I.Width, I.Height,
                                                         I.Dialogue, IT.IDItem, IT.IsCollectable, IT.IsVisible, IT.Effectiveness
                                                  FROM Image AS I INNER JOIN 
                                                       Item AS IT ON I.IDImage = IT.IDImage
-                                                 WHERE I.IDSituation = @Situation AND I.IsItem = 1 AND IT.IDPlayer IS NULL;", conn);
+                                                 WHERE I.IDSituation = @Situation AND I.IsItem = 1 AND IT.IDPlayer IS NULL AND IT.IDGameplay = @IDGameplay;", conn);
             select.Parameters.AddWithValue("@Situation", idSituation);
+            select.Parameters.AddWithValue("@IDGameplay", idGameplay);
 
             SqlDataReader reader = select.ExecuteReader();
             List<Item> list = new List<Item>();
@@ -303,15 +360,18 @@ namespace ProgettoPCTO
         {
             using(SqlConnection conn = new SqlConnection(_connectionString))
             {
+                conn.Open();
+
                 // Write gameplay associated with the account
                 g.IdGameplay = InsertGameplay(username, g, conn);
                 InsertPlayer(g.IdGameplay, g.PlayerProfile, conn);
                 foreach(Situation s in g.Situations.Values)
                 {
                     List<Entity> entities = new List<Entity>(s.Entities);
+                    // problem
                     entities.AddRange(s.Items);
                     InsertVariations(g.IdGameplay, s.IdSituation, s.IsUnlocked, conn);
-                    InsertCharacterAndItem(g.IdGameplay, s.IdSituation, entities, conn);
+                    InsertCharacterAndItem(g.IdGameplay, entities, conn);
                     InsertActions(g.IdGameplay, s.IdSituation, s.Actions, conn);
                 }
                 
@@ -322,6 +382,8 @@ namespace ProgettoPCTO
         {
             using(SqlConnection conn = new SqlConnection(_connectionString))
             {
+                conn.Open();
+
                 SqlCommand insert = new SqlCommand(@"INSERT INTO Account VALUES (@Username, @Email, @Password);", conn);
 
                 insert.Parameters.AddWithValue("@Username", username);
@@ -346,6 +408,10 @@ namespace ProgettoPCTO
 
         private void InsertVariations(int idGameplay, int idSituation, bool value, SqlConnection conn)
         {
+            // If the situation is already unlocked there's no need to save the variable
+            if (value)
+                return;
+
             SqlCommand insert = new SqlCommand("INSERT INTO SituationVariable VALUES (@IDSituation, @Unlocked, @IDGameplay);", conn);
 
             insert.Parameters.AddWithValue("@IDSituation", idSituation);
@@ -373,14 +439,14 @@ namespace ProgettoPCTO
 
         private void InsertPlayer(int idGameplay, Player p, SqlConnection conn)
         {
-            SqlCommand insertCharacter = new SqlCommand("INSERT INTO Character VALUES (@Strength, @IsVisible, @EffectiveWeapon, @IDImage, @IDGameplay);", conn);
+            SqlCommand insertCharacter = new SqlCommand(@"INSERT INTO Character(Strength, IsVisible, IDImage, IDGameplay)
+                                                          VALUES (@Strength, @IsVisible, @IDImage, @IDGameplay);", conn);
             SqlCommand insert = new SqlCommand(@"INSERT INTO Player VALUES (@IDCharacter, @Health, @Armor, @Experience, @IDGameplay);", conn);
 
-            insert.Parameters.AddWithValue("@Strength", p.Strength);
-            insert.Parameters.AddWithValue("@IsVisible", p.IsVisible);
-            insert.Parameters.AddWithValue("@EffectiveWeapon", p.EffectiveWeapon);
-            insert.Parameters.AddWithValue("@IDImage", DBNull.Value);
-            insert.Parameters.AddWithValue("@IDGameplay", idGameplay);
+            insertCharacter.Parameters.AddWithValue("@Strength", p.Strength);
+            insertCharacter.Parameters.AddWithValue("@IsVisible", p.IsVisible);
+            insertCharacter.Parameters.AddWithValue("@IDImage", DBNull.Value);
+            insertCharacter.Parameters.AddWithValue("@IDGameplay", idGameplay);
 
             insertCharacter.ExecuteNonQuery();
             int id = GetIdentityValue("Character", conn);
@@ -426,6 +492,7 @@ namespace ProgettoPCTO
                     insertItem.Parameters.AddWithValue("@IsVisible", i.IsVisible);
                     insertItem.Parameters.AddWithValue("@Effectiveness", i.Effectiveness);
                     insertItem.Parameters.AddWithValue("@IDImage", i.IdImage);
+                    insertItem.Parameters.AddWithValue("@IDGameplay", idGameplay);
 
                     insertItem.ExecuteNonQuery();
                     insertItem.Dispose();
