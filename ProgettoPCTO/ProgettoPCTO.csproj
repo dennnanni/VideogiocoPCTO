@@ -128,6 +128,7 @@
     <Content Include="Img\Items\healthpotion.png" />
     <Content Include="Img\Items\pickaxe.png" />
     <Content Include="Img\Items\sword.png" />
+    <Content Include="Login.aspx" />
     <Content Include="SQLScript\PCTO-createtables.sql" />
     <Content Include="SQLScript\PCTO-insert.sql" />
     <Content Include="SQLScript\PCTO-select.sql" />
@@ -159,6 +160,13 @@
     <Compile Include="Class\Item.cs" />
     <Compile Include="Class\Player.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Class\Situation.cs" />
     <Compile Include="SQLReader.cs" />

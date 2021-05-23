@@ -1,8 +1,12 @@
 USE Videogame
 
+
 SELECT * 
 FROM Situation AS S LEFT JOIN SituationVariable AS SV ON S.IDSituation = SV.IDInstance
 WHERE SV.IDGameplay = 1 OR SV.IDInstance IS NULL;
+
+SELECT * 
+FROM Image INNER JOIN Item ON Image.IDImage = Item.IDImage;
 
 SELECT *
 FROM Gameplay;

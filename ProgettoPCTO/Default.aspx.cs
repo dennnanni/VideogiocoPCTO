@@ -26,20 +26,18 @@ namespace ProgettoPCTO
         {
             if (!IsPostBack)
             {
-                _game = new Gameplay();
-                _game.Initialize();
-                _game.Save(Server);
-
                 // Creates the gameplay and loads the first situation
-                _game = new Gameplay().SetUp(Server);
+                //_game = new Gameplay().SetUp(Server);
+                SQLReader reader = new SQLReader("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
+                _game = reader.ReadData("default");
                 Session["player"] = _game.PlayerProfile;
                 Session["gameplay"] = _game;
                 _selectedAction = drpActions.SelectedValue;
                 _currentSituation = _game["area1"];
                 this.LoadSituation("area1");
 
-                SQLReader reader = new SQLReader("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
-                reader.ReadData("default");
+                //SQLReader reader = new SQLReader("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
+                //reader.ReadData("default");
             }
             else
             {

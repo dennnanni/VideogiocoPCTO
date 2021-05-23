@@ -55,7 +55,7 @@ namespace ProgettoPCTO
             SqlCommand select = new SqlCommand(@"SELECT S.IDSituation, S.Title, S.Name, S.Description, S.ImageURL, S.UnlockingItem, S.IDForward, S.IDRight, S.IDBackward, S.IDLeft, SV.Unlocked
                                                  FROM Situation AS S LEFT JOIN 
                                                       SituationVariable AS SV ON S.IDSituation = SV.IDInstance
-                                                      WHERE SV.IDGameplay = 1 OR SV.IDInstance IS NULL;", conn);
+                                                 WHERE SV.IDGameplay = 1 OR SV.IDInstance IS NULL;", conn);
             select.Parameters.AddWithValue("@Gameplay", idGameplay);
 
             SqlDataReader reader = select.ExecuteReader();
@@ -224,10 +224,10 @@ namespace ProgettoPCTO
         private List<Item> ReadItems(int idSituation, SqlConnection conn)
         {
             SqlCommand select = new SqlCommand(@"SELECT I.IDImage, I.Name, I.Description, I.X, I.Y, I.ImageURL, I.Width, I.Height,
-                                                        I.Dialogue, IT.IsCollectable, IT.IsVisible, IT.Effectiveness
+                                                        I.Dialogue, IT.IDItem, IT.IsCollectable, IT.IsVisible, IT.Effectiveness
                                                  FROM Image AS I INNER JOIN 
                                                       Item AS IT ON I.IDImage = IT.IDImage
-                                                 WHERE I.IDSituation = @Situation AND I.IsItem = 1 AND IT.IDPlayer = NULL", conn);
+                                                 WHERE I.IDSituation = @Situation AND I.IsItem = 1 AND IT.IDPlayer IS NULL;", conn);
             select.Parameters.AddWithValue("@Situation", idSituation);
 
             SqlDataReader reader = select.ExecuteReader();
@@ -238,7 +238,7 @@ namespace ProgettoPCTO
                 list.Add(new Item(reader["ImageURL"].ToString().TrimEnd(null))
                 {
                     IdImage = int.Parse(reader["IDImage"].ToString().TrimEnd(null)),
-                    IdItem = int.Parse(reader["IDCharacter"].ToString().TrimEnd(null)),
+                    IdItem = int.Parse(reader["IDItem"].ToString().TrimEnd(null)),
                     Name = reader["Name"].ToString().TrimEnd(null),
                     Description = reader["Description"].ToString().TrimEnd(null),
                     X = int.Parse(reader["X"].ToString().TrimEnd(null)),
@@ -246,9 +246,9 @@ namespace ProgettoPCTO
                     Width = int.Parse(reader["Width"].ToString().TrimEnd(null)),
                     Height = int.Parse(reader["Height"].ToString().TrimEnd(null)),
                     Dialogue = reader["Dialogue"].ToString().TrimEnd(null),
-                    IsVisible = int.Parse(reader["IsVisible"].ToString().TrimEnd(null)) != 0,
+                    IsVisible = (bool)reader["IsVisible"],
                     Effectiveness = int.Parse(reader["Effectiveness"].ToString().TrimEnd(null)),
-                    IsCollectable = int.Parse(reader["IsVisible"].ToString().TrimEnd(null)) != 0,
+                    IsCollectable = (bool)reader["IsVisible"]
 
                 });
             }
@@ -294,7 +294,6 @@ namespace ProgettoPCTO
             {
                 // Write gameplay associated with the account
                 InsertGameplay(username, g, conn);
-                InsertSituation(g.IdGameplay, g.Situations, conn);
                 foreach(Situation s in g.Situations.Values)
                 {
                     List<Entity> entities = new List<Entity>(s.Entities);
@@ -331,62 +330,21 @@ namespace ProgettoPCTO
             SqlCommand insert = new SqlCommand(@"INSERT INTO Player VALUES (@Health, @Armor, @Experience, @IDGameplay);", conn);
         }
 
-        private void InsertSituation(int idGameplay, Dictionary<string, Situation> situations, SqlConnection conn)
-        {
-            foreach(KeyValuePair<string, Situation> el in situations)
-            {
-                SqlCommand insert = new SqlCommand(@"INSERT INTO Situation 
-                                                     VALUES (@Title, @Name, @Description, @ImageURL, @UnlockingItem, 
-                                                     @IdGameplay, @IdForward, @IdRight, @IdBackward, @IdLeft);", conn);
-
-                insert.Parameters.AddWithValue("@Title", el.Key);
-                insert.Parameters.AddWithValue("@Name", el.Value.Name);
-                insert.Parameters.AddWithValue("@Description", el.Value.Description);
-                insert.Parameters.AddWithValue("@ImageURL", el.Value.ImageURL);
-                insert.Parameters.AddWithValue("@UnlockingItem", el.Value.UnlockingItem);
-                insert.Parameters.AddWithValue("@IdGameplay", idGameplay);
-                insert.Parameters.AddWithValue("@IdForward", situations[el.Value.Areas[0]].IdSituation);
-                insert.Parameters.AddWithValue("@IdRight", situations[el.Value.Areas[1]].IdSituation);
-                insert.Parameters.AddWithValue("@IdBackward", situations[el.Value.Areas[2]].IdSituation);
-                insert.Parameters.AddWithValue("@IdLeft", situations[el.Value.Areas[3]].IdSituation);
-
-                insert.ExecuteNonQuery();
-                insert.Dispose();
-            }
-        }
-
-        private void InsertCharacterAndImage(int idSituation, List<Entity> entities, SqlConnection conn)
+        private void InsertCharacterAndImage(int idGameplay, int idSituation, List<Entity> entities, SqlConnection conn)
         {
             foreach(Entity e in entities)
             {
-                SqlCommand insertImage = new SqlCommand(@"INSERT INTO Image(Name, Description, X, Y, ImageURL, Width, Height, Dialogue, IDSituation)
-                                                          VALUES (@Name, @Description, @X, @Y, @ImageURL, @Width, @Height, @Dialogue, @IdSituation);", conn);
-
-                insertImage.Parameters.AddWithValue("@Name", e.Name);
-                insertImage.Parameters.AddWithValue("@Description", e.Description);
-                insertImage.Parameters.AddWithValue("@X", e.X);
-                insertImage.Parameters.AddWithValue("@Y", e.Y);
-                insertImage.Parameters.AddWithValue("@ImageURL", e.ImageURL);
-                insertImage.Parameters.AddWithValue("@Width", e.Width);
-                insertImage.Parameters.AddWithValue("@Height", e.Height);
-                insertImage.Parameters.AddWithValue("@Dialogue", e.Dialogue);
-                insertImage.Parameters.AddWithValue("@IdSituation", idSituation);
-
-                insertImage.ExecuteNonQuery();
-                insertImage.Dispose();
-
                 if (e.GetType() == typeof(Character))
                 {
                     Character c = (Character)e;
-                    SqlCommand update = new SqlCommand(@"UPDATE Character SET IsCharacter = 1;", conn);
-                    update.ExecuteNonQuery();
 
-                    SqlCommand insertChar = new SqlCommand("INSERT INTO Character VALUES (@Strength, @IsVisible, @EffectiveWeapon, @IDImage);", conn);
+                    SqlCommand insertChar = new SqlCommand("INSERT INTO Character VALUES (@Strength, @IsVisible, @EffectiveWeapon, @IDImage, @IDGameplay);", conn);
 
                     insertChar.Parameters.AddWithValue("@Strength", c.Strength);
                     insertChar.Parameters.AddWithValue("@IsVisible", c.IsVisible);
                     insertChar.Parameters.AddWithValue("@EffectiveWeapon", c.EffectiveWeapon);
                     insertChar.Parameters.AddWithValue("@IDImage", c.IdImage);
+                    insertChar.Parameters.AddWithValue("@IDGameplay", idGameplay);
 
                     insertChar.ExecuteNonQuery();
                     insertChar.Dispose();
@@ -394,10 +352,8 @@ namespace ProgettoPCTO
                 else if (e.GetType() == typeof(Item))
                 {
                     Item i = (Item)e;
-                    SqlCommand update = new SqlCommand(@"UPDATE Character SET IsItem = 1;", conn);
-                    update.ExecuteNonQuery();
 
-                    SqlCommand insertItem = new SqlCommand("INSERT INTO Item VALUES (@IsCollectable, @IsVisible, @Effectiveness, NULL, @IDImage);", conn);
+                    SqlCommand insertItem = new SqlCommand("INSERT INTO Item VALUES (@IsCollectable, @IsVisible, @Effectiveness, NULL, @IDImage, @IDGameplay);", conn);
 
                     insertItem.Parameters.AddWithValue("@IsCollectable", i.IsCollectable);
                     insertItem.Parameters.AddWithValue("@IsVisible", i.IsVisible);

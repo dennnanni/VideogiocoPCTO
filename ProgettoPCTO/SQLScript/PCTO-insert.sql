@@ -2,7 +2,7 @@
 USE Videogame
 GO
 
-INSERT INTO Account VALUES ('default', 'default');
+INSERT INTO Account VALUES ('default', 'prova', 'default');
 
 INSERT INTO Gameplay VALUES ('area0', 'default');
 
@@ -39,7 +39,7 @@ UPDATE Situation SET IDForward = 5, IDRight = NULL, IDBackward = 2, IDLeft = NUL
 UPDATE Situation SET IDForward = NULL, IDRight = NULL, IDBackward = 4, IDLeft = 6 WHERE IDSituation = 5;
 
 -- Insertion of player
-INSERT INTO Character VALUES (50, 0, NULL, NULL);
+INSERT INTO Character VALUES (50, 0, NULL, NULL, NULL);
 INSERT INTO Player VALUES (1, 100, 0, 0, 1);
 
 -- Insertion of Images
@@ -62,12 +62,12 @@ INSERT INTO Image VALUES ('Pozione della salute', 'Restituisce 30 punti salute!'
 60, 60, 'Hai aggiunto Pozione della salute al tuo inventario.', 0, 1, 3);
 
 -- Insertion of characters
-INSERT INTO Character VALUES (0, 1, NULL, 1);
-INSERT INTO Character VALUES (5, 1, 'Spada', 3);
+INSERT INTO Character VALUES (0, 1, NULL, 1, 1);
+INSERT INTO Character VALUES (5, 1, 'Spada', 3, 1);
 
 -- Insertion of items
-INSERT INTO Item VALUES (1, 1, 0, NULL, 2);
-INSERT INTO Item VALUES (1, 1, 30, NULL, 4);
+INSERT INTO Item VALUES (1, 1, 0, NULL, 2, 1);
+INSERT INTO Item VALUES (1, 1, 30, NULL, 4, 1);
 
 -- Insert actions
 INSERT INTO Action VALUES (1, 'Parla con Steve', 1);
