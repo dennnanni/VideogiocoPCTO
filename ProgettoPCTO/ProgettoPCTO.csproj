@@ -133,6 +133,7 @@
     <Content Include="SQLScript\PCTO-insert.sql" />
     <Content Include="SQLScript\PCTO-select.sql" />
     <Content Include="Stylesheet.css" />
+    <Content Include="StylesheetLogin.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

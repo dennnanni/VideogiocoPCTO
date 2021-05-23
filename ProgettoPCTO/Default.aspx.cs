@@ -20,7 +20,17 @@ namespace ProgettoPCTO
         private string[] _friendEntitesNames = { "steve", "personaggio misterioso" };
         private string[] _weaponsNames = { "spada", "piccone" };
         private string _selectedAction = ""; // Back up from the drop down list
-        private string _username = "";
+        private string Username
+        {
+            get => Session["user"].ToString();
+            set => Session["user"] = value;
+        }
+
+        private Gameplay Game
+        {
+            get => (Gameplay)Session["Game"];
+            set => Session["Game"] = value;
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,20 +40,15 @@ namespace ProgettoPCTO
                 //_game = new Gameplay().SetUp(Server);
                 SQLReader reader = new SQLReader("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
                 _game = reader.ReadData("default");
-                Session["player"] = _game.PlayerProfile;
-                Session["gameplay"] = _game;
+                Game = _game;
                 _selectedAction = drpActions.SelectedValue;
                 _currentSituation = _game["area1"];
                 this.LoadSituation("area1");
-
-                //SQLReader reader = new SQLReader("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
-                //reader.ReadData("default");
             }
             else
             {
                 // Restores last changes 
-                _game = (Gameplay)Session["gameplay"];
-                _game.PlayerProfile = (Player)Session["player"];
+                _game = (Gameplay)Game;
                 _selectedAction = drpActions.SelectedValue;
                 _currentSituation = _game[_game.CurrentAreaID];
                 this.LoadSituation(_game.CurrentAreaID);
@@ -69,7 +74,7 @@ namespace ProgettoPCTO
             this.LoadSituation(_currentSituation.Areas[index]);
 
             _game.CurrentAreaID = _currentAreaID;
-            Session["gameplay"] = _game;
+            Game = _game;
         }
 
         public void LoadSituation(string name) // Loading by name is much more easy to reuse code
@@ -161,7 +166,7 @@ namespace ProgettoPCTO
 
             // Save the parameters
             _game.CurrentAreaID = name;
-            Session["gameplay"] = _game;
+            Game = _game;
         }
          
 
@@ -233,8 +238,7 @@ namespace ProgettoPCTO
             drpActions.Items.Remove(_selectedAction);
 
             _game.CurrentAreaID = _currentAreaID;
-            Session["gameplay"] = _game;
-            Session["player"] = _game.PlayerProfile;
+            Game = _game;
         }
 
         protected void btnDrop_Click(object sender, EventArgs e)
@@ -259,8 +263,7 @@ namespace ProgettoPCTO
             lstInventory.Items.RemoveAt(selectedIndex);
 
             _game.CurrentAreaID = _currentAreaID;
-            Session["gameplay"] = _game;
-            Session["player"] = _game.PlayerProfile;
+            Game = _game;
         }
 
         private bool ItemHandler(Item item)
@@ -438,8 +441,7 @@ namespace ProgettoPCTO
 
             txtStory.Text += "Hai usato " + selectedItem + ". " + message + "\n";
 
-            Session["player"] = _game.PlayerProfile;
-            Session["gameplay"] = _game;
+            Game = _game;
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -479,8 +481,7 @@ namespace ProgettoPCTO
             btnSave.Enabled = true;
 
             // Stores the gameplay structure
-            Session["gameplay"] = _game;
-            Session["player"] = _game.PlayerProfile;
+            Game = _game;
             _selectedAction = drpActions.SelectedValue;
             _currentSituation = _game[_game.CurrentAreaID];
 
@@ -496,10 +497,9 @@ namespace ProgettoPCTO
             }
             _currentAreaID = "area0";
             _game.CurrentAreaID = "area1";
-            Session["player"] = _game.PlayerProfile;
             _selectedAction = drpActions.SelectedValue;
             _currentSituation = _game["area1"];
-            Session["gameplay"] = _game;
+            Game = _game;
             foreach (Control b in pnlCardinals.Controls)
             {
                 Button button = b as Button;

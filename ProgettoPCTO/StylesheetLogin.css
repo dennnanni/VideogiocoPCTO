@@ -1,0 +1,123 @@
+﻿body {
+}
+
+#pnlContainer {
+    position: absolute;
+    border: solid;
+    top: 10px;
+    left: 10px;
+    border-color: black;
+    border-width: 5px;
+    height: 270px;
+    width: 350px;
+}
+
+#txtUsername {
+    position: absolute;
+    top: 80px;
+    left: 140px;
+    width: 170px;
+}
+
+#txtPassword {
+    position: absolute;
+    top: 120px;
+    left: 140px;
+    width: 170px;
+}
+
+#lblUsername {
+    position: absolute;
+    left: 20px;
+    top: 80px;
+    width: 100px;
+    display: block;
+    text-align: center;
+}
+
+#lblPassword {
+    position: absolute;
+    left: 20px;
+    top: 120px;
+    width: 100px;
+    display: block;
+    text-align: center;
+}
+
+#lblTitle {
+    position: absolute;
+    top: 20px;
+    font-size: 20px;
+    left: 25px;
+    width: 300px;
+    text-align: center;
+    display: block;
+}
+
+#btnLogin {
+    position: absolute;
+    width: 100px;
+    height: 25px;
+    top: 160px;
+    left: 125px;
+}
+
+#hypResetPassword {
+    position: absolute;
+    top: 205px;
+    width: 350px;
+    display: block;
+    text-align: center;
+}
+
+#hypSignUp {
+    position: absolute;
+    top: 230px;
+    width: 350px;
+    display: block;
+    text-align: center;
+}
+
+#pnlContainerReset {
+    position: absolute;
+    border: solid;
+    top: 10px;
+    left: 10px;
+    border-color: black;
+    border-width: 5px;
+    height: 270px;
+    width: 350px;
+}
+
+#pnlContainerSignUp {
+    position: absolute;
+    border: solid;
+    top: 10px;
+    left: 10px;
+    border-color: black;
+    border-width: 5px;
+    height: 270px;
+    width: 350px;
+}
+
+#txtNewUsername {
+    position: absolute;
+    top: 80px;
+    left: 140px;
+    width: 170px;
+}
+
+#txtNewPassword {
+    position: absolute;
+    top: 120px;
+    left: 140px;
+    width: 170px;
+}
+
+#hypLogIn {
+    position: absolute;
+    top: 205px;
+    width: 350px;
+    display: block;
+    text-align: center;
+}
