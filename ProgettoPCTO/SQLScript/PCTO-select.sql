@@ -1,5 +1,7 @@
 USE Videogame
 
+SELECT IDENT_CURRENT('Situation') AS [Identity];
+DBCC CHECKIDENT('Situation', NORESEED);
 
 SELECT * 
 FROM Situation AS S LEFT JOIN SituationVariable AS SV ON S.IDSituation = SV.IDInstance

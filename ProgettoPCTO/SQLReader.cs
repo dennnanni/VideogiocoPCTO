@@ -37,8 +37,8 @@ namespace ProgettoPCTO
         {
             SqlCommand select = new SqlCommand(@"SELECT IDGameplay, CurrentAreaID 
                                                  FROM Gameplay 
-                                                 WHERE Gameplay.Username = 'default'", conn);
-            //select.Parameters.AddWithValue("@Username", username);
+                                                 WHERE Gameplay.Username = @Username", conn);
+            select.Parameters.AddWithValue("@Username", username);
 
             SqlDataReader reader = select.ExecuteReader();
 
@@ -55,7 +55,7 @@ namespace ProgettoPCTO
             SqlCommand select = new SqlCommand(@"SELECT S.IDSituation, S.Title, S.Name, S.Description, S.ImageURL, S.UnlockingItem, S.IDForward, S.IDRight, S.IDBackward, S.IDLeft, SV.Unlocked
                                                  FROM Situation AS S LEFT JOIN 
                                                       SituationVariable AS SV ON S.IDSituation = SV.IDInstance
-                                                 WHERE SV.IDGameplay = 1 OR SV.IDInstance IS NULL;", conn);
+                                                 WHERE SV.IDGameplay = @Gameplay OR SV.IDInstance IS NULL;", conn);
             select.Parameters.AddWithValue("@Gameplay", idGameplay);
 
             SqlDataReader reader = select.ExecuteReader();
@@ -114,6 +114,17 @@ namespace ProgettoPCTO
             string value = reader[0].ToString().TrimEnd(null);
             reader.Close();
             return value;
+        }
+
+        private int GetIdentityValue(string table, SqlConnection conn)
+        {
+            SqlCommand identity = new SqlCommand($"DBCC CHECKIDENT('{table}', NORESEED);", conn);
+
+            object id = identity.ExecuteScalar();
+            if (id is null)
+                return -1;
+            else
+                return (int)id;
         }
 
         private Dictionary<string, Item> GetInventoryItems(int idPlayer, SqlConnection conn)
@@ -293,29 +304,35 @@ namespace ProgettoPCTO
             using(SqlConnection conn = new SqlConnection(_connectionString))
             {
                 // Write gameplay associated with the account
-                InsertGameplay(username, g, conn);
+                g.IdGameplay = InsertGameplay(username, g, conn);
+                InsertPlayer(g.IdGameplay, g.PlayerProfile, conn);
                 foreach(Situation s in g.Situations.Values)
                 {
                     List<Entity> entities = new List<Entity>(s.Entities);
                     entities.AddRange(s.Items);
+                    InsertVariations(g.IdGameplay, s.IdSituation, s.IsUnlocked, conn);
+                    InsertCharacterAndItem(g.IdGameplay, s.IdSituation, entities, conn);
+                    InsertActions(g.IdGameplay, s.IdSituation, s.Actions, conn);
                 }
+                
             }
         }
 
-        public void InsertAccount(string username, string password)
+        public void InsertAccount(string username, string email, string password)
         {
             using(SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand insert = new SqlCommand(@"INSERT INTO Account VALUES (@Username, @Password);", conn);
+                SqlCommand insert = new SqlCommand(@"INSERT INTO Account VALUES (@Username, @Email, @Password);", conn);
 
                 insert.Parameters.AddWithValue("@Username", username);
-                insert.Parameters.AddWithValue("@Password", Helper.HashPassword(password));
+                insert.Parameters.AddWithValue("@Email", email);
+                insert.Parameters.AddWithValue("@Password", password);
 
                 insert.ExecuteNonQuery();
             }
         }
 
-        private void InsertGameplay(string username, Gameplay g, SqlConnection conn)
+        private int InsertGameplay(string username, Gameplay g, SqlConnection conn)
         {
             SqlCommand insert = new SqlCommand(@"INSERT INTO Gameplay VALUES (@CurrentArea, @Username);", conn);
 
@@ -323,14 +340,62 @@ namespace ProgettoPCTO
             insert.Parameters.AddWithValue("@CurrentArea", g.CurrentAreaID);
 
             insert.ExecuteNonQuery();
+
+            return GetIdentityValue("Gameplay", conn);
+        }
+
+        private void InsertVariations(int idGameplay, int idSituation, bool value, SqlConnection conn)
+        {
+            SqlCommand insert = new SqlCommand("INSERT INTO SituationVariable VALUES (@IDSituation, @Unlocked, @IDGameplay);", conn);
+
+            insert.Parameters.AddWithValue("@IDSituation", idSituation);
+            insert.Parameters.AddWithValue("@Unlocked", value);
+            insert.Parameters.AddWithValue("IDGameplay", idGameplay);
+
+            insert.ExecuteNonQuery();
+        }
+
+        private void InsertActions(int idGameplay, int idSituation, List<string> actions, SqlConnection conn)
+        {
+            foreach(string s in actions)
+            {
+                SqlCommand insert = new SqlCommand("INSERT INTO Action VALUES (@IDSituation, @Dialogue, @IDGameplay);", conn);
+
+                insert.Parameters.AddWithValue("@IDSituation", idSituation);
+                insert.Parameters.AddWithValue("@Dialogue", s);
+                insert.Parameters.AddWithValue("@IDGameplay", idGameplay);
+
+                insert.ExecuteNonQuery();
+                insert.Dispose();
+            }
+            
         }
 
         private void InsertPlayer(int idGameplay, Player p, SqlConnection conn)
         {
-            SqlCommand insert = new SqlCommand(@"INSERT INTO Player VALUES (@Health, @Armor, @Experience, @IDGameplay);", conn);
+            SqlCommand insertCharacter = new SqlCommand("INSERT INTO Character VALUES (@Strength, @IsVisible, @EffectiveWeapon, @IDImage, @IDGameplay);", conn);
+            SqlCommand insert = new SqlCommand(@"INSERT INTO Player VALUES (@IDCharacter, @Health, @Armor, @Experience, @IDGameplay);", conn);
+
+            insert.Parameters.AddWithValue("@Strength", p.Strength);
+            insert.Parameters.AddWithValue("@IsVisible", p.IsVisible);
+            insert.Parameters.AddWithValue("@EffectiveWeapon", p.EffectiveWeapon);
+            insert.Parameters.AddWithValue("@IDImage", DBNull.Value);
+            insert.Parameters.AddWithValue("@IDGameplay", idGameplay);
+
+            insertCharacter.ExecuteNonQuery();
+            int id = GetIdentityValue("Character", conn);
+
+            insert.Parameters.AddWithValue("@IDCharacter", id);
+            insert.Parameters.AddWithValue("@Health", p.Health);
+            insert.Parameters.AddWithValue("@Armor", p.Armor);
+            insert.Parameters.AddWithValue("@Experience", p.Experience);
+            insert.Parameters.AddWithValue("@IDGameplay", idGameplay);
+
+            insert.ExecuteNonQuery();
+
         }
 
-        private void InsertCharacterAndImage(int idGameplay, int idSituation, List<Entity> entities, SqlConnection conn)
+        private void InsertCharacterAndItem(int idGameplay, List<Entity> entities, SqlConnection conn)
         {
             foreach(Entity e in entities)
             {
@@ -348,6 +413,8 @@ namespace ProgettoPCTO
 
                     insertChar.ExecuteNonQuery();
                     insertChar.Dispose();
+
+                    c.IdCharacter = GetIdentityValue("Character", conn);
                 }
                 else if (e.GetType() == typeof(Item))
                 {
@@ -362,14 +429,22 @@ namespace ProgettoPCTO
 
                     insertItem.ExecuteNonQuery();
                     insertItem.Dispose();
+
+                    i.IdItem = GetIdentityValue("Item", conn);
                 }
             }
         }
 
+        
 
         #endregion
 
         #region Updater
+
+        private void UpdateReferences(Gameplay g, SqlConnection conn)
+        {
+
+        }
 
         #endregion
     }
