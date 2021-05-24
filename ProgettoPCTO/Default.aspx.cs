@@ -45,6 +45,7 @@ namespace ProgettoPCTO
                 // Creates the gameplay and loads the first situation
                 _game = new Gameplay().SetUp(Server);
                 Commands = new SQLCommands("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
+                Commands.InsertSituation(_game.Situations, Page);
                 _game = Commands.ReadData("default");
                 Game = _game;
                 _selectedAction = drpActions.SelectedValue;
@@ -54,7 +55,7 @@ namespace ProgettoPCTO
             else
             {
                 // Restores last changes 
-                _game = (Gameplay)Game;
+                _game = Game;
                 _selectedAction = drpActions.SelectedValue;
                 _currentSituation = _game[_game.CurrentAreaID];
                 this.LoadSituation(_game.CurrentAreaID);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace ProgettoPCTO
 {
@@ -22,8 +23,6 @@ namespace ProgettoPCTO
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                // TODO: Selezione nel database dei valori associati all'account
-
                 conn.Open();
                 ReadGameplay(username, g, conn);
                 g.PlayerProfile = ReadPlayer(g.IdGameplay, conn);
@@ -80,7 +79,6 @@ namespace ProgettoPCTO
             SqlCommand select = new SqlCommand(@"SELECT S.IDSituation, S.Title, S.Name, S.Description, S.ImageURL, S.UnlockingItem, S.IDForward, S.IDRight, S.IDBackward, S.IDLeft, SV.Unlocked
                                                  FROM Situation AS S LEFT JOIN 
                                                       SituationVariable AS SV ON S.IDSituation = SV.IDInstance;", conn);
-            select.Parameters.AddWithValue("@Gameplay", idGameplay);
 
             SqlDataReader reader = select.ExecuteReader();
 
@@ -357,11 +355,7 @@ namespace ProgettoPCTO
 
         #endregion
 
-        #region Writer
-        /* 
-         * To Do List:
-         * Character, Item, Player, Action, Gameplay, Account, Image
-         */
+        #region Writer (finished)
         public void WriteData(string username, Gameplay g)
         {
             using(SqlConnection conn = new SqlConnection(_connectionString))
@@ -478,6 +472,7 @@ namespace ProgettoPCTO
 
         }
 
+        #region Insertion of Situation and Image
         public void InsertSituation(Dictionary<string, Situation> situations)
         {
             using(SqlConnection conn = new SqlConnection(_connectionString))
@@ -502,6 +497,7 @@ namespace ProgettoPCTO
                     insert.Dispose();
 
                     situations[el.Key].IdSituation = GetIdentityValue("Situation", conn);
+
                 }
 
                 foreach (Situation s in situations.Values)
@@ -568,6 +564,8 @@ namespace ProgettoPCTO
             }
         }
 
+        #endregion
+
         private void InsertCharacterAndItem(int idGameplay, List<Entity> entities, SqlConnection conn)
         {
             foreach(Entity e in entities)
@@ -618,12 +616,79 @@ namespace ProgettoPCTO
 
         #region Updater
 
-        private void UpdateReferences(Gameplay g, SqlConnection conn)
+        public void UpdateReferences(string username, Gameplay g)
+        {
+            using(SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                UpdateGameplay(username, g.CurrentAreaID, conn);
+
+            }
+        }
+
+        private void UpdateGameplay(string username, string currentArea, SqlConnection conn)
+        {
+            SqlCommand update = new SqlCommand("UPDATE Gameplay SET CurrentAreaID = @CurrentArea WHERE Username = @Username;", conn);
+
+            update.Parameters.AddWithValue("@CurrentArea", currentArea);
+            update.Parameters.AddWithValue("@Username", username);
+
+            update.ExecuteNonQuery();
+        }
+
+        // DA CORREGGERE
+        private void UpdateItem(Item i, int idPlayer, SqlConnection conn)
+        {
+            SqlCommand update = new SqlCommand(@"UPDATE Item SET IsCollectable = @Collectable, IsVisible = @Visible,
+                                                 Effectiveness = @Effectiveness, IDPlayer = @IDPlayer;", conn);
+
+            update.Parameters.AddWithValue("@Collectable", i.IsCollectable);
+            update.Parameters.AddWithValue("@Visible", i.IsVisible);
+            update.Parameters.AddWithValue("@Effectiveness", i.Effectiveness);
+            update.Parameters.AddWithValue("@IDPlayer", idPlayer);
+
+            update.ExecuteNonQuery();
+        }
+
+        private void UpdateCharacter(Character c, SqlConnection conn)
         {
 
         }
 
+        private void UpdatePlayer(Player p, SqlConnection conn)
+        {
+
+        }
+
+        private void UpdateVariables(Dictionary<string, Situation> s, SqlConnection conn)
+        {
+
+        }
+
+        public void UpdatePassword(string username, string password)
+        {
+            using(SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                SqlCommand update = new SqlCommand("UPDATE Account SET Password = @Password WHERE Username = @Username;", conn);
+
+                update.Parameters.AddWithValue("@Password", password);
+                update.Parameters.AddWithValue("@Username", username);
+
+                update.ExecuteNonQuery();
+            }
+        }
+
         #endregion
+
+
+        private void DeleteAction(int idGameplay, int idSituation, SqlConnection conn)
+        {
+            SqlCommand delete = new SqlCommand("DELETE FROM Action WHERE IDGameplay = @IdGameplay AND IDSituation = @IdSituation;", conn);
+
+            delete.Parameters.AddWithValue("@IdGameplay", idGameplay);
+            delete.Parameters.AddWithValue("@IdSituation", idSituation);
+
+            delete.ExecuteNonQuery();
+        }
     }
 
 }

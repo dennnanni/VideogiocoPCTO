@@ -39,11 +39,6 @@ namespace ProgettoPCTO
                     }
                 }
 
-                using (SqlConnection conn = new SqlConnection((string)Session["connection"]))
-                {
-                    conn.Open();
-                    // caricare parte data.xml
-                }
             }
             
         }
