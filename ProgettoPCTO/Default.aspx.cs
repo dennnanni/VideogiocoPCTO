@@ -42,12 +42,9 @@ namespace ProgettoPCTO
         {
             if (!IsPostBack)
             {
-                
-
                 // Creates the gameplay and loads the first situation
                 _game = new Gameplay().SetUp(Server);
                 Commands = new SQLCommands("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
-                Commands.WriteData("default", _game);
                 _game = Commands.ReadData("default");
                 Game = _game;
                 _selectedAction = drpActions.SelectedValue;

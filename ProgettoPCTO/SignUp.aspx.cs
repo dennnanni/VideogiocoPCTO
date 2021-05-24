@@ -20,8 +20,7 @@ namespace ProgettoPCTO
             string password = txtPassword.Text;
             string email = txtEmail.Text;
 
-            // change
-            if(false &&username == "default")
+            if(username == "default")
             {
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "AlertBox", "alert('Username non valido, sceglierne un altro.');", true);
                 return;
@@ -31,10 +30,9 @@ namespace ProgettoPCTO
 
             if (command.ValidateUsernameAndEmail(username, email))
             {
-                // change
-                command.InsertAccount("default", "default", "default");
-                //Gameplay g = command.ReadData("default");
-                //command.WriteData(username, g);
+                command.InsertAccount(username, email, Helper.HashPassword(password));
+                Gameplay g = command.ReadData("default");
+                command.WriteData(username, g);
 
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "AlertBox", "alert('Registrazione avvenuta con successo.');", true);
 

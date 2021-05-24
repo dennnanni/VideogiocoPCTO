@@ -12,6 +12,9 @@ FROM Gameplay;
 SELECT * 
 FROM Situation;
 
+SELECT *
+FROM SituationVariable;
+
 SELECT * 
 FROM Image;
 

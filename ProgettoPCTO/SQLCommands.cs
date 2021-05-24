@@ -136,6 +136,12 @@ namespace ProgettoPCTO
                                select dictEl.Key).First();
 
                 dict[title].IsUnlocked = (bool)reader[1];
+                if (dict[title].IsUnlocked)
+                {
+                    // If the situation is unlocked it needs another image, so the image url changes
+                    string[] temp = dict[title].ImageURL.Split('.');
+                    dict[title].ImageURL = string.Format("{0}u.{1}", temp[0], temp[1]);
+                }
             }
 
             reader.Close();
@@ -367,9 +373,17 @@ namespace ProgettoPCTO
                 InsertPlayer(g.IdGameplay, g.PlayerProfile, conn);
                 foreach(Situation s in g.Situations.Values)
                 {
-                    List<Entity> entities = new List<Entity>(s.Entities);
-                    // problem
-                    entities.AddRange(s.Items);
+                    List<Entity> entities = new List<Entity>();
+                    if (!(s.Items is null))
+                    {
+                        entities.AddRange(s.Items);
+                    }
+
+                    if (!(s.Entities is null))
+                    {
+                        entities.AddRange(s.Entities);
+                    }
+
                     InsertVariations(g.IdGameplay, s.IdSituation, s.IsUnlocked, conn);
                     InsertCharacterAndItem(g.IdGameplay, entities, conn);
                     InsertActions(g.IdGameplay, s.IdSituation, s.Actions, conn);
@@ -423,6 +437,9 @@ namespace ProgettoPCTO
 
         private void InsertActions(int idGameplay, int idSituation, List<string> actions, SqlConnection conn)
         {
+            if (actions is null)
+                return;
+
             foreach(string s in actions)
             {
                 SqlCommand insert = new SqlCommand("INSERT INTO Action VALUES (@IDSituation, @Dialogue, @IDGameplay);", conn);
@@ -461,6 +478,96 @@ namespace ProgettoPCTO
 
         }
 
+        public void InsertSituation(Dictionary<string, Situation> situations)
+        {
+            using(SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                foreach (KeyValuePair<string, Situation> el in situations)
+                {
+                    SqlCommand insert = new SqlCommand(@"INSERT INTO Situation (Title, Name, Description, ImageURL, UnlockingItem)
+                                                     VALUES (@Title, @Name, @Description, @ImageURL, @UnlockingItem);", conn);
+
+                    insert.Parameters.AddWithValue("@Title", el.Key);
+                    insert.Parameters.AddWithValue("@Name", el.Value.Name);
+                    insert.Parameters.AddWithValue("@Description", el.Value.Description is null ? "" : el.Value.Description);
+                    insert.Parameters.AddWithValue("@ImageURL", el.Value.ImageURL);
+                    if (el.Value.UnlockingItem is null)
+                        insert.Parameters.AddWithValue("@UnlockingItem", DBNull.Value);
+                    else
+                        insert.Parameters.AddWithValue("@UnlockingItem", el.Value.UnlockingItem);
+
+                    insert.ExecuteNonQuery();
+                    insert.Dispose();
+
+                    situations[el.Key].IdSituation = GetIdentityValue("Situation", conn);
+                }
+
+                foreach (Situation s in situations.Values)
+                {
+                    SqlCommand update = new SqlCommand(@"UPDATE Situation SET IDForward = @IdForward, IDRight = @IdRight, 
+                    IDBackward = @IdBackward, IDLeft = @IdLeft
+                    WHERE IDSituation = @IdSituation;", conn);
+
+                    if (s.Areas[0] is null)
+                        update.Parameters.AddWithValue("@IdForward", DBNull.Value);
+                    else
+                        update.Parameters.AddWithValue("@IdForward", situations[s.Areas[0]].IdSituation);
+                    if (s.Areas[1] is null)
+                        update.Parameters.AddWithValue("@IdRight", DBNull.Value);
+                    else
+                        update.Parameters.AddWithValue("@IdRight", situations[s.Areas[1]].IdSituation);
+                    if (s.Areas[2] is null)
+                        update.Parameters.AddWithValue("@IdBackward", DBNull.Value);
+                    else
+                        update.Parameters.AddWithValue("@IdBackward", situations[s.Areas[2]].IdSituation);
+                    if (s.Areas[3] is null)
+                        update.Parameters.AddWithValue("@IdLeft", DBNull.Value);
+                    else
+                        update.Parameters.AddWithValue("@IdLeft", situations[s.Areas[3]].IdSituation);
+
+                    update.Parameters.AddWithValue("@IdSituation", s.IdSituation);
+
+                    update.ExecuteNonQuery();
+                    update.Dispose();
+                }
+            }
+            
+        }
+
+        public void InsertImage(int idSituation, List<Entity> entities)
+        {
+            using(SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                for(int i = 0; i < entities.Count; i++)
+                {
+                    Entity e = entities[i];
+                    SqlCommand insert = new SqlCommand(@"INSERT INTO Image VALUES(@Name, @Description, @X, @Y, @ImageURL, 
+                                                         @Width, @Height, @Dialogue, @IsCharacter, @IsItem, @IDSituation);", conn);
+
+                    insert.Parameters.AddWithValue("@Name", e.Name);
+                    insert.Parameters.AddWithValue("@Description", e.Description);
+                    insert.Parameters.AddWithValue("@X", e.X);
+                    insert.Parameters.AddWithValue("@Y", e.Y);
+                    insert.Parameters.AddWithValue("@ImageURL", e.ImageURL);
+                    insert.Parameters.AddWithValue("@Width", e.Width);
+                    insert.Parameters.AddWithValue("@Height", e.Height);
+                    insert.Parameters.AddWithValue("@Dialogue", e.Dialogue);
+                    insert.Parameters.AddWithValue("@IsCharacter", e.GetType() == typeof(Character));
+                    insert.Parameters.AddWithValue("@IsItem", e.GetType() == typeof(Item));
+                    insert.Parameters.AddWithValue("@IDSituation", idSituation);
+
+                    insert.ExecuteNonQuery();
+                    insert.Dispose();
+
+                    entities[i].IdImage = GetIdentityValue("Image", conn);
+                }
+            }
+        }
+
         private void InsertCharacterAndItem(int idGameplay, List<Entity> entities, SqlConnection conn)
         {
             foreach(Entity e in entities)
@@ -471,9 +578,12 @@ namespace ProgettoPCTO
 
                     SqlCommand insertChar = new SqlCommand("INSERT INTO Character VALUES (@Strength, @IsVisible, @EffectiveWeapon, @IDImage, @IDGameplay);", conn);
 
+                    if(c.EffectiveWeapon is null)
+                        insertChar.Parameters.AddWithValue("@EffectiveWeapon", DBNull.Value);
+                    else
+                        insertChar.Parameters.AddWithValue("@EffectiveWeapon", c.EffectiveWeapon);
                     insertChar.Parameters.AddWithValue("@Strength", c.Strength);
                     insertChar.Parameters.AddWithValue("@IsVisible", c.IsVisible);
-                    insertChar.Parameters.AddWithValue("@EffectiveWeapon", c.EffectiveWeapon);
                     insertChar.Parameters.AddWithValue("@IDImage", c.IdImage);
                     insertChar.Parameters.AddWithValue("@IDGameplay", idGameplay);
 
