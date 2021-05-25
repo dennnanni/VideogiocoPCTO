@@ -639,12 +639,18 @@ namespace ProgettoPCTO
         private void UpdateItem(Item i, int idPlayer, SqlConnection conn)
         {
             SqlCommand update = new SqlCommand(@"UPDATE Item SET IsCollectable = @Collectable, IsVisible = @Visible,
-                                                 Effectiveness = @Effectiveness, IDPlayer = @IDPlayer;", conn);
+                                                 Effectiveness = @Effectiveness, IDPlayer = @IDPlayer 
+                                                 WHERE IDItem = @IDItem;", conn);
 
             update.Parameters.AddWithValue("@Collectable", i.IsCollectable);
             update.Parameters.AddWithValue("@Visible", i.IsVisible);
             update.Parameters.AddWithValue("@Effectiveness", i.Effectiveness);
-            update.Parameters.AddWithValue("@IDPlayer", idPlayer);
+            if (idPlayer == -1)
+                update.Parameters.AddWithValue("@IDPlayer", DBNull.Value);
+            else
+                update.Parameters.AddWithValue("@IDPlayer", idPlayer);
+
+            update.Parameters.AddWithValue("@IDItem", i.IdItem);
 
             update.ExecuteNonQuery();
         }

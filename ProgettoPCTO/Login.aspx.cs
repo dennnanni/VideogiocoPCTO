@@ -39,6 +39,34 @@ namespace ProgettoPCTO
                     }
                 }
 
+                // DA TESTARE :)
+                using(SqlConnection conn = new SqlConnection((string)Session["connection"]))
+                {
+                    conn.Open();
+                    SqlCommand select = new SqlCommand("SELECT * FROM Account WHERE Username = 'default';", conn);
+                    SqlDataReader reader = select.ExecuteReader();
+                    if (!reader.Read())
+                    {
+                        SQLCommands handler = new SQLCommands((string)Session["connection"]);
+                        handler.InsertAccount("default", "default", "default");
+
+                        // Read from XML file and upload datas into the db
+                        Gameplay g = (new Gameplay()).SetUp(Server);
+                        
+                        handler.InsertSituation(g.Situations);
+                        foreach(string key in g.Situations.Keys)
+                        {
+                            List<Entity> entities = new List<Entity>();
+                            if (!(g.Situations[key].Entities is null))
+                                entities.AddRange(g.Situations[key].Entities);
+                            if (!(g.Situations[key].Items is null))
+                                entities.AddRange(g.Situations[key].Items);
+                            handler.InsertImage(g.Situations[key].IdSituation, entities);
+                        }
+                        handler.WriteData("default", g);
+                    }
+
+                }
             }
             
         }
@@ -48,7 +76,6 @@ namespace ProgettoPCTO
             string username = txtUsername.Text;
             string password = Helper.HashPassword(txtPassword.Text);
 
-            // change
             if (Helper.Authenticate(username, txtPassword.Text, "Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;"))
             {
                 Session["user"] = username;
