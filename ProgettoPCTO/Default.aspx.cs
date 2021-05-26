@@ -168,6 +168,7 @@ namespace ProgettoPCTO
             // Save the parameters
             Game.CurrentAreaID = name;
             Game = Game;
+
         }
          
 

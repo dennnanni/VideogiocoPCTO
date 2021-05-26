@@ -15,7 +15,7 @@ namespace ProgettoPCTO
             _connectionString = connectionString;
         }
 
-        #region Reader
+        #region Reader (finished)
 
         public Gameplay ReadData(string username)
         {
@@ -611,32 +611,33 @@ namespace ProgettoPCTO
 
         #region Updater
 
-        public void UpdateValues(string username, Gameplay g)
+        //public void UpdateValues(string username, Gameplay g)
+        //{
+        //    using(SqlConnection conn = new SqlConnection(_connectionString))
+        //    {
+        //        UpdateGameplay(g.IdGameplay, g.CurrentAreaID, conn);
+        //        UpdateVariables(g.IdGameplay, g.Situations); // Unlocks areas
+        //        foreach(Situation s in g.Situations.Values)
+        //        {
+        //            foreach(Item i in s.Items)
+        //                UpdateItem(i, -1, conn);
+        //        }
+        //        UpdatePlayer(g.PlayerProfile, conn);
+        //    }
+        //}
+
+        public void UpdateGameplay(int idGameplay, string currentArea)
         {
             using(SqlConnection conn = new SqlConnection(_connectionString))
             {
-                UpdateGameplay(g.IdGameplay, g.CurrentAreaID, conn);
-                UpdateVariables(g.IdGameplay, g.Situations, conn); // Unlocks areas
-                foreach(Situation s in g.Situations.Values)
-                {
-                    foreach(Character c in s.Entities)
-                        UpdateCharacter(c, conn);
+                SqlCommand update = new SqlCommand("UPDATE Gameplay SET CurrentAreaID = @CurrentArea WHERE IDGameplay = @IDGameplay;", conn);
 
-                    foreach(Item i in s.Items)
-                        UpdateItem(i, -1, conn);
-                }
-                UpdatePlayer(g.PlayerProfile, conn);
+                update.Parameters.AddWithValue("@CurrentArea", currentArea);
+                update.Parameters.AddWithValue("@IDGameplay", idGameplay);
+
+                update.ExecuteNonQuery();
             }
-        }
-
-        private void UpdateGameplay(int idGameplay, string currentArea, SqlConnection conn)
-        {
-            SqlCommand update = new SqlCommand("UPDATE Gameplay SET CurrentAreaID = @CurrentArea WHERE IDGameplay = @IDGameplay;", conn);
-
-            update.Parameters.AddWithValue("@CurrentArea", currentArea);
-            update.Parameters.AddWithValue("@IDGameplay", idGameplay);
-
-            update.ExecuteNonQuery();
+            
         }
 
         // DA CORREGGERE (not tested)
@@ -646,23 +647,26 @@ namespace ProgettoPCTO
         /// <param name="i">Item</param>
         /// <param name="idPlayer">ID value -1 puts DBNull.Value in db</param>
         /// <param name="conn">Connection to the db</param>
-        private void UpdateItem(Item i, int idPlayer, SqlConnection conn)
+        public void UpdateItem(Item i, int idPlayer)
         {
-            SqlCommand update = new SqlCommand(@"UPDATE Item SET IsCollectable = @Collectable, IsVisible = @Visible,
+            using(SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                SqlCommand update = new SqlCommand(@"UPDATE Item SET IsCollectable = @Collectable, IsVisible = @Visible,
                                                  Effectiveness = @Effectiveness, IDPlayer = @IDPlayer 
                                                  WHERE IDItem = @IDItem;", conn);
 
-            update.Parameters.AddWithValue("@Collectable", i.IsCollectable);
-            update.Parameters.AddWithValue("@Visible", i.IsVisible);
-            update.Parameters.AddWithValue("@Effectiveness", i.Effectiveness);
-            if (idPlayer == -1)
-                update.Parameters.AddWithValue("@IDPlayer", DBNull.Value);
-            else
-                update.Parameters.AddWithValue("@IDPlayer", idPlayer);
+                update.Parameters.AddWithValue("@Collectable", i.IsCollectable);
+                update.Parameters.AddWithValue("@Visible", i.IsVisible);
+                update.Parameters.AddWithValue("@Effectiveness", i.Effectiveness);
+                if (idPlayer == -1)
+                    update.Parameters.AddWithValue("@IDPlayer", DBNull.Value);
+                else
+                    update.Parameters.AddWithValue("@IDPlayer", idPlayer);
 
-            update.Parameters.AddWithValue("@IDItem", i.IdItem);
+                update.Parameters.AddWithValue("@IDItem", i.IdItem);
 
-            update.ExecuteNonQuery();
+                update.ExecuteNonQuery();
+            }
         }
 
         //private void UpdateCharacter(Character c, SqlConnection conn)
@@ -679,42 +683,48 @@ namespace ProgettoPCTO
         //    update.ExecuteNonQuery();
         //}
 
-        private void UpdatePlayer(Player p, SqlConnection conn)
+        public void UpdatePlayer(Player p)
         {
-            SqlCommand update = new SqlCommand(@"UPDATE Player 
+            using(SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                SqlCommand update = new SqlCommand(@"UPDATE Player 
                                                  SET Health = @Health, Armor = @Armor, Experience = @XP
                                                  WHERE IDCharacter = @IDPlayer;", conn);
-            update.Parameters.AddWithValue("@Health", p.Health);
-            update.Parameters.AddWithValue("@Armor", p.Armor);
-            update.Parameters.AddWithValue("@XP", p.Experience);
-            update.Parameters.AddWithValue("@IDPlayer", p.IdCharacter);
+                update.Parameters.AddWithValue("@Health", p.Health);
+                update.Parameters.AddWithValue("@Armor", p.Armor);
+                update.Parameters.AddWithValue("@XP", p.Experience);
+                update.Parameters.AddWithValue("@IDPlayer", p.IdCharacter);
 
-            update.ExecuteNonQuery();
-
-            foreach(Item i in p.Inventory.Values)
-            {
-                UpdateItem(i, p.IdCharacter, conn);
+                update.ExecuteNonQuery();
             }
+
+            // Insertion of items to the inventory 
+            //foreach(Item i in p.Inventory.Values)
+            //{
+            //    UpdateItem(i, p.IdCharacter);
+            //}
         }
         
-        private void UpdateVariables(int idGameplay, Dictionary<string, Situation> situations, SqlConnection conn)
+        public void UpdateVariables(int idGameplay, Dictionary<string, Situation> situations)
         {
-            foreach(Situation s in situations.Values)
+            using(SqlConnection conn = new SqlConnection(_connectionString))
             {
-                if (!s.IsUnlocked)
+                foreach (Situation s in situations.Values)
                 {
-                    SqlCommand update = new SqlCommand(@"UPDATE SituationVariable 
-                                                         SET Unlocked = @Unlocked
-                                                         WHERE IDGameplay = @IDGameplay AND IDInstance = @IDSituation;", conn);
-                    update.Parameters.AddWithValue("@Unlocked", s.IsUnlocked);
-                    update.Parameters.AddWithValue("@IDGameplay", idGameplay);
-                    update.Parameters.AddWithValue("@IDSituation", s.IdSituation);
+                    if (!s.IsUnlocked)
+                    {
+                        SqlCommand update = new SqlCommand(@"UPDATE SituationVariable 
+                                                             SET Unlocked = @Unlocked
+                                                             WHERE IDGameplay = @IDGameplay AND IDInstance = @IDSituation;", conn);
+                        update.Parameters.AddWithValue("@Unlocked", s.IsUnlocked);
+                        update.Parameters.AddWithValue("@IDGameplay", idGameplay);
+                        update.Parameters.AddWithValue("@IDSituation", s.IdSituation);
 
-                    update.ExecuteNonQuery();
-                    update.Dispose();
+                        update.ExecuteNonQuery();
+                        update.Dispose();
+                    }
                 }
             }
-            
         }
 
         public void UpdatePassword(string username, string password)
