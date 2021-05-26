@@ -721,18 +721,16 @@ namespace ProgettoPCTO
             {
                 conn.Open();
 
-                if (!s.IsUnlocked)
-                {
-                    SqlCommand update = new SqlCommand(@"UPDATE SituationVariable 
-                                                            SET Unlocked = @Unlocked
-                                                            WHERE IDGameplay = @IDGameplay AND IDInstance = @IDSituation;", conn);
-                    update.Parameters.AddWithValue("@Unlocked", s.IsUnlocked);
-                    update.Parameters.AddWithValue("@IDGameplay", idGameplay);
-                    update.Parameters.AddWithValue("@IDSituation", s.IdSituation);
+                SqlCommand update = new SqlCommand(@"UPDATE SituationVariable 
+                                                        SET Unlocked = @Unlocked
+                                                        WHERE IDGameplay = @IDGameplay AND IDInstance = @IDSituation;", conn);
+                update.Parameters.AddWithValue("@Unlocked", s.IsUnlocked);
+                update.Parameters.AddWithValue("@IDGameplay", idGameplay);
+                update.Parameters.AddWithValue("@IDSituation", s.IdSituation);
 
-                    update.ExecuteNonQuery();
-                    update.Dispose();
-                }
+                update.ExecuteNonQuery();
+                update.Dispose();
+                
             }
         }
 

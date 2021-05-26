@@ -332,7 +332,7 @@ namespace ProgettoPCTO
                     btnDo.Enabled = false;
                     btnDrop.Enabled = false;
                     btnUse.Enabled = false;
-                    btnSave.Enabled = false;
+                    btnLogOut.Enabled = true;
 
                     return;
                 }
@@ -375,7 +375,7 @@ namespace ProgettoPCTO
                     }
                 }
                 // Checks if it is something that should be removed from the inventory
-                if(s.UnlockingItem == "Scala" || s.UnlockingItem == "Totem")
+                if(s.UnlockingItem == "Scala" || s.UnlockingItem == "Totem magico")
                 {
                     Handler.DeleteItem(Game.PlayerProfile.Inventory[s.UnlockingItem].IdItem);
                     Game.PlayerProfile.Inventory.Remove(s.UnlockingItem);
@@ -472,76 +472,72 @@ namespace ProgettoPCTO
 
         }
 
-        protected void btnSave_Click(object sender, EventArgs e)
+        protected void btnLogOut_Click(object sender, EventArgs e)
         {
-            //Handler.WriteData(Username, Game);
-
-            //if (!_game.Save(Server))
-            //{
-            //    txtStory.Text += "IMPOSSIBILE SALVARE I PROGRESSI.\n";
-            //    return;
-            //}
+            Username = "";
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "AlertBox", "alert('Disconnessione avvenuta con successo.');", true);
+            Response.Redirect("~/Login.aspx", true);
         }
 
-        protected void btnLoad_Click(object sender, EventArgs e)
-        {
-            // Reads from the file which contains saved data
-            Game = Game.Restore(Server);
+        //protected void btnLoad_Click(object sender, EventArgs e)
+        //{
+        //    // Reads from the file which contains saved data
+        //    Game = Game.Restore(Server);
 
-            if (Game == null)
-            {
-                txtStory.Text += "NESSUN PROGRESSO SALVATO!\n";
-                return;
-            }
+        //    if (Game == null)
+        //    {
+        //        txtStory.Text += "NESSUN PROGRESSO SALVATO!\n";
+        //        return;
+        //    }
 
-            lstInventory.Items.Clear();
-            foreach(string itemName in Game.PlayerProfile.Inventory.Keys)
-            {
-                lstInventory.Items.Add(itemName);
-            }
+        //    lstInventory.Items.Clear();
+        //    foreach(string itemName in Game.PlayerProfile.Inventory.Keys)
+        //    {
+        //        lstInventory.Items.Add(itemName);
+        //    }
 
-            // Enables the interface
-            foreach (Button b in pnlCardinals.Controls)
-            {
-                b.Enabled = true;
-            }
-            btnDo.Enabled = true;
-            btnDrop.Enabled = true;
-            btnUse.Enabled = true;
-            btnSave.Enabled = true;
+        //    // Enables the interface
+        //    foreach (Button b in pnlCardinals.Controls)
+        //    {
+        //        b.Enabled = true;
+        //    }
+        //    btnDo.Enabled = true;
+        //    btnDrop.Enabled = true;
+        //    btnUse.Enabled = true;
+        //    btnLogOut.Enabled = true;
 
-            // Stores the gameplay structure
-            _selectedAction = drpActions.SelectedValue;
-            _currentSituation = Game[Game.CurrentAreaID];
+        //    // Stores the gameplay structure
+        //    _selectedAction = drpActions.SelectedValue;
+        //    _currentSituation = Game[Game.CurrentAreaID];
 
-            this.LoadSituation(Game.CurrentAreaID);
-        }
+        //    this.LoadSituation(Game.CurrentAreaID);
+        //}
 
-        protected void btnRestart_Click(object sender, EventArgs e)
-        {
-            Game = Game.SetUp(Server);
-            if(Game == null)
-            {
-                Page.Response.Redirect("~/Errore.aspx", true);
-            }
-            Game.CurrentAreaID = "area0";
-            Game.CurrentAreaID = "area1";
-            _selectedAction = drpActions.SelectedValue;
-            _currentSituation = Game["area1"];
-            Game = Game;
-            foreach (Control b in pnlCardinals.Controls)
-            {
-                Button button = b as Button;
-                if (button != null)
-                    button.Enabled = true;
-            }
-            btnDo.Enabled = true;
-            btnDrop.Enabled = true;
-            btnUse.Enabled = true;
-            btnSave.Enabled = true;
-            lstInventory.Items.Clear();
-            this.LoadSituation(Game.CurrentAreaID);
-        }
+        //protected void btnRestart_Click(object sender, EventArgs e)
+        //{
+        //    Game = Game.SetUp(Server);
+        //    if(Game == null)
+        //    {
+        //        Page.Response.Redirect("~/Errore.aspx", true);
+        //    }
+        //    Game.CurrentAreaID = "area0";
+        //    Game.CurrentAreaID = "area1";
+        //    _selectedAction = drpActions.SelectedValue;
+        //    _currentSituation = Game["area1"];
+        //    Game = Game;
+        //    foreach (Control b in pnlCardinals.Controls)
+        //    {
+        //        Button button = b as Button;
+        //        if (button != null)
+        //            button.Enabled = true;
+        //    }
+        //    btnDo.Enabled = true;
+        //    btnDrop.Enabled = true;
+        //    btnUse.Enabled = true;
+        //    btnLogOut.Enabled = true;
+        //    lstInventory.Items.Clear();
+        //    this.LoadSituation(Game.CurrentAreaID);
+        //}
 
     }
 }

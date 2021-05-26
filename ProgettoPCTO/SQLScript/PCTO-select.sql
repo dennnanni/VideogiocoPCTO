@@ -1,12 +1,9 @@
 USE Videogame
 
-SELECT IsCollectable, IsVisible FROM Item WHERE IDItem = 12;
+-- SCRIPT FOR GENERAL QUERIES
 
 SELECT * 
-FROM Situation AS S INNER JOIN SituationVariable AS SV ON S.IDSituation = SV.IDInstance;
-
-SELECT * 
-FROM Image INNER JOIN Item ON Image.IDImage = Item.IDImage;
+FROM Account;
 
 SELECT *
 FROM Gameplay;
@@ -32,6 +29,4 @@ FROM Player;
 SELECT * 
 FROM Action;
 
-SELECT * 
-FROM Account;
 
