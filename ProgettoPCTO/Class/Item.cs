@@ -24,5 +24,8 @@ namespace ProgettoPCTO
 
         [DataMember]
         public int Effectiveness { get; set; }
+
+        [DataMember]
+        public bool IsVisible { get; set; } = true;
     }
 }

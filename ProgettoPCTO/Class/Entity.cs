@@ -47,9 +47,6 @@ namespace ProgettoPCTO
         public Dictionary<string, Item> Inventory { get; set; }
 
         [DataMember]
-        public bool IsVisible { get; set; } = true;
-
-        [DataMember]
         public string EffectiveWeapon { get; set; }
 
         /// <summary>

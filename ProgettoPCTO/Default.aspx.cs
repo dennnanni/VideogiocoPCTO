@@ -13,7 +13,6 @@ namespace ProgettoPCTO
     enum Cardinals : int { Avanti, Destra, Indietro, Sinistra }
     public partial class Default : System.Web.UI.Page
     {
-        private Gameplay _game = null;
         private string _currentAreaID = "area0";
         private Situation _currentSituation;
         private string[] _hostileEntitiesNames = { "creeper", "zombie", "scheletro" };
@@ -43,24 +42,20 @@ namespace ProgettoPCTO
             if (!IsPostBack)
             {
                 // Creates the gameplay and loads the first situation
-                _game = new Gameplay().SetUp(Server);
+                Game = new Gameplay().SetUp(Server);
                 Commands = new SQLCommands("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
-                Commands.InsertSituation(_game.Situations);
-
-                Commands.WriteData(Username, _game);
-                _game = Commands.ReadData("default");
-                Game = _game;
+                Game = Commands.ReadData("default");
                 _selectedAction = drpActions.SelectedValue;
-                _currentSituation = _game["area1"];
+                _currentSituation = Game["area1"];
                 this.LoadSituation("area1");
             }
             else
             {
-                // Restores last changes 
-                _game = Game;
+                // Restores last changes
+                _currentAreaID = Game.CurrentAreaID;
                 _selectedAction = drpActions.SelectedValue;
-                _currentSituation = _game[_game.CurrentAreaID];
-                this.LoadSituation(_game.CurrentAreaID);
+                _currentSituation = Game[Game.CurrentAreaID];
+                this.LoadSituation(Game.CurrentAreaID);
 
             }
         }
@@ -82,25 +77,25 @@ namespace ProgettoPCTO
             txtStory.Text = "";
             this.LoadSituation(_currentSituation.Areas[index]);
 
-            _game.CurrentAreaID = _currentAreaID;
-            Game = _game;
+            Game.CurrentAreaID = _currentAreaID;
+            Game = Game;
         }
 
         public void LoadSituation(string name) // Loading by name is much more easy to reuse code
         {
-            Situation s = _game[name];
+            Situation s = Game[name];
             bool print = false;
 
             if (_currentAreaID != name)
                 print = true;
 
-            if (!_game[name].IsUnlocked || _currentAreaID != "area0" && _game[_currentAreaID].Entities != null && _game[_currentAreaID].Entities.Count != 0 )
+            if (!Game[name].IsUnlocked || _currentAreaID != "area0" && Game[_currentAreaID].Entities != null && Game[_currentAreaID].Entities.Count != 0)
             { 
                 name = _currentAreaID;
                 print = true;
             }
 
-            s = _game[name];
+            s = Game[name];
 
             // Clears the images panel from all controls and sets the background
             pnlImages.Controls.Clear();
@@ -141,20 +136,17 @@ namespace ProgettoPCTO
             }
 
             // Showing stats
-            lblExperience.Text = "Esperienza: " + _game.PlayerProfile.Experience;
-            lblHealth.Text = "Salute: " + _game.PlayerProfile.Health;
+            lblExperience.Text = "Esperienza: " + Game.PlayerProfile.Experience;
+            lblHealth.Text = "Salute: " + Game.PlayerProfile.Health;
 
 
             // Loading all entities in the situation if there are
             if (s.Entities != null)
                 foreach (Character e in s.Entities)
                 {
-                    if (e.IsVisible)
-                    {
-                        pnlImages.Controls.Add(_game.SetEntityImage(e));
-                        if (print)
-                            txtStory.Text += "Hai incontrato " + e.Name + ". " + e.Description + "\n";
-                    }
+                    pnlImages.Controls.Add(Game.SetEntityImage(e));
+                    if (print)
+                        txtStory.Text += "Hai incontrato " + e.Name + ". " + e.Description + "\n";
                 }
 
             // Loads all items in the situation
@@ -163,7 +155,7 @@ namespace ProgettoPCTO
                 {
                     if (i.IsVisible)
                     {
-                        pnlImages.Controls.Add(_game.SetEntityImage(i));
+                        pnlImages.Controls.Add(Game.SetEntityImage(i));
                         if (print)
                             txtStory.Text += "Hai trovato " + i.Name + ". " + i.Description + "\n";
                     }
@@ -174,8 +166,8 @@ namespace ProgettoPCTO
                 _currentAreaID = name;
 
             // Save the parameters
-            _game.CurrentAreaID = name;
-            Game = _game;
+            Game.CurrentAreaID = name;
+            Game = Game;
         }
          
 
@@ -226,8 +218,8 @@ namespace ProgettoPCTO
                 {
                     Character friend = entity as Character;
 
-                    // Removes the enemy from the panel and from the situation
-                    _game[_currentAreaID].Entities.Remove(friend);
+                    // Removes the entity from the array
+                    Game[_currentAreaID].Entities.Remove(friend);
                     pnlImages.Controls.Remove(pnlImages.FindControl("img" + friend.Name));
                 }
 
@@ -241,13 +233,14 @@ namespace ProgettoPCTO
                     return;
             }
 
-            _game[_currentAreaID].Actions.Remove(_selectedAction);
+            Game[_currentAreaID].Actions.Remove(_selectedAction);
 
             // Removes the action from the action list
             drpActions.Items.Remove(_selectedAction);
+            //Commands.DeleteAction(_game.IdGameplay, _game[_currentAreaID].IdSituation, _selectedAction);
 
-            _game.CurrentAreaID = _currentAreaID;
-            Game = _game;
+            Game.CurrentAreaID = _currentAreaID;
+            Game = Game;
         }
 
         protected void btnDrop_Click(object sender, EventArgs e)
@@ -267,12 +260,12 @@ namespace ProgettoPCTO
             // Shows the message
             txtStory.Text += "Hai lasciato " + itemName + "\n";
 
-            Item backup = _game.PlayerProfile.Inventory[itemName];
-            _game.PlayerProfile.Drop(backup.Name);
+            Item backup = Game.PlayerProfile.Inventory[itemName];
+            Game.PlayerProfile.Drop(backup.Name);
             lstInventory.Items.RemoveAt(selectedIndex);
 
-            _game.CurrentAreaID = _currentAreaID;
-            Game = _game;
+            Game.CurrentAreaID = _currentAreaID;
+            Game = Game;
         }
 
         private bool ItemHandler(Item item)
@@ -280,8 +273,8 @@ namespace ProgettoPCTO
             // Try to add item to the inventory
             try
             {
-                _game.PlayerProfile.Collect(item);
-                _game[_currentAreaID].Items.Remove(item);
+                Game.PlayerProfile.Collect(item);
+                Game[_currentAreaID].Items.Remove(item);
 
                 pnlImages.Controls.Remove(pnlImages.FindControl("img" + item.Name));
             }
@@ -301,14 +294,13 @@ namespace ProgettoPCTO
         private void HostileEntityHandler(Character hostile)
         {
             // Player can only kill the enemy if he has the right item in his inventory
-            if (hostile.EffectiveWeapon != null && _game.PlayerProfile.Inventory.ContainsKey(hostile.EffectiveWeapon))
+            if (hostile.EffectiveWeapon != null && Game.PlayerProfile.Inventory.ContainsKey(hostile.EffectiveWeapon))
             {
-                hostile.IsVisible = false;
-                _game.PlayerProfile.Experience += 50;
+                Game.PlayerProfile.Experience += 50;
 
                 try
                 {
-                    _game.PlayerProfile.Health = _game.PlayerProfile.Health - hostile.Strength;
+                    Game.PlayerProfile.Health = Game.PlayerProfile.Health - hostile.Strength;
                 }
                 catch (Exception ex)
                 {
@@ -329,12 +321,12 @@ namespace ProgettoPCTO
                 
 
                 // Updates all labels
-                lblExperience.Text = "Esperienza: " + _game.PlayerProfile.Experience;
-                lblHealth.Text = "Salute: " + _game.PlayerProfile.Health;
-                lblStrength.Text = "Forza: " + _game.PlayerProfile.Strength;
+                lblExperience.Text = "Esperienza: " + Game.PlayerProfile.Experience;
+                lblHealth.Text = "Salute: " + Game.PlayerProfile.Health;
+                lblStrength.Text = "Forza: " + Game.PlayerProfile.Strength;
 
                 // Removes the enemy from the panel and from the situation
-                _game[_currentAreaID].Entities.Remove(hostile);
+                Game[_currentAreaID].Entities.Remove(hostile);
                 pnlImages.Controls.Remove(pnlImages.FindControl("img" + hostile.Name));
             }
             else if (hostile.EffectiveWeapon != null)
@@ -347,10 +339,10 @@ namespace ProgettoPCTO
 
         private bool SituationHandler()
         {
-            if (_game.PlayerProfile.InventoryToString().Contains(_game[_currentAreaID].UnlockingItem))
+            if (Game.PlayerProfile.InventoryToString().Contains(Game[_currentAreaID].UnlockingItem))
             {
                 // Replaces the image with the unlocked visual
-                Situation s = _game[_currentAreaID];
+                Situation s = Game[_currentAreaID];
                 s.ImageURL = s.ImageURL.Replace(_currentAreaID, _currentAreaID + "u");
                 s.Name = s.Name.Replace(" misterioso", "");
                 s.Name = s.Name.Replace(" misteriosa", "");
@@ -359,16 +351,16 @@ namespace ProgettoPCTO
                 // Checks if it is something that should be removed from the inventory
                 if(s.UnlockingItem == "Scala" || s.UnlockingItem == "Totem")
                 {
-                    _game.PlayerProfile.Inventory.Remove(s.UnlockingItem);
+                    Game.PlayerProfile.Inventory.Remove(s.UnlockingItem);
                     lstInventory.Items.Remove(s.UnlockingItem);
                 }
 
                 // Finds the locked area and unlocks it
                 for(int i =  0; i < s.Areas.Length; i++)
                 {
-                    if (s.Areas[i] != null && !_game[s.Areas[i]].IsUnlocked)
+                    if (s.Areas[i] != null && !Game[s.Areas[i]].IsUnlocked)
                     {
-                        _game[s.Areas[i]].IsUnlocked = true;
+                        Game[s.Areas[i]].IsUnlocked = true;
                         i = 4;
                     }
                 }
@@ -379,6 +371,7 @@ namespace ProgettoPCTO
                     for (int i = 0; i < s.Items.Count; i++)
                     {
                         s.Items[i].IsVisible = true;
+                        s.Items[i].IsCollectable = true;
                         s.Actions.Add("Raccogli " + s.Items[i].Name);
                     }
                 }
@@ -386,14 +379,14 @@ namespace ProgettoPCTO
                 // Removes the action
                 s.Actions.Remove(_selectedAction);
                 
-                _game[_currentAreaID] = s;
+                Game[_currentAreaID] = s;
                 this.LoadSituation(_currentAreaID);
 
                 return true;
             }
             else
             {
-                txtStory.Text += "Per aprire questo passaggio devi avere " + _game[_currentAreaID].UnlockingItem + ".\n";
+                txtStory.Text += "Per aprire questo passaggio devi avere " + Game[_currentAreaID].UnlockingItem + ".\n";
                 return false;
             }
         }
@@ -421,36 +414,36 @@ namespace ProgettoPCTO
                 {
                     int val = 0;
                     // Searches the potion in the inventory and get its effectiveness
-                    foreach(string index in _game.PlayerProfile.Inventory.Keys)
+                    foreach(string index in Game.PlayerProfile.Inventory.Keys)
                     {
                         // Gets potion effectiveness
-                        if (_game.PlayerProfile.Inventory[index].Name.Contains("salute"))
-                            val = _game.PlayerProfile.Inventory[index].Effectiveness;
+                        if (Game.PlayerProfile.Inventory[index].Name.Contains("salute"))
+                            val = Game.PlayerProfile.Inventory[index].Effectiveness;
                     }
-                    message = _game.PlayerProfile.Cure(val);
-                    lblHealth.Text = "Salute: " + _game.PlayerProfile.Health;
+                    message = Game.PlayerProfile.Cure(val);
+                    lblHealth.Text = "Salute: " + Game.PlayerProfile.Health;
                 }
                 else if (selectedItem.Contains("forza"))
                 {
                     int val = 0;
-                    foreach (string index in _game.PlayerProfile.Inventory.Keys)
+                    foreach (string index in Game.PlayerProfile.Inventory.Keys)
                     {
                         // Gets potion effectiveness
-                        if (_game.PlayerProfile.Inventory[index].Name.Contains("forza"))
-                            val = _game.PlayerProfile.Inventory[index].Effectiveness;
+                        if (Game.PlayerProfile.Inventory[index].Name.Contains("forza"))
+                            val = Game.PlayerProfile.Inventory[index].Effectiveness;
                     }
-                    message = _game.PlayerProfile.Strengthen(val);
-                    lblStrength.Text = "Forza: " + _game.PlayerProfile.Strength;
+                    message = Game.PlayerProfile.Strengthen(val);
+                    lblStrength.Text = "Forza: " + Game.PlayerProfile.Strength;
                 }
 
-                _game.PlayerProfile.Inventory.Remove(lstInventory.SelectedValue);
+                Game.PlayerProfile.Inventory.Remove(lstInventory.SelectedValue);
                 lstInventory.Items.Remove(lstInventory.SelectedValue);
                     
             }
 
             txtStory.Text += "Hai usato " + selectedItem + ". " + message + "\n";
 
-            Game = _game;
+            Game = Game;
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -467,16 +460,16 @@ namespace ProgettoPCTO
         protected void btnLoad_Click(object sender, EventArgs e)
         {
             // Reads from the file which contains saved data
-            _game = _game.Restore(Server);
+            Game = Game.Restore(Server);
 
-            if (_game == null)
+            if (Game == null)
             {
                 txtStory.Text += "NESSUN PROGRESSO SALVATO!\n";
                 return;
             }
 
             lstInventory.Items.Clear();
-            foreach(string itemName in _game.PlayerProfile.Inventory.Keys)
+            foreach(string itemName in Game.PlayerProfile.Inventory.Keys)
             {
                 lstInventory.Items.Add(itemName);
             }
@@ -492,25 +485,25 @@ namespace ProgettoPCTO
             btnSave.Enabled = true;
 
             // Stores the gameplay structure
-            Game = _game;
+            Game = Game;
             _selectedAction = drpActions.SelectedValue;
-            _currentSituation = _game[_game.CurrentAreaID];
+            _currentSituation = Game[Game.CurrentAreaID];
 
-            this.LoadSituation(_game.CurrentAreaID);
+            this.LoadSituation(Game.CurrentAreaID);
         }
 
         protected void btnRestart_Click(object sender, EventArgs e)
         {
-            _game = _game.SetUp(Server);
-            if(_game == null)
+            Game = Game.SetUp(Server);
+            if(Game == null)
             {
                 Page.Response.Redirect("~/Errore.aspx", true);
             }
             _currentAreaID = "area0";
-            _game.CurrentAreaID = "area1";
+            Game.CurrentAreaID = "area1";
             _selectedAction = drpActions.SelectedValue;
-            _currentSituation = _game["area1"];
-            Game = _game;
+            _currentSituation = Game["area1"];
+            Game = Game;
             foreach (Control b in pnlCardinals.Controls)
             {
                 Button button = b as Button;
@@ -522,7 +515,7 @@ namespace ProgettoPCTO
             btnUse.Enabled = true;
             btnSave.Enabled = true;
             lstInventory.Items.Clear();
-            this.LoadSituation(_game.CurrentAreaID);
+            this.LoadSituation(Game.CurrentAreaID);
         }
 
     }

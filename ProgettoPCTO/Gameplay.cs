@@ -43,9 +43,9 @@ namespace ProgettoPCTO
 
         [DataMember]
         public Player PlayerProfile { get; set; }
-        
+
         [DataMember]
-        public string CurrentAreaID { get; set; }
+        public string CurrentAreaID { get; set; } = "area0";
         
         [DataMember]
         public int IdGameplay { get; set; }

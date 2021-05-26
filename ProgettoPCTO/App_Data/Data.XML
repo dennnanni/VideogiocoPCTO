@@ -10,7 +10,6 @@
     <IdImage>0</IdImage>
     <ImageURL i:nil="true" />
     <Inventory xmlns:d3p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-    <IsVisible>true</IsVisible>
     <Name i:nil="true" />
     <Width>0</Width>
     <X>0</X>
@@ -51,7 +50,6 @@ Per iniziare, spostati all'interno del labirinto.
             <IdImage>0</IdImage>
             <ImageURL>~\Img\Characters\steve.png</ImageURL>
             <Inventory i:nil="true" />
-            <IsVisible>true</IsVisible>
             <Name>Steve</Name>
             <Width>110</Width>
             <X>320</X>
@@ -92,7 +90,6 @@ Per iniziare, spostati all'interno del labirinto.
             <IdImage>0</IdImage>
             <ImageURL>~\Img\Characters\creeper.png</ImageURL>
             <Inventory i:nil="true" />
-            <IsVisible>true</IsVisible>
             <Name>Creeper</Name>
             <Width>220</Width>
             <X>250</X>
@@ -114,7 +111,6 @@ Per iniziare, spostati all'interno del labirinto.
             <IdImage>0</IdImage>
             <ImageURL>~\Img\Items\sword.png</ImageURL>
             <Inventory i:nil="true" />
-            <IsVisible>true</IsVisible>
             <Name>Spada</Name>
             <Width>100</Width>
             <X>440</X>
@@ -122,6 +118,7 @@ Per iniziare, spostati all'interno del labirinto.
             <Effectiveness>0</Effectiveness>
             <IdItem>0</IdItem>
             <IsCollectable>true</IsCollectable>
+            <IsVisible>true</IsVisible>
           </Item>
         </Items>
         <Name>interno</Name>
@@ -156,7 +153,6 @@ Per iniziare, spostati all'interno del labirinto.
             <IdImage>0</IdImage>
             <ImageURL>~\Img\Items\healthpotion.png</ImageURL>
             <Inventory i:nil="true" />
-            <IsVisible>true</IsVisible>
             <Name>Pozione della salute</Name>
             <Width>60</Width>
             <X>240</X>
@@ -164,6 +160,7 @@ Per iniziare, spostati all'interno del labirinto.
             <Effectiveness>30</Effectiveness>
             <IdItem>0</IdItem>
             <IsCollectable>true</IsCollectable>
+            <IsVisible>true</IsVisible>
           </Item>
         </Items>
         <Name>vicolo cieco</Name>
@@ -364,7 +361,6 @@ Per iniziare, spostati all'interno del labirinto.
             <IdImage>0</IdImage>
             <ImageURL>~\Img\Items\pickaxe.png</ImageURL>
             <Inventory i:nil="true" />
-            <IsVisible>true</IsVisible>
             <Name>Piccone</Name>
             <Width>80</Width>
             <X>380</X>
@@ -372,6 +368,7 @@ Per iniziare, spostati all'interno del labirinto.
             <Effectiveness>0</Effectiveness>
             <IdItem>0</IdItem>
             <IsCollectable>true</IsCollectable>
+            <IsVisible>true</IsVisible>
           </Item>
         </Items>
         <Name>vicolo cieco</Name>
@@ -489,7 +486,6 @@ Per iniziare, spostati all'interno del labirinto.
             <IdImage>0</IdImage>
             <ImageURL>~\Img\Items\ladder.png</ImageURL>
             <Inventory i:nil="true" />
-            <IsVisible>false</IsVisible>
             <Name>Scala</Name>
             <Width>60</Width>
             <X>430</X>
@@ -497,6 +493,7 @@ Per iniziare, spostati all'interno del labirinto.
             <Effectiveness>0</Effectiveness>
             <IdItem>0</IdItem>
             <IsCollectable>true</IsCollectable>
+            <IsVisible>false</IsVisible>
           </Item>
         </Items>
         <Name>bivio misterioso</Name>
@@ -568,7 +565,6 @@ Per iniziare, spostati all'interno del labirinto.
             <IdImage>0</IdImage>
             <ImageURL>~\Img\Characters\character.png</ImageURL>
             <Inventory i:nil="true" />
-            <IsVisible>true</IsVisible>
             <Name>Personaggio misterioso</Name>
             <Width>120</Width>
             <X>400</X>
@@ -614,7 +610,6 @@ Per iniziare, spostati all'interno del labirinto.
             <IdImage>0</IdImage>
             <ImageURL>~\Img\Items\healthpotion.png</ImageURL>
             <Inventory i:nil="true" />
-            <IsVisible>true</IsVisible>
             <Name>Pozione della salute</Name>
             <Width>60</Width>
             <X>240</X>
@@ -622,6 +617,7 @@ Per iniziare, spostati all'interno del labirinto.
             <Effectiveness>30</Effectiveness>
             <IdItem>0</IdItem>
             <IsCollectable>true</IsCollectable>
+            <IsVisible>true</IsVisible>
           </Item>
         </Items>
         <Name>corridoio</Name>
@@ -694,7 +690,6 @@ Hai ucciso zombie</Dialogue>
             <IdImage>0</IdImage>
             <ImageURL>~\Img\Characters\zombie.png</ImageURL>
             <Inventory i:nil="true" />
-            <IsVisible>true</IsVisible>
             <Name>Zombie</Name>
             <Width>200</Width>
             <X>250</X>
@@ -739,7 +734,6 @@ Hai ucciso zombie</Dialogue>
             <IdImage>0</IdImage>
             <ImageURL>~\Img\Items\strengthpotion.png</ImageURL>
             <Inventory i:nil="true" />
-            <IsVisible>true</IsVisible>
             <Name>Pozione della forza</Name>
             <Width>60</Width>
             <X>240</X>
@@ -747,6 +741,7 @@ Hai ucciso zombie</Dialogue>
             <Effectiveness>20</Effectiveness>
             <IdItem>0</IdItem>
             <IsCollectable>true</IsCollectable>
+            <IsVisible>true</IsVisible>
           </Item>
         </Items>
         <Name>percorso</Name>
@@ -778,7 +773,6 @@ Hai ucciso zombie</Dialogue>
             <IdImage>0</IdImage>
             <ImageURL>~\Img\Characters\skeleton.png</ImageURL>
             <Inventory i:nil="true" />
-            <IsVisible>true</IsVisible>
             <Name>Scheletro</Name>
             <Width>220</Width>
             <X>250</X>
@@ -800,7 +794,6 @@ Hai ucciso zombie</Dialogue>
             <IdImage>0</IdImage>
             <ImageURL>~\Img\Items\ladder.png</ImageURL>
             <Inventory i:nil="true" />
-            <IsVisible>true</IsVisible>
             <Name>Scala</Name>
             <Width>100</Width>
             <X>310</X>
@@ -808,6 +801,7 @@ Hai ucciso zombie</Dialogue>
             <Effectiveness>0</Effectiveness>
             <IdItem>0</IdItem>
             <IsCollectable>true</IsCollectable>
+            <IsVisible>true</IsVisible>
           </Item>
         </Items>
         <Name>vicolo cieco</Name>
@@ -880,7 +874,6 @@ Hai ucciso zombie</Dialogue>
             <IdImage>0</IdImage>
             <ImageURL>~\Img\Characters\skeleton.png</ImageURL>
             <Inventory i:nil="true" />
-            <IsVisible>true</IsVisible>
             <Name>Scheletro</Name>
             <Width>200</Width>
             <X>250</X>
@@ -1014,7 +1007,6 @@ Hai ucciso zombie</Dialogue>
             <IdImage>0</IdImage>
             <ImageURL>~\Img\Items\magictotem.png</ImageURL>
             <Inventory i:nil="true" />
-            <IsVisible>true</IsVisible>
             <Name>Totem magico</Name>
             <Width>120</Width>
             <X>350</X>
@@ -1022,6 +1014,7 @@ Hai ucciso zombie</Dialogue>
             <Effectiveness>0</Effectiveness>
             <IdItem>0</IdItem>
             <IsCollectable>true</IsCollectable>
+            <IsVisible>true</IsVisible>
           </Item>
         </Items>
         <Name>vicolo cieco</Name>

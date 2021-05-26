@@ -76,9 +76,8 @@ namespace ProgettoPCTO
 
         private Dictionary<string, Situation> ReadSituations(int idGameplay, SqlConnection conn)
         {
-            SqlCommand select = new SqlCommand(@"SELECT S.IDSituation, S.Title, S.Name, S.Description, S.ImageURL, S.UnlockingItem, S.IDForward, S.IDRight, S.IDBackward, S.IDLeft, SV.Unlocked
-                                                 FROM Situation AS S LEFT JOIN 
-                                                      SituationVariable AS SV ON S.IDSituation = SV.IDInstance;", conn);
+            SqlCommand select = new SqlCommand(@"SELECT S.IDSituation, S.Title, S.Name, S.Description, S.ImageURL, S.UnlockingItem, S.IDForward, S.IDRight, S.IDBackward, S.IDLeft
+                                                 FROM Situation AS S", conn);
 
             SqlDataReader reader = select.ExecuteReader();
 
@@ -227,7 +226,7 @@ namespace ProgettoPCTO
         #region Select of characters and items
         private Player ReadPlayer(int idGameplay, SqlConnection conn)
         {
-            SqlCommand select = new SqlCommand(@"SELECT C.Strength, C.IsVisible, P.IDCharacter, P.Armor, P.Health, P.Experience
+            SqlCommand select = new SqlCommand(@"SELECT C.Strength, P.IDCharacter, P.Armor, P.Health, P.Experience
                                                  FROM Player AS P INNER JOIN 
                                                       Character AS C ON P.IDCharacter = C.IDCharacter
                                                  WHERE P.IDGameplay = @Id", conn);
@@ -242,7 +241,6 @@ namespace ProgettoPCTO
                 IdCharacter = id,
                 Strength = int.Parse(reader["Strength"].ToString().TrimEnd(null)),
                 Health = int.Parse(reader["Health"].ToString().TrimEnd(null)),
-                IsVisible = (bool)reader["IsVisible"],
                 Armor = int.Parse(reader["Armor"].ToString().TrimEnd(null)),
                 Experience = int.Parse(reader["Experience"].ToString().TrimEnd(null))
             };
@@ -258,7 +256,7 @@ namespace ProgettoPCTO
         private List<Character> ReadCharacters(int idSituation, int idGameplay, SqlConnection conn)
         {
             SqlCommand select = new SqlCommand(@"SELECT I.IDImage, I.Name, I.Description, I.X, I.Y, I.ImageURL, I.Width, I.Height,
-                                                        I.Dialogue, C.IDCharacter, C.Strength, C.IsVisible, C.EffectiveWeapon
+                                                        I.Dialogue, C.IDCharacter, C.Strength, C.EffectiveWeapon
                                                  FROM Image AS I INNER JOIN 
                                                       Character AS C ON I.IDImage = C.IDImage
                                                  WHERE I.IDSituation = @Situation AND I.IsCharacter = 1 AND C.IDGameplay = @IDGameplay", conn);
@@ -282,7 +280,6 @@ namespace ProgettoPCTO
                     Height = int.Parse(reader["Height"].ToString().TrimEnd(null)),
                     Dialogue = reader["Dialogue"].ToString().TrimEnd(null),
                     Strength = int.Parse(reader["Strength"].ToString().TrimEnd(null)),
-                    IsVisible = (bool)reader["IsVisible"],
                     EffectiveWeapon = reader["EffectiveWeapon"].ToString().TrimEnd(null)
                 });
             }
@@ -320,7 +317,7 @@ namespace ProgettoPCTO
                     Dialogue = reader["Dialogue"].ToString().TrimEnd(null),
                     IsVisible = (bool)reader["IsVisible"],
                     Effectiveness = int.Parse(reader["Effectiveness"].ToString().TrimEnd(null)),
-                    IsCollectable = (bool)reader["IsVisible"]
+                    IsCollectable = (bool)reader["IsCollectable"]
 
                 });
             }
@@ -450,12 +447,11 @@ namespace ProgettoPCTO
 
         private void InsertPlayer(int idGameplay, Player p, SqlConnection conn)
         {
-            SqlCommand insertCharacter = new SqlCommand(@"INSERT INTO Character(Strength, IsVisible, IDImage, IDGameplay)
-                                                          VALUES (@Strength, @IsVisible, @IDImage, @IDGameplay);", conn);
+            SqlCommand insertCharacter = new SqlCommand(@"INSERT INTO Character(Strength, IDImage, IDGameplay)
+                                                          VALUES (@Strength, @IDImage, @IDGameplay);", conn);
             SqlCommand insert = new SqlCommand(@"INSERT INTO Player VALUES (@IDCharacter, @Health, @Armor, @Experience, @IDGameplay);", conn);
 
             insertCharacter.Parameters.AddWithValue("@Strength", p.Strength);
-            insertCharacter.Parameters.AddWithValue("@IsVisible", p.IsVisible);
             insertCharacter.Parameters.AddWithValue("@IDImage", DBNull.Value);
             insertCharacter.Parameters.AddWithValue("@IDGameplay", idGameplay);
 
@@ -574,14 +570,13 @@ namespace ProgettoPCTO
                 {
                     Character c = (Character)e;
 
-                    SqlCommand insertChar = new SqlCommand("INSERT INTO Character VALUES (@Strength, @IsVisible, @EffectiveWeapon, @IDImage, @IDGameplay);", conn);
+                    SqlCommand insertChar = new SqlCommand("INSERT INTO Character VALUES (@Strength, @EffectiveWeapon, @IDImage, @IDGameplay);", conn);
 
                     if(c.EffectiveWeapon is null)
                         insertChar.Parameters.AddWithValue("@EffectiveWeapon", DBNull.Value);
                     else
                         insertChar.Parameters.AddWithValue("@EffectiveWeapon", c.EffectiveWeapon);
                     insertChar.Parameters.AddWithValue("@Strength", c.Strength);
-                    insertChar.Parameters.AddWithValue("@IsVisible", c.IsVisible);
                     insertChar.Parameters.AddWithValue("@IDImage", c.IdImage);
                     insertChar.Parameters.AddWithValue("@IDGameplay", idGameplay);
 
@@ -616,26 +611,41 @@ namespace ProgettoPCTO
 
         #region Updater
 
-        public void UpdateReferences(string username, Gameplay g)
+        public void UpdateValues(string username, Gameplay g)
         {
             using(SqlConnection conn = new SqlConnection(_connectionString))
             {
-                UpdateGameplay(username, g.CurrentAreaID, conn);
+                UpdateGameplay(g.IdGameplay, g.CurrentAreaID, conn);
+                UpdateVariables(g.IdGameplay, g.Situations, conn); // Unlocks areas
+                foreach(Situation s in g.Situations.Values)
+                {
+                    foreach(Character c in s.Entities)
+                        UpdateCharacter(c, conn);
 
+                    foreach(Item i in s.Items)
+                        UpdateItem(i, -1, conn);
+                }
+                UpdatePlayer(g.PlayerProfile, conn);
             }
         }
 
-        private void UpdateGameplay(string username, string currentArea, SqlConnection conn)
+        private void UpdateGameplay(int idGameplay, string currentArea, SqlConnection conn)
         {
-            SqlCommand update = new SqlCommand("UPDATE Gameplay SET CurrentAreaID = @CurrentArea WHERE Username = @Username;", conn);
+            SqlCommand update = new SqlCommand("UPDATE Gameplay SET CurrentAreaID = @CurrentArea WHERE IDGameplay = @IDGameplay;", conn);
 
             update.Parameters.AddWithValue("@CurrentArea", currentArea);
-            update.Parameters.AddWithValue("@Username", username);
+            update.Parameters.AddWithValue("@IDGameplay", idGameplay);
 
             update.ExecuteNonQuery();
         }
 
-        // DA CORREGGERE
+        // DA CORREGGERE (not tested)
+        /// <summary>
+        /// Updates the data of an Item given its id
+        /// </summary>
+        /// <param name="i">Item</param>
+        /// <param name="idPlayer">ID value -1 puts DBNull.Value in db</param>
+        /// <param name="conn">Connection to the db</param>
         private void UpdateItem(Item i, int idPlayer, SqlConnection conn)
         {
             SqlCommand update = new SqlCommand(@"UPDATE Item SET IsCollectable = @Collectable, IsVisible = @Visible,
@@ -657,17 +667,54 @@ namespace ProgettoPCTO
 
         private void UpdateCharacter(Character c, SqlConnection conn)
         {
+            SqlCommand update = new SqlCommand(@"UPDATE Character SET Strength = @Strength,EffectiveWeapon = @EffectiveWeapon
+                                                 WHERE IDCharacter = @IDCharacter;", conn);
+            update.Parameters.AddWithValue("@Strength", c.Strength);
+            if (c.EffectiveWeapon is null)
+                update.Parameters.AddWithValue("@EffectiveWeapon", DBNull.Value);
+            else
+                update.Parameters.AddWithValue("@EffectiveWeapon", c.EffectiveWeapon);
+            update.Parameters.AddWithValue("@IDCharacter", c.IdCharacter);
 
+            update.ExecuteNonQuery();
         }
 
         private void UpdatePlayer(Player p, SqlConnection conn)
         {
+            SqlCommand update = new SqlCommand(@"UPDATE Player 
+                                                 SET Health = @Health, Armor = @Armor, Experience = @XP
+                                                 WHERE IDCharacter = @IDPlayer;", conn);
+            update.Parameters.AddWithValue("@Health", p.Health);
+            update.Parameters.AddWithValue("@Armor", p.Armor);
+            update.Parameters.AddWithValue("@XP", p.Experience);
+            update.Parameters.AddWithValue("@IDPlayer", p.IdCharacter);
 
+            update.ExecuteNonQuery();
+
+            foreach(Item i in p.Inventory.Values)
+            {
+                UpdateItem(i, p.IdCharacter, conn);
+            }
         }
-
-        private void UpdateVariables(Dictionary<string, Situation> s, SqlConnection conn)
+        
+        private void UpdateVariables(int idGameplay, Dictionary<string, Situation> situations, SqlConnection conn)
         {
+            foreach(Situation s in situations.Values)
+            {
+                if (!s.IsUnlocked)
+                {
+                    SqlCommand update = new SqlCommand(@"UPDATE SituationVariable 
+                                                         SET Unlocked = @Unlocked
+                                                         WHERE IDGameplay = @IDGameplay AND IDInstance = @IDSituation;", conn);
+                    update.Parameters.AddWithValue("@Unlocked", s.IsUnlocked);
+                    update.Parameters.AddWithValue("@IDGameplay", idGameplay);
+                    update.Parameters.AddWithValue("@IDSituation", s.IdSituation);
 
+                    update.ExecuteNonQuery();
+                    update.Dispose();
+                }
+            }
+            
         }
 
         public void UpdatePassword(string username, string password)
@@ -685,15 +732,20 @@ namespace ProgettoPCTO
 
         #endregion
 
-
-        private void DeleteAction(int idGameplay, int idSituation, SqlConnection conn)
+        public void DeleteAction(int idGameplay, int idSituation, string text)
         {
-            SqlCommand delete = new SqlCommand("DELETE FROM Action WHERE IDGameplay = @IdGameplay AND IDSituation = @IdSituation;", conn);
+            using(SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                SqlCommand delete = new SqlCommand(@"DELETE FROM Action WHERE IDGameplay = @IdGameplay 
+                                                     AND IDSituation = @IdSituation AND Dialogue = @Dialogue;", conn);
 
-            delete.Parameters.AddWithValue("@IdGameplay", idGameplay);
-            delete.Parameters.AddWithValue("@IdSituation", idSituation);
+                delete.Parameters.AddWithValue("@IdGameplay", idGameplay);
+                delete.Parameters.AddWithValue("@IdSituation", idSituation);
+                delete.Parameters.AddWithValue("@Dialogue", text);
 
-            delete.ExecuteNonQuery();
+                delete.ExecuteNonQuery();
+            }
         }
     }
 

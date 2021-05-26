@@ -39,7 +39,8 @@ namespace ProgettoPCTO
                     }
                 }
 
-                // DA TESTARE :)
+                // Checks if the default account in the db exists, if it does not, then reads from the XML file the game config and
+                // uploads the game scheme in the db
                 using(SqlConnection conn = new SqlConnection((string)Session["connection"]))
                 {
                     conn.Open();
@@ -47,11 +48,14 @@ namespace ProgettoPCTO
                     SqlDataReader reader = select.ExecuteReader();
                     if (!reader.Read())
                     {
+                        Gameplay g = new Gameplay();
+                        g.Initialize();
                         SQLCommands handler = new SQLCommands((string)Session["connection"]);
                         handler.InsertAccount("default", "default", "default");
 
+                        g.Save(Server);
                         // Read from XML file and upload datas into the db
-                        Gameplay g = (new Gameplay()).SetUp(Server);
+                        g = (new Gameplay()).SetUp(Server);
                         
                         handler.InsertSituation(g.Situations);
                         foreach(string key in g.Situations.Keys)

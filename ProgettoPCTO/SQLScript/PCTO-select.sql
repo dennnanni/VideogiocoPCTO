@@ -1,5 +1,7 @@
 USE Videogame
 
+SELECT IsCollectable, IsVisible FROM Item WHERE IDItem = 12;
+
 SELECT * 
 FROM Situation AS S INNER JOIN SituationVariable AS SV ON S.IDSituation = SV.IDInstance;
 

@@ -15,8 +15,7 @@ CREATE TABLE Account(
 -- CREAZIONE TABELLE
 CREATE TABLE Gameplay(
 	IDGameplay INT PRIMARY KEY NOT NULL IDENTITY(1,1),
-	--CurrentAreaID INT REFERENCES Situation(IDSituation) 
-	CurrentAreaID CHAR(7), -- Da controllare meglio
+	CurrentAreaID CHAR(7),
 	Username CHAR(15) REFERENCES Account(Username) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -35,15 +34,18 @@ CREATE TABLE Situation(
 );
 
 CREATE TABLE SituationVariable(
-	IDInstance INT PRIMARY KEY NOT NULL REFERENCES Situation(IDSituation),
+	IDInstance INT NOT NULL REFERENCES Situation(IDSituation),
 	Unlocked BIT DEFAULT 0,
-	IDGameplay INT REFERENCES Gameplay(IDGameplay)
+	IDGameplay INT REFERENCES Gameplay(IDGameplay),
+	CONSTRAINT PK_Instance PRIMARY KEY (IDInstance, IDGameplay)
 );
 
+-- Action table is an array of strings so it is impossible to add a identity ID
 CREATE TABLE Action(
 	IDSituation INT REFERENCES Situation(IDSituation) ON DELETE CASCADE,
 	Dialogue VARCHAR(100),
-	IDGameplay INT REFERENCES Gameplay(IDGameplay) ON DELETE CASCADE
+	IDGameplay INT REFERENCES Gameplay(IDGameplay) ON DELETE CASCADE,
+	CONSTRAINT PK_Action PRIMARY KEY (IDSituation, Dialogue, IDGameplay)
 );
 
 CREATE TABLE Image(
@@ -74,7 +76,6 @@ CREATE TABLE Item(
 CREATE TABLE Character(
 	IDCharacter INT PRIMARY KEY NOT NULL IDENTITY(1,1),
 	Strength INT CHECK(Strength >= 0),
-	IsVisible BIT NOT NULL,
 	EffectiveWeapon CHAR(15),
 	IDImage INT REFERENCES Image(IDImage) ON DELETE CASCADE ON UPDATE CASCADE,
 	IDGameplay INT REFERENCES Gameplay(IDGameplay) ON DELETE CASCADE ON UPDATE CASCADE
