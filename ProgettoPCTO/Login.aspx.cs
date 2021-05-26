@@ -50,7 +50,7 @@ namespace ProgettoPCTO
                     {
                         Gameplay g = new Gameplay();
                         g.Initialize();
-                        SQLCommands handler = new SQLCommands((string)Session["connection"]);
+                        SQLHandler handler = new SQLHandler((string)Session["connection"]);
                         handler.InsertAccount("default", "default", "default");
 
                         g.Save(Server);

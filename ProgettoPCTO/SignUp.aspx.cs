@@ -26,7 +26,7 @@ namespace ProgettoPCTO
                 return;
             }
 
-            SQLCommands command = new SQLCommands("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
+            SQLHandler command = new SQLHandler("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
 
             if (command.ValidateUsernameAndEmail(username, email))
             {

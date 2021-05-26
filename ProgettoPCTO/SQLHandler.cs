@@ -7,10 +7,10 @@ using System.IO;
 
 namespace ProgettoPCTO
 {
-    public class SQLCommands
+    public class SQLHandler
     {
         private string _connectionString = "";
-        public SQLCommands(string connectionString)
+        public SQLHandler(string connectionString)
         {
             _connectionString = connectionString;
         }
@@ -665,19 +665,19 @@ namespace ProgettoPCTO
             update.ExecuteNonQuery();
         }
 
-        private void UpdateCharacter(Character c, SqlConnection conn)
-        {
-            SqlCommand update = new SqlCommand(@"UPDATE Character SET Strength = @Strength,EffectiveWeapon = @EffectiveWeapon
-                                                 WHERE IDCharacter = @IDCharacter;", conn);
-            update.Parameters.AddWithValue("@Strength", c.Strength);
-            if (c.EffectiveWeapon is null)
-                update.Parameters.AddWithValue("@EffectiveWeapon", DBNull.Value);
-            else
-                update.Parameters.AddWithValue("@EffectiveWeapon", c.EffectiveWeapon);
-            update.Parameters.AddWithValue("@IDCharacter", c.IdCharacter);
+        //private void UpdateCharacter(Character c, SqlConnection conn)
+        //{
+        //    SqlCommand update = new SqlCommand(@"UPDATE Character SET Strength = @Strength,EffectiveWeapon = @EffectiveWeapon
+        //                                         WHERE IDCharacter = @IDCharacter;", conn);
+        //    update.Parameters.AddWithValue("@Strength", c.Strength);
+        //    if (c.EffectiveWeapon is null)
+        //        update.Parameters.AddWithValue("@EffectiveWeapon", DBNull.Value);
+        //    else
+        //        update.Parameters.AddWithValue("@EffectiveWeapon", c.EffectiveWeapon);
+        //    update.Parameters.AddWithValue("@IDCharacter", c.IdCharacter);
 
-            update.ExecuteNonQuery();
-        }
+        //    update.ExecuteNonQuery();
+        //}
 
         private void UpdatePlayer(Player p, SqlConnection conn)
         {
@@ -743,6 +743,17 @@ namespace ProgettoPCTO
                 delete.Parameters.AddWithValue("@IdGameplay", idGameplay);
                 delete.Parameters.AddWithValue("@IdSituation", idSituation);
                 delete.Parameters.AddWithValue("@Dialogue", text);
+
+                delete.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteCharacter(int idCharacter)
+        {
+            using(SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                SqlCommand delete = new SqlCommand("DELETE FROM Character WHERE IDCharacter = @IdCharacter;", conn);
+                delete.Parameters.AddWithValue("@IdCharacter", idCharacter);
 
                 delete.ExecuteNonQuery();
             }

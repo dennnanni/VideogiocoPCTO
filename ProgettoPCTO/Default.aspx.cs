@@ -31,9 +31,9 @@ namespace ProgettoPCTO
             set => Session["game"] = value;
         }
 
-        private SQLCommands Commands
+        private SQLHandler Handler
         {
-            get => (SQLCommands)Session["commands"];
+            get => (SQLHandler)Session["commands"];
             set => Session["commands"] = value;
         }
 
@@ -43,8 +43,8 @@ namespace ProgettoPCTO
             {
                 // Creates the gameplay and loads the first situation
                 Game = new Gameplay().SetUp(Server);
-                Commands = new SQLCommands("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
-                Game = Commands.ReadData("default");
+                Handler = new SQLHandler("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
+                Game = Handler.ReadData("default");
                 _selectedAction = drpActions.SelectedValue;
                 _currentSituation = Game["area1"];
                 this.LoadSituation("area1");
@@ -287,6 +287,7 @@ namespace ProgettoPCTO
 
             // Adds the name to the inventory list
             lstInventory.Items.Add(item.Name);
+            
 
             return true;
         }
@@ -326,6 +327,7 @@ namespace ProgettoPCTO
                 lblStrength.Text = "Forza: " + Game.PlayerProfile.Strength;
 
                 // Removes the enemy from the panel and from the situation
+                Handler.DeleteCharacter(hostile.IdCharacter);
                 Game[_currentAreaID].Entities.Remove(hostile);
                 pnlImages.Controls.Remove(pnlImages.FindControl("img" + hostile.Name));
             }
@@ -448,7 +450,7 @@ namespace ProgettoPCTO
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            Commands.WriteData(Username, Game);
+            Handler.WriteData(Username, Game);
 
             //if (!_game.Save(Server))
             //{
