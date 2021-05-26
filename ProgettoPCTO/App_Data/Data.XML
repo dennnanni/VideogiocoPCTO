@@ -1121,7 +1121,7 @@ Hai ucciso zombie</Dialogue>
         <Entities i:nil="true" />
         <IdSituation>0</IdSituation>
         <ImageURL>~\Img\Areas\area22.gif</ImageURL>
-        <IsUnlocked>true</IsUnlocked>
+        <IsUnlocked>false</IsUnlocked>
         <Items i:nil="true" />
         <Name>VITTORIA</Name>
         <UnlockingItem i:nil="true" />

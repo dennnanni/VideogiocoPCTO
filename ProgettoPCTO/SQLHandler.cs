@@ -72,11 +72,11 @@ namespace ProgettoPCTO
 
             SqlDataReader reader = select.ExecuteReader();
 
-            reader.Read();
-
-            g.IdGameplay = int.Parse(reader["IDGameplay"].ToString());
-            g.CurrentAreaID = reader["CurrentAreaID"].ToString().TrimEnd(null);
-
+            if (reader.Read())
+            {
+                g.IdGameplay = int.Parse(reader["IDGameplay"].ToString());
+                g.CurrentAreaID = reader["CurrentAreaID"].ToString().TrimEnd(null);
+            }
             reader.Close();
         }
 
@@ -253,8 +253,6 @@ namespace ProgettoPCTO
 
             reader.Close();
             p.Inventory = GetInventoryItems(id, conn);
-
-            
 
             return p;
         }
