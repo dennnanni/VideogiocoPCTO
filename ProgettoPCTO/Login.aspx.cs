@@ -53,9 +53,9 @@ namespace ProgettoPCTO
                         SQLHandler handler = new SQLHandler((string)Session["connection"]);
                         handler.InsertAccount("default", "default", "default");
 
-                        g.Save(Server);
-                        // Read from XML file and upload datas into the db
-                        g = (new Gameplay()).SetUp(Server);
+                        //g.Save(Server);
+                        //// Read from XML file and upload datas into the db
+                        //g = (new Gameplay()).SetUp(Server);
                         
                         handler.InsertSituation(g.Situations);
                         foreach(string key in g.Situations.Keys)

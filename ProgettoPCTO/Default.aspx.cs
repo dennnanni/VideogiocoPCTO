@@ -44,7 +44,7 @@ namespace ProgettoPCTO
                 // Creates the gameplay and loads the first situation
                 Game = new Gameplay().SetUp(Server);
                 Handler = new SQLHandler("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
-                Game = Handler.ReadData("default");
+                Game = Handler.ReadData(Username);
                 _selectedAction = drpActions.SelectedValue;
                 _currentSituation = Game["area1"];
                 this.LoadSituation("area1");
@@ -77,8 +77,6 @@ namespace ProgettoPCTO
             txtStory.Text = "";
             this.LoadSituation(_currentSituation.Areas[index]);
 
-            Game.CurrentAreaID = _currentAreaID;
-            Game = Game;
         }
 
         public void LoadSituation(string name) // Loading by name is much more easy to reuse code
@@ -161,14 +159,11 @@ namespace ProgettoPCTO
                     }
                 }
 
-            if (_currentAreaID != name)
-                // Update the current area ID
-                _currentAreaID = name;
-
             // Save the parameters
             Game.CurrentAreaID = name;
-            Game = Game;
 
+            // Updates in the database
+            Handler.UpdateGameplay(Game.IdGameplay, Game.CurrentAreaID);
         }
          
 
@@ -220,7 +215,8 @@ namespace ProgettoPCTO
                     Character friend = entity as Character;
 
                     // Removes the entity from the array
-                    Game[_currentAreaID].Entities.Remove(friend);
+                    Handler.DeleteCharacter(friend.IdCharacter);
+                    Game[Game.CurrentAreaID].Entities.Remove(friend);
                     pnlImages.Controls.Remove(pnlImages.FindControl("img" + friend.Name));
                 }
 
@@ -234,14 +230,13 @@ namespace ProgettoPCTO
                     return;
             }
 
-            Game[_currentAreaID].Actions.Remove(_selectedAction);
+            // Deletes the selected action both from the database and the gameplay
+            Handler.DeleteAction(Game.IdGameplay, Game[Game.CurrentAreaID].IdSituation, _selectedAction);
+            Game[Game.CurrentAreaID].Actions.Remove(_selectedAction);
 
             // Removes the action from the action list
             drpActions.Items.Remove(_selectedAction);
-            //Commands.DeleteAction(_game.IdGameplay, _game[_currentAreaID].IdSituation, _selectedAction);
 
-            Game.CurrentAreaID = _currentAreaID;
-            Game = Game;
         }
 
         protected void btnDrop_Click(object sender, EventArgs e)
@@ -275,7 +270,14 @@ namespace ProgettoPCTO
             try
             {
                 Game.PlayerProfile.Collect(item);
-                Game[_currentAreaID].Items.Remove(item);
+                for(int i = 0; i < Game[_currentAreaID].Items.Count; i++)
+                {
+                    if(Game[_currentAreaID].Items[i].Name == item.Name)
+                    {
+                        Game[_currentAreaID].Items[i].IsCollectable = false;
+                        Game[_currentAreaID].Items[i].IsVisible = false;
+                    }
+                }
 
                 pnlImages.Controls.Remove(pnlImages.FindControl("img" + item.Name));
             }
@@ -288,7 +290,9 @@ namespace ProgettoPCTO
 
             // Adds the name to the inventory list
             lstInventory.Items.Add(item.Name);
-            
+
+            // Updates in the db
+            Handler.UpdateItem(item, Game.PlayerProfile.IdCharacter);
 
             return true;
         }
@@ -327,7 +331,7 @@ namespace ProgettoPCTO
                 lblHealth.Text = "Salute: " + Game.PlayerProfile.Health;
                 lblStrength.Text = "Forza: " + Game.PlayerProfile.Strength;
 
-                // Removes the enemy from the panel and from the situation
+                // Removes the enemy from the panel, from the situation, and from the database
                 Handler.DeleteCharacter(hostile.IdCharacter);
                 Game[_currentAreaID].Entities.Remove(hostile);
                 pnlImages.Controls.Remove(pnlImages.FindControl("img" + hostile.Name));
@@ -350,22 +354,14 @@ namespace ProgettoPCTO
                 s.Name = s.Name.Replace(" misterioso", "");
                 s.Name = s.Name.Replace(" misteriosa", "");
                 s.Description = "Il passaggio è aperto!";
+                Handler.UpdateVariables(Game.IdGameplay, s);
 
                 // Checks if it is something that should be removed from the inventory
                 if(s.UnlockingItem == "Scala" || s.UnlockingItem == "Totem")
                 {
+                    Handler.DeleteItem(Game.PlayerProfile.Inventory[s.UnlockingItem].IdItem);
                     Game.PlayerProfile.Inventory.Remove(s.UnlockingItem);
                     lstInventory.Items.Remove(s.UnlockingItem);
-                }
-
-                // Finds the locked area and unlocks it
-                for(int i =  0; i < s.Areas.Length; i++)
-                {
-                    if (s.Areas[i] != null && !Game[s.Areas[i]].IsUnlocked)
-                    {
-                        Game[s.Areas[i]].IsUnlocked = true;
-                        i = 4;
-                    }
                 }
 
                 // Shows items if there are some
@@ -375,11 +371,19 @@ namespace ProgettoPCTO
                     {
                         s.Items[i].IsVisible = true;
                         s.Items[i].IsCollectable = true;
+                        Handler.UpdateItem(s.Items[i], -1);
                         s.Actions.Add("Raccogli " + s.Items[i].Name);
+                        using(SqlConnection conn = new SqlConnection(Handler.ConnectionString))
+                        {
+                            List<string> tmp = new List<string>();
+                            tmp.Add("Raccogli " + s.Items[i].Name);
+                            Handler.InsertActions(Game.IdGameplay, s.IdSituation, tmp, conn);
+                        }
                     }
                 }
 
                 // Removes the action
+                Handler.DeleteAction(Game.IdGameplay, s.IdSituation, _selectedAction);
                 s.Actions.Remove(_selectedAction);
                 
                 Game[_currentAreaID] = s;
@@ -439,6 +443,7 @@ namespace ProgettoPCTO
                     lblStrength.Text = "Forza: " + Game.PlayerProfile.Strength;
                 }
 
+                Handler.DeleteItem(Game.PlayerProfile.Inventory[lstInventory.SelectedValue].IdItem);
                 Game.PlayerProfile.Inventory.Remove(lstInventory.SelectedValue);
                 lstInventory.Items.Remove(lstInventory.SelectedValue);
                     
@@ -446,12 +451,11 @@ namespace ProgettoPCTO
 
             txtStory.Text += "Hai usato " + selectedItem + ". " + message + "\n";
 
-            Game = Game;
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            Handler.WriteData(Username, Game);
+            //Handler.WriteData(Username, Game);
 
             //if (!_game.Save(Server))
             //{
@@ -488,7 +492,6 @@ namespace ProgettoPCTO
             btnSave.Enabled = true;
 
             // Stores the gameplay structure
-            Game = Game;
             _selectedAction = drpActions.SelectedValue;
             _currentSituation = Game[Game.CurrentAreaID];
 

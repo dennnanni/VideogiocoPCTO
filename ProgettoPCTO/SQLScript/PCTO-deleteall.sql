@@ -1,0 +1,19 @@
+-- DELETE ALL
+USE Videogame
+GO
+
+DELETE FROM SituationVariable;
+DELETE FROM Image;
+DELETE FROM Situation;
+DELETE FROM Player;
+DELETE FROM Character;
+DELETE FROM Gameplay;
+DELETE FROM Account;
+
+DBCC CHECKIDENT('Gameplay', RESEED, 0);
+DBCC CHECKIDENT('Situation', RESEED, 0);
+DBCC CHECKIDENT('Image', RESEED, 0);
+DBCC CHECKIDENT('Character', RESEED, 0);
+DBCC CHECKIDENT('Item', RESEED, 0);
+DBCC CHECKIDENT('Action', RESEED, 0);
+

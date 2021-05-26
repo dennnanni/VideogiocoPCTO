@@ -15,6 +15,12 @@ namespace ProgettoPCTO
             _connectionString = connectionString;
         }
 
+        public string ConnectionString
+        {
+            get => _connectionString;
+            set => _connectionString = value;
+        }
+
         #region Reader (finished)
 
         public Gameplay ReadData(string username)
@@ -213,8 +219,8 @@ namespace ProgettoPCTO
                     Width = int.Parse(reader["Width"].ToString().TrimEnd(null)),
                     Height = int.Parse(reader["Height"].ToString().TrimEnd(null)),
                     Dialogue = reader["Dialogue"].ToString().TrimEnd(null),
-                    IsCollectable = int.Parse(reader["IsCollectable"].ToString().TrimEnd(null)) != 0,
-                    IsVisible = int.Parse(reader["IsVisible"].ToString().TrimEnd(null)) != 0,
+                    IsCollectable = (bool)reader["IsCollectable"],
+                    IsVisible = (bool)reader["IsVisible"],
                     Effectiveness = int.Parse(reader["Effectiveness"].ToString().TrimEnd(null))
                 });
             }
@@ -426,7 +432,7 @@ namespace ProgettoPCTO
             insert.ExecuteNonQuery();
         }
 
-        private void InsertActions(int idGameplay, int idSituation, List<string> actions, SqlConnection conn)
+        public void InsertActions(int idGameplay, int idSituation, List<string> actions, SqlConnection conn)
         {
             if (actions is null)
                 return;
@@ -630,6 +636,8 @@ namespace ProgettoPCTO
         {
             using(SqlConnection conn = new SqlConnection(_connectionString))
             {
+                conn.Open();
+
                 SqlCommand update = new SqlCommand("UPDATE Gameplay SET CurrentAreaID = @CurrentArea WHERE IDGameplay = @IDGameplay;", conn);
 
                 update.Parameters.AddWithValue("@CurrentArea", currentArea);
@@ -651,6 +659,8 @@ namespace ProgettoPCTO
         {
             using(SqlConnection conn = new SqlConnection(_connectionString))
             {
+                conn.Open();
+
                 SqlCommand update = new SqlCommand(@"UPDATE Item SET IsCollectable = @Collectable, IsVisible = @Visible,
                                                  Effectiveness = @Effectiveness, IDPlayer = @IDPlayer 
                                                  WHERE IDItem = @IDItem;", conn);
@@ -687,6 +697,8 @@ namespace ProgettoPCTO
         {
             using(SqlConnection conn = new SqlConnection(_connectionString))
             {
+                conn.Open();
+
                 SqlCommand update = new SqlCommand(@"UPDATE Player 
                                                  SET Health = @Health, Armor = @Armor, Experience = @XP
                                                  WHERE IDCharacter = @IDPlayer;", conn);
@@ -705,24 +717,23 @@ namespace ProgettoPCTO
             //}
         }
         
-        public void UpdateVariables(int idGameplay, Dictionary<string, Situation> situations)
+        public void UpdateVariables(int idGameplay, Situation s)
         {
             using(SqlConnection conn = new SqlConnection(_connectionString))
             {
-                foreach (Situation s in situations.Values)
-                {
-                    if (!s.IsUnlocked)
-                    {
-                        SqlCommand update = new SqlCommand(@"UPDATE SituationVariable 
-                                                             SET Unlocked = @Unlocked
-                                                             WHERE IDGameplay = @IDGameplay AND IDInstance = @IDSituation;", conn);
-                        update.Parameters.AddWithValue("@Unlocked", s.IsUnlocked);
-                        update.Parameters.AddWithValue("@IDGameplay", idGameplay);
-                        update.Parameters.AddWithValue("@IDSituation", s.IdSituation);
+                conn.Open();
 
-                        update.ExecuteNonQuery();
-                        update.Dispose();
-                    }
+                if (!s.IsUnlocked)
+                {
+                    SqlCommand update = new SqlCommand(@"UPDATE SituationVariable 
+                                                            SET Unlocked = @Unlocked
+                                                            WHERE IDGameplay = @IDGameplay AND IDInstance = @IDSituation;", conn);
+                    update.Parameters.AddWithValue("@Unlocked", s.IsUnlocked);
+                    update.Parameters.AddWithValue("@IDGameplay", idGameplay);
+                    update.Parameters.AddWithValue("@IDSituation", s.IdSituation);
+
+                    update.ExecuteNonQuery();
+                    update.Dispose();
                 }
             }
         }
@@ -731,6 +742,8 @@ namespace ProgettoPCTO
         {
             using(SqlConnection conn = new SqlConnection(_connectionString))
             {
+                conn.Open();
+
                 SqlCommand update = new SqlCommand("UPDATE Account SET Password = @Password WHERE Username = @Username;", conn);
 
                 update.Parameters.AddWithValue("@Password", password);
@@ -747,6 +760,7 @@ namespace ProgettoPCTO
             using(SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
+
                 SqlCommand delete = new SqlCommand(@"DELETE FROM Action WHERE IDGameplay = @IdGameplay 
                                                      AND IDSituation = @IdSituation AND Dialogue = @Dialogue;", conn);
 
@@ -762,8 +776,23 @@ namespace ProgettoPCTO
         {
             using(SqlConnection conn = new SqlConnection(_connectionString))
             {
+                conn.Open();
+
                 SqlCommand delete = new SqlCommand("DELETE FROM Character WHERE IDCharacter = @IdCharacter;", conn);
                 delete.Parameters.AddWithValue("@IdCharacter", idCharacter);
+
+                delete.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteItem(int idItem)
+        {
+            using(SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand delete = new SqlCommand("DELETE FROM Item WHERE IDItem = @IdItem;", conn);
+                delete.Parameters.AddWithValue("@IdItem", idItem);
 
                 delete.ExecuteNonQuery();
             }
