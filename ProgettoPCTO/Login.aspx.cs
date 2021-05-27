@@ -53,9 +53,8 @@ namespace ProgettoPCTO
                         SQLHandler handler = new SQLHandler((string)Session["connection"]);
                         handler.InsertAccount("default", "default", "default");
 
-                        //g.Save(Server);
                         // Read from XML file and upload datas into the db
-                        g = (new Gameplay()).SetUp(Server);
+                        g = new Gameplay().SetUp(Server);
 
                         handler.InsertSituation(g.Situations);
                         foreach(string key in g.Situations.Keys)
@@ -78,16 +77,15 @@ namespace ProgettoPCTO
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             string username = txtUsername.Text;
-            string password = Helper.HashPassword(txtPassword.Text);
 
-            if (Helper.Authenticate(username, txtPassword.Text, "Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;"))
+            if (Helper.Authenticate(username, txtPassword.Text, (string)Session["connection"]))
             {
                 Session["user"] = username;
-                Page.Response.Redirect("~/Default.aspx", true);
+                Page.Response.Redirect("~/Default.aspx?user=" + username, true);
             }
             else
             {
-
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "AlertBox", "alert('Username o password errati.');", true);
             }
         }
     }

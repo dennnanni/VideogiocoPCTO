@@ -36,13 +36,19 @@ namespace ProgettoPCTO
             set => Session["commands"] = value;
         }
 
+        private string ConnectionString
+        {
+            get => (string)Session["connection"];
+            set => Session["connection"] = value;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 // Creates the gameplay and loads the first situation
                 Game = new Gameplay().SetUp(Server);
-                Handler = new SQLHandler("Data Source = (local);Initial Catalog = Videogame;Integrated Security = True;");
+                Handler = new SQLHandler(ConnectionString);
                 Game = Handler.ReadData(Username);
                 if (!(Game.PlayerProfile.Inventory is null))
                 {
@@ -362,10 +368,21 @@ namespace ProgettoPCTO
             {
                 // Replaces the image with the unlocked visual
                 Situation s = Game[Game.CurrentAreaID];
+
+                if (Game.CurrentAreaID == "area11" && !s.ImageURL.Contains('u'))
+                {
+                    using(SqlConnection conn = new SqlConnection(ConnectionString))
+                    {
+                        conn.Open();
+                        Handler.InsertVariations(Game.IdGameplay, Game[Game.CurrentAreaID].IdSituation, true, conn);
+                    }
+                }
+
                 s.ImageURL = s.ImageURL.Replace(Game.CurrentAreaID, Game.CurrentAreaID + "u");
                 s.Name = s.Name.Replace(" misterioso", "");
                 s.Name = s.Name.Replace(" misteriosa", "");
                 s.Description = "Il passaggio è aperto!";
+
                 for(int i = 0; i < s.Areas.Length; i++)
                 {
                     if(s.Areas[i] != null && Game[s.Areas[i]].IsUnlocked == false)

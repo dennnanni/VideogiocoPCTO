@@ -379,7 +379,8 @@ namespace ProgettoPCTO
                         entities.AddRange(s.Entities);
                     }
 
-                    InsertVariations(g.IdGameplay, s.IdSituation, s.IsUnlocked, conn);
+                    if(!s.IsUnlocked)
+                        InsertVariations(g.IdGameplay, s.IdSituation, s.IsUnlocked, conn);
                     InsertCharacterAndItem(g.IdGameplay, entities, conn);
                     InsertActions(g.IdGameplay, s.IdSituation, s.Actions, conn);
                 }
@@ -415,11 +416,11 @@ namespace ProgettoPCTO
             return GetIdentityValue("Gameplay", conn);
         }
 
-        private void InsertVariations(int idGameplay, int idSituation, bool value, SqlConnection conn)
+        public void InsertVariations(int idGameplay, int idSituation, bool value, SqlConnection conn)
         {
             // If the situation is already unlocked there's no need to save the variable
-            if (value)
-                return;
+            //if (value)
+            //    return;
 
             SqlCommand insert = new SqlCommand("INSERT INTO SituationVariable VALUES (@IDSituation, @Unlocked, @IDGameplay);", conn);
 
@@ -609,26 +610,11 @@ namespace ProgettoPCTO
             }
         }
 
-        
+
 
         #endregion
 
-        #region Updater
-
-        //public void UpdateValues(string username, Gameplay g)
-        //{
-        //    using(SqlConnection conn = new SqlConnection(_connectionString))
-        //    {
-        //        UpdateGameplay(g.IdGameplay, g.CurrentAreaID, conn);
-        //        UpdateVariables(g.IdGameplay, g.Situations); // Unlocks areas
-        //        foreach(Situation s in g.Situations.Values)
-        //        {
-        //            foreach(Item i in s.Items)
-        //                UpdateItem(i, -1, conn);
-        //        }
-        //        UpdatePlayer(g.PlayerProfile, conn);
-        //    }
-        //}
+        #region Updater (finished)
 
         public void UpdateGameplay(int idGameplay, string currentArea)
         {
@@ -646,7 +632,6 @@ namespace ProgettoPCTO
             
         }
 
-        // DA CORREGGERE (not tested)
         /// <summary>
         /// Updates the data of an Item given its id
         /// </summary>
@@ -677,20 +662,6 @@ namespace ProgettoPCTO
             }
         }
 
-        //private void UpdateCharacter(Character c, SqlConnection conn)
-        //{
-        //    SqlCommand update = new SqlCommand(@"UPDATE Character SET Strength = @Strength,EffectiveWeapon = @EffectiveWeapon
-        //                                         WHERE IDCharacter = @IDCharacter;", conn);
-        //    update.Parameters.AddWithValue("@Strength", c.Strength);
-        //    if (c.EffectiveWeapon is null)
-        //        update.Parameters.AddWithValue("@EffectiveWeapon", DBNull.Value);
-        //    else
-        //        update.Parameters.AddWithValue("@EffectiveWeapon", c.EffectiveWeapon);
-        //    update.Parameters.AddWithValue("@IDCharacter", c.IdCharacter);
-
-        //    update.ExecuteNonQuery();
-        //}
-
         public void UpdatePlayer(Player p)
         {
             using(SqlConnection conn = new SqlConnection(_connectionString))
@@ -708,11 +679,6 @@ namespace ProgettoPCTO
                 update.ExecuteNonQuery();
             }
 
-            // Insertion of items to the inventory 
-            //foreach(Item i in p.Inventory.Values)
-            //{
-            //    UpdateItem(i, p.IdCharacter);
-            //}
         }
         
         public void UpdateVariables(int idGameplay, Situation s)
@@ -750,6 +716,8 @@ namespace ProgettoPCTO
         }
 
         #endregion
+
+        #region Deletion (finished)
 
         public void DeleteAction(int idGameplay, int idSituation, string text)
         {
@@ -793,6 +761,8 @@ namespace ProgettoPCTO
                 delete.ExecuteNonQuery();
             }
         }
+
+        #endregion
     }
 
 }
