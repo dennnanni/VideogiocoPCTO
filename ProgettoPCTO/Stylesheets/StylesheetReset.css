@@ -33,6 +33,7 @@
     width: 100px;
     display: block;
     text-align: center;
+    font-weight: bold;
 }
 
 #lblOtp {

@@ -20,11 +20,10 @@ namespace ProgettoPCTO
             string password = txtPassword.Text;
             string email = txtEmail.Text;
 
-            bool emailOk = true;
-            string[] tmp = email.Split('@');
-            if(tmp[0] is null || tmp[1] is null || tmp.Length == 1)
+            if (!CheckEmail(email))
             {
-
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "AlertBox", "alert('Indirizzo email non valido.');", true);
+                return;
             }
 
             if(username == "default")
@@ -52,6 +51,21 @@ namespace ProgettoPCTO
                 txtPassword.Text = "";
                 txtUsername.Text = "";
             }
+        }
+
+        private bool CheckEmail(string email)
+        {
+            // Check if there are the name and the domain
+            string[] tmp = email.Split('@');
+            if (tmp[0] is null || tmp[1] is null || tmp.Length == 1)
+                return false;
+
+            // Checks if there is a top level domain 
+            string[] tmp2 = tmp[1].Split('.');
+            if (tmp2[tmp2.Length - 1] is null)
+                return false;
+
+            return true;
         }
     }
 }

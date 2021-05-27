@@ -8,7 +8,7 @@ GO
 
 CREATE TABLE Account(
 	Username CHAR(15) PRIMARY KEY NOT NULL,
-	Email CHAR(340),
+	Email CHAR(340) UNIQUE,
 	Password CHAR(256)
 );
 
@@ -41,6 +41,7 @@ CREATE TABLE SituationVariable(
 );
 
 -- Action table is an array of strings so it is impossible to add a identity ID
+
 CREATE TABLE Action(
 	IDSituation INT REFERENCES Situation(IDSituation) ON DELETE CASCADE,
 	Dialogue VARCHAR(100),

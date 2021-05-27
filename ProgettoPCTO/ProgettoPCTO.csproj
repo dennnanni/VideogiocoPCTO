@@ -133,7 +133,6 @@
     <Content Include="SignUp.aspx" />
     <Content Include="SQLScript\PCTO-createtables.sql" />
     <Content Include="SQLScript\PCTO-deleteall.sql" />
-    <Content Include="SQLScript\PCTO-insert.sql" />
     <Content Include="SQLScript\PCTO-select.sql" />
     <Content Include="Stylesheets\Stylesheet.css" />
     <Content Include="Stylesheets\StylesheetReset.css" />

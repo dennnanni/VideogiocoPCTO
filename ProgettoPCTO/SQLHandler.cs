@@ -63,6 +63,18 @@ namespace ProgettoPCTO
             }
         }
 
+        public string GetUsernameFromEmail(string email)
+        {
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                SqlCommand select = new SqlCommand("SELECT Username FROM Account WHERE Email = @Email;", conn);
+
+                select.Parameters.AddWithValue("@Email", email);
+                return (string)select.ExecuteScalar();
+            }
+        }
+
         private void ReadGameplay(string username, Gameplay g, SqlConnection conn)
         {
             SqlCommand select = new SqlCommand(@"SELECT IDGameplay, CurrentAreaID 
@@ -454,7 +466,8 @@ namespace ProgettoPCTO
         {
             SqlCommand insertCharacter = new SqlCommand(@"INSERT INTO Character(Strength, IDImage, IDGameplay)
                                                           VALUES (@Strength, @IDImage, @IDGameplay);", conn);
-            SqlCommand insert = new SqlCommand(@"INSERT INTO Player VALUES (@IDCharacter, @Health, @Armor, @Experience, @IDGameplay);", conn);
+            SqlCommand insert = new SqlCommand(@"INSERT INTO Player
+                                                 VALUES (@IDCharacter, @Health, @Armor, @Experience, @IDGameplay);", conn);
 
             insertCharacter.Parameters.AddWithValue("@Strength", p.Strength);
             insertCharacter.Parameters.AddWithValue("@IDImage", DBNull.Value);
@@ -470,7 +483,6 @@ namespace ProgettoPCTO
             insert.Parameters.AddWithValue("@IDGameplay", idGameplay);
 
             insert.ExecuteNonQuery();
-
         }
 
         #region Insertion of Situation and Image

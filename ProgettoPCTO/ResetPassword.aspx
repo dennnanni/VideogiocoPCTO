@@ -13,10 +13,10 @@
         <div>
             <asp:Panel ID="pnlContainer" runat="server" Height="270px" Width="350px" Visible="true">
                 <asp:Label ID="lblTitle" runat="server" Text="Label"><b>Reimposta password</b></asp:Label>
-                <asp:Label ID="lblEmail" runat="server" Text="Label"><b>Email</b></asp:Label>
+                <asp:Label ID="lblEmail" runat="server" Text="Label">Email</asp:Label>
                 <asp:TextBox runat="server" ID="txtEmail" placeholder="Enter Email"></asp:TextBox>
-                <asp:Label ID="lblOtp" runat="server" Text="Label" Enabled="false"><b>OTP</b></asp:Label>
-                <asp:TextBox runat="server" ID="txtOtp" TextMode="Password" placeholder="Enter OTP"></asp:TextBox>
+                <asp:Label ID="lblOtp" runat="server" Text="Label" Enabled="false" Visible ="false"><b>OTP</b></asp:Label>
+                <asp:TextBox runat="server" ID="txtOtp" Enabled="false" Visible ="false" placeholder="Enter OTP"></asp:TextBox>
                 <asp:Button runat="server" ID="btnSend"  Text="Send" OnClick="btnSend_Click"  />
                 <asp:HyperLink ID="hypLogin" runat="server" NavigateUrl="~/Login.aspx">Accedi</asp:HyperLink>
             </asp:Panel>

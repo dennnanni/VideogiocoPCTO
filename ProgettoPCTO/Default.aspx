@@ -35,8 +35,7 @@
                     <asp:Label ID="lblStrength" runat="server" Text="Forza: 50" Width="210" Height="10"></asp:Label>
                 </asp:Panel>
                 <asp:Button ID="btnLogOut" runat="server" Text="Disconnettiti" Height="50" Width="210" OnClick="btnLogOut_Click"/>
-                <asp:Button ID="btnLoad" runat="server" Text="Carica profilo" Height="50" Width="210"/>
-                <asp:Button ID="btnRestart" runat="server" Text="Ricomincia" Height="50" Width="210"/>
+                
             </ContentTemplate>
         </asp:UpdatePanel>
         
