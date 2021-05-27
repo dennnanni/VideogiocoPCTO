@@ -129,12 +129,14 @@
     <Content Include="Img\Items\pickaxe.png" />
     <Content Include="Img\Items\sword.png" />
     <Content Include="Login.aspx" />
+    <Content Include="ResetPassword.aspx" />
     <Content Include="SignUp.aspx" />
     <Content Include="SQLScript\PCTO-createtables.sql" />
     <Content Include="SQLScript\PCTO-deleteall.sql" />
     <Content Include="SQLScript\PCTO-insert.sql" />
     <Content Include="SQLScript\PCTO-select.sql" />
     <Content Include="Stylesheets\Stylesheet.css" />
+    <Content Include="Stylesheets\StylesheetReset.css" />
     <Content Include="Stylesheets\StylesheetSignup.css" />
     <Content Include="Stylesheets\StylesheetLogin.css" />
     <Content Include="Web.config" />
@@ -173,6 +175,13 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Class\Situation.cs" />
+    <Compile Include="ResetPassword.aspx.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResetPassword.aspx.designer.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SignUp.aspx.cs">
       <DependentUpon>SignUp.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

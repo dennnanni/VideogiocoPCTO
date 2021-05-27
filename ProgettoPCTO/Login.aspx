@@ -18,7 +18,7 @@
                 <asp:Label ID="lblPassword" runat="server" Text="Label"><b>Password</b></asp:Label>
                 <asp:TextBox runat="server" ID="txtPassword" TextMode="Password" placeholder="Enter Password"></asp:TextBox>
                 <asp:Button runat="server" ID="btnLogin"  Text="Login" OnClick="btnLogin_Click" />
-                <asp:HyperLink ID="hypResetPassword" runat="server" NavigateUrl="~/Login.aspx?action=&quot;reset&quot;">Reimposta password</asp:HyperLink>
+                <asp:HyperLink ID="hypResetPassword" runat="server" NavigateUrl="~/ResetPassword.aspx">Reimposta password</asp:HyperLink>
                 <asp:HyperLink ID="hypSignUp" runat="server" NavigateUrl="~/SignUp.aspx">Registrati</asp:HyperLink>
             </asp:Panel>
            

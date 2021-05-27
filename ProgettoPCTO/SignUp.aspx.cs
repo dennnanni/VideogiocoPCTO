@@ -20,6 +20,13 @@ namespace ProgettoPCTO
             string password = txtPassword.Text;
             string email = txtEmail.Text;
 
+            bool emailOk = true;
+            string[] tmp = email.Split('@');
+            if(tmp[0] is null || tmp[1] is null || tmp.Length == 1)
+            {
+
+            }
+
             if(username == "default")
             {
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "AlertBox", "alert('Username non valido, sceglierne un altro.');", true);

@@ -1,4 +1,5 @@
 USE Videogame
+GO
 
 -- SCRIPT FOR GENERAL QUERIES
 
