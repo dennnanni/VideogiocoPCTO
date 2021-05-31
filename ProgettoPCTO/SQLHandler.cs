@@ -136,7 +136,7 @@ namespace ProgettoPCTO
             }
 
             // Reads data from the variables table
-            SqlCommand selectVariables = new SqlCommand(@"SELECT IDInstance, Unlocked
+            SqlCommand selectVariables = new SqlCommand(@"SELECT IDInstance, Unlocked, Referenced
                                                           FROM SituationVariable
                                                           WHERE IDGameplay = @IDGameplay", conn);
 
@@ -151,7 +151,21 @@ namespace ProgettoPCTO
                                select dictEl.Key).First();
 
                 dict[title].IsUnlocked = (bool)reader[1];
-                if (dict[title].IsUnlocked)
+                if ((bool)reader["Referenced"] && dict[title].IsUnlocked)
+                {
+                    // Search for the connected situation with the lower ID
+                    foreach(string key in dict[title].Areas)
+                    {
+                        if(key != null && dict[key].IdSituation < dict[title].IdSituation)
+                        {
+                            // If the situation is unlocked it needs another image, so the image url changes
+                            string[] temp = dict[key].ImageURL.Split('.');
+                            dict[key].ImageURL = string.Format("{0}u.{1}", temp[0], temp[1]);
+                        }
+                    }
+                    
+                }
+                else if(dict[title].IsUnlocked)
                 {
                     // If the situation is unlocked it needs another image, so the image url changes
                     string[] temp = dict[title].ImageURL.Split('.');
@@ -392,7 +406,7 @@ namespace ProgettoPCTO
                     }
 
                     if(!s.IsUnlocked)
-                        InsertVariations(g.IdGameplay, s.IdSituation, s.IsUnlocked, conn);
+                        InsertVariations(g.IdGameplay, s.IdSituation, s.IsUnlocked, true, conn);
                     InsertCharacterAndItem(g.IdGameplay, entities, conn);
                     InsertActions(g.IdGameplay, s.IdSituation, s.Actions, conn);
                 }
@@ -428,17 +442,14 @@ namespace ProgettoPCTO
             return GetIdentityValue("Gameplay", conn);
         }
 
-        public void InsertVariations(int idGameplay, int idSituation, bool value, SqlConnection conn)
+        public void InsertVariations(int idGameplay, int idSituation, bool value, bool referenced, SqlConnection conn)
         {
-            // If the situation is already unlocked there's no need to save the variable
-            //if (value)
-            //    return;
-
-            SqlCommand insert = new SqlCommand("INSERT INTO SituationVariable VALUES (@IDSituation, @Unlocked, @IDGameplay);", conn);
+            SqlCommand insert = new SqlCommand("INSERT INTO SituationVariable VALUES (@IDSituation, @Unlocked, @IDGameplay, @Referenced);", conn);
 
             insert.Parameters.AddWithValue("@IDSituation", idSituation);
             insert.Parameters.AddWithValue("@Unlocked", value);
-            insert.Parameters.AddWithValue("IDGameplay", idGameplay);
+            insert.Parameters.AddWithValue("@IDGameplay", idGameplay);
+            insert.Parameters.AddWithValue("@Referenced", referenced);
 
             insert.ExecuteNonQuery();
         }

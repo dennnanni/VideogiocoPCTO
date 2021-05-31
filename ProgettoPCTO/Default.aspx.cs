@@ -374,7 +374,7 @@ namespace ProgettoPCTO
                     using(SqlConnection conn = new SqlConnection(ConnectionString))
                     {
                         conn.Open();
-                        Handler.InsertVariations(Game.IdGameplay, Game[Game.CurrentAreaID].IdSituation, true, conn);
+                        Handler.InsertVariations(Game.IdGameplay, Game[Game.CurrentAreaID].IdSituation, true, false, conn);
                     }
                 }
 

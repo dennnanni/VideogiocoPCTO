@@ -37,7 +37,7 @@ namespace ProgettoPCTO
                 var smtpClient = new SmtpClient("smtp.gmail.com")
                 {
                     Port = 587,
-                    Credentials = new NetworkCredential("assistance.videogame@gmail.com", "example"),
+                    Credentials = new NetworkCredential("assistance.videogame@gmail.com", "denisenanni"),
                     EnableSsl = true,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                 };

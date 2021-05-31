@@ -37,10 +37,9 @@ CREATE TABLE SituationVariable(
 	IDInstance INT NOT NULL REFERENCES Situation(IDSituation),
 	Unlocked BIT DEFAULT 0,
 	IDGameplay INT REFERENCES Gameplay(IDGameplay),
+	Referenced BIT,
 	CONSTRAINT PK_Instance PRIMARY KEY (IDInstance, IDGameplay)
 );
-
--- Action table is an array of strings so it is impossible to add a identity ID
 
 CREATE TABLE Action(
 	IDSituation INT REFERENCES Situation(IDSituation) ON DELETE CASCADE,
